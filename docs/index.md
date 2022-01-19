@@ -1,15 +1,17 @@
 --- 
 title: "Do A Data Science Project in 10 Days"
-author: "Gangmin Li"
-date: "2021-03-07"
+author: 
+- "Bakti Siregar"
+- "F. Athon Pangruruk"
+date: "2022-01-19"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-github-repo: GangminLi/Do-Data-Science-with-R
-url: 'https\://bookdown.org/Do-Data-Science-in-10days/'
+github-repo: dsciencelabs/Data-Science-with-R
+url: 'https://dsciencelabs.github.io/Data-Science-with-R/'
 description: "This is a data science project practice book. It was initially written for my Big Data course to help students to run a quick data analytical project and to understand 1. the data analytical process, the typical tasks and the methods, techniques and the algorithms need to accomplish these tasks. During convid19, the unicersity has adopted on-line teaching. So the students can not access to the university labs and HPC facilities. Gaining an experience of doing a data science project becomes individual students self-learning in isolation. This book aimed to help them to read through it and follow instructions to complete the sample propject by themslef. However, it is required by many other students who want to know about data analytics, machine learning and particularly practical issues, to gain experience and confidence of doing data analysis. So it is aimed for beginners and have no much knowledge of data Science. the format for this book is bookdown::gitbook."
 cover-image: images/cover.png
 ---
