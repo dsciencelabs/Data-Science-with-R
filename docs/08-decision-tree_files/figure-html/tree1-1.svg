@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 504.00 360.00'>
+<defs>
+  <style type='text/css'><![CDATA[
+    line, polyline, polygon, path, rect, circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
+<polyline points='160.34,201.00 233.67,148.37 252.00,148.37 ' style='stroke-width: 0.75; stroke-linecap: butt;' />
+<polyline points='343.66,201.00 270.33,148.37 252.00,148.37 ' style='stroke-width: 0.75; stroke-linecap: butt;' />
+<polygon points='219.24,152.68 219.24,135.45 284.76,135.45 284.76,152.68 219.24,152.68 ' style='stroke-width: 0.75; stroke: none; fill: #FFFFFF;' />
+<text x='224.15' y='148.36' style='font-size: 12.00px; font-weight: bold; font-family: Arial;' textLength='55.71px' lengthAdjust='spacingAndGlyphs'>Sex = mal</text>
+<polygon points='152.01,204.04 152.29,203.25 153.12,202.52 154.45,201.89 156.17,201.41 158.18,201.11 160.34,201.00 160.34,201.00 162.50,201.11 164.51,201.41 166.23,201.89 167.56,202.52 168.39,203.25 168.67,204.04 168.67,215.20 168.39,215.99 167.56,216.72 166.23,217.35 164.51,217.83 162.50,218.13 160.34,218.24 160.34,218.24 158.18,218.13 156.17,217.83 154.45,217.35 153.12,216.72 152.29,215.99 152.01,215.20 ' style='stroke-width: 0.75; fill: #FFFFFF;' />
+<polygon points='335.33,204.04 335.61,203.25 336.44,202.52 337.77,201.89 339.49,201.41 341.50,201.11 343.66,201.00 343.66,201.00 345.82,201.11 347.83,201.41 349.55,201.89 350.88,202.52 351.71,203.25 351.99,204.04 351.99,215.20 351.71,215.99 350.88,216.72 349.55,217.35 347.83,217.83 345.82,218.13 343.66,218.24 343.66,218.24 341.50,218.13 339.49,217.83 337.77,217.35 336.44,216.72 335.61,215.99 335.33,215.20 ' style='stroke-width: 0.75; fill: #FFFFFF;' />
+<text x='157.00' y='213.86' style='font-size: 12.00px; font-family: Arial;' textLength='6.67px' lengthAdjust='spacingAndGlyphs'>0</text>
+<text x='340.32' y='213.93' style='font-size: 12.00px; font-family: Arial;' textLength='6.67px' lengthAdjust='spacingAndGlyphs'>1</text>
+<polygon points='193.42,143.53 193.50,143.11 193.73,142.72 194.10,142.39 194.58,142.13 195.14,141.97 195.74,141.91 215.46,141.91 216.06,141.97 216.62,142.13 217.10,142.39 217.47,142.72 217.70,143.11 217.78,143.53 217.78,153.22 217.70,153.64 217.47,154.03 217.10,154.36 216.62,154.62 216.06,154.78 215.46,154.84 195.74,154.84 195.14,154.78 194.58,154.62 194.10,154.36 193.73,154.03 193.50,153.64 193.42,153.22 ' style='stroke-width: 0.75; fill: #FFFFFF;' />
+<polygon points='285.77,143.53 285.84,143.11 286.08,142.72 286.44,142.39 286.92,142.13 287.48,141.97 288.08,141.91 303.57,141.91 304.17,141.97 304.73,142.13 305.21,142.39 305.58,142.72 305.81,143.11 305.89,143.53 305.89,153.22 305.81,153.64 305.58,154.03 305.21,154.36 304.73,154.62 304.17,154.78 303.57,154.84 288.08,154.84 287.48,154.78 286.92,154.62 286.44,154.36 286.08,154.03 285.84,153.64 285.77,153.22 ' style='stroke-width: 0.75; fill: #FFFFFF;' />
+<text x='197.15' y='150.99' style='font-size: 9.60px; font-style: italic; font-family: Arial;' textLength='14.94px' lengthAdjust='spacingAndGlyphs'>yes</text>
+<text x='289.48' y='150.86' style='font-size: 9.60px; font-style: italic; font-family: Arial;' textLength='10.68px' lengthAdjust='spacingAndGlyphs'>no</text>
+</svg>
