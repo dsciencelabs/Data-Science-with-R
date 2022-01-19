@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>8.1 Decision Tree in Hunt’s Algorithm | Do A Data Science Project in 10 Days</title>
+  <meta name="description" content="This is a data science project practice book. It was initially written for my Big Data course to help students to run a quick data analytical project and to understand 1. the data analytical process, the typical tasks and the methods, techniques and the algorithms need to accomplish these tasks. During convid19, the unicersity has adopted on-line teaching. So the students can not access to the university labs and HPC facilities. Gaining an experience of doing a data science project becomes individual students self-learning in isolation. This book aimed to help them to read through it and follow instructions to complete the sample propject by themslef. However, it is required by many other students who want to know about data analytics, machine learning and particularly practical issues, to gain experience and confidence of doing data analysis. So it is aimed for beginners and have no much knowledge of data Science. the format for this book is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="8.1 Decision Tree in Hunt’s Algorithm | Do A Data Science Project in 10 Days" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://bookdown.org/Do-Data-Science-in-10days/" />
+  <meta property="og:image" content="https://bookdown.org/Do-Data-Science-in-10days/images/cover.png" />
+  <meta property="og:description" content="This is a data science project practice book. It was initially written for my Big Data course to help students to run a quick data analytical project and to understand 1. the data analytical process, the typical tasks and the methods, techniques and the algorithms need to accomplish these tasks. During convid19, the unicersity has adopted on-line teaching. So the students can not access to the university labs and HPC facilities. Gaining an experience of doing a data science project becomes individual students self-learning in isolation. This book aimed to help them to read through it and follow instructions to complete the sample propject by themslef. However, it is required by many other students who want to know about data analytics, machine learning and particularly practical issues, to gain experience and confidence of doing data analysis. So it is aimed for beginners and have no much knowledge of data Science. the format for this book is bookdown::gitbook." />
+  <meta name="github-repo" content="GangminLi/Do-Data-Science-with-R" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="8.1 Decision Tree in Hunt’s Algorithm | Do A Data Science Project in 10 Days" />
+  
+  <meta name="twitter:description" content="This is a data science project practice book. It was initially written for my Big Data course to help students to run a quick data analytical project and to understand 1. the data analytical process, the typical tasks and the methods, techniques and the algorithms need to accomplish these tasks. During convid19, the unicersity has adopted on-line teaching. So the students can not access to the university labs and HPC facilities. Gaining an experience of doing a data science project becomes individual students self-learning in isolation. This book aimed to help them to read through it and follow instructions to complete the sample propject by themslef. However, it is required by many other students who want to know about data analytics, machine learning and particularly practical issues, to gain experience and confidence of doing data analysis. So it is aimed for beginners and have no much knowledge of data Science. the format for this book is bookdown::gitbook." />
+  <meta name="twitter:image" content="https://bookdown.org/Do-Data-Science-in-10days/images/cover.png" />
+
+<meta name="author" content="Gangmin Li" />
+
+
+<meta name="date" content="2021-03-07" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="prediction-with-decision-trees.html"/>
+<link rel="next" href="the-simplest-decision-tree-for-titanic.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Do Data Science in 10 Days</a></li>
+
+<li class="divider"></li>
+<li><a href="index.html#section"></a><ul>
+<li class="chapter" data-level="" data-path="what-is-this-book.html"><a href="what-is-this-book.html"><i class="fa fa-check"></i>What is This Book?</a></li>
+<li class="chapter" data-level="" data-path="structure-of-the-book.html"><a href="structure-of-the-book.html"><i class="fa fa-check"></i>Structure of the Book</a></li>
+<li class="chapter" data-level="" data-path="what-can-this-book-offer-you.html"><a href="what-can-this-book-offer-you.html"><i class="fa fa-check"></i>What Can This Book Offer You?</a></li>
+<li class="chapter" data-level="" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i>Notes</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="what-is-data-science.html"><a href="what-is-data-science.html"><i class="fa fa-check"></i><b>1.1</b> What is Data Science?</a><ul>
+<li class="chapter" data-level="" data-path="what-is-data-science.html"><a href="what-is-data-science.html#data-science-as-discovery-of-data-insight"><i class="fa fa-check"></i>Data Science as Discovery of Data Insight</a></li>
+<li class="chapter" data-level="" data-path="what-is-data-science.html"><a href="what-is-data-science.html#data-science-as-development-of-data-product"><i class="fa fa-check"></i>Data Science as Development of Data Product</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="what-is-data-scientist.html"><a href="what-is-data-scientist.html"><i class="fa fa-check"></i><b>1.2</b> What is Data Scientist?</a><ul>
+<li class="chapter" data-level="" data-path="what-is-data-scientist.html"><a href="what-is-data-scientist.html#the-requisite-skill-set"><i class="fa fa-check"></i>The Requisite Skill Set</a></li>
+<li class="chapter" data-level="" data-path="what-is-data-scientist.html"><a href="what-is-data-scientist.html#how-to-become-a-data-scientist"><i class="fa fa-check"></i>How to Become a Data Scientist?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="process.html"><a href="process.html"><i class="fa fa-check"></i><b>1.3</b> Process of Doing Data Science</a><ul>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#step1"><i class="fa fa-check"></i>Step 1: Understand the Problem - Define Objectives</a></li>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#step2"><i class="fa fa-check"></i>Step 2: Understand Data - Knowing your Raw Materials</a></li>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#preprocess"><i class="fa fa-check"></i>Step 3: Data Preprocessing - Get your Data Ready</a></li>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#analyse"><i class="fa fa-check"></i>Step 4: Data Analyese - Building Models</a></li>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#step-5-results-interpretation-and-evaluation"><i class="fa fa-check"></i>Step 5: Results Interpretation and Evaluation</a></li>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#step-6-data-report-and-communication"><i class="fa fa-check"></i>Step 6: Data Report and Communication</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html"><i class="fa fa-check"></i><b>1.4</b> Tools used in Doing a Data Science Project</a><ul>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#r"><i class="fa fa-check"></i>R</a></li>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#python"><i class="fa fa-check"></i>Python</a></li>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#sql"><i class="fa fa-check"></i>SQL</a></li>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#hadoop"><i class="fa fa-check"></i>Hadoop</a></li>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#tableau"><i class="fa fa-check"></i>Tableau</a></li>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#weka"><i class="fa fa-check"></i>Weka</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html"><i class="fa fa-check"></i><b>1.5</b> Applications of Data Science</a><ul>
+<li class="chapter" data-level="" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html#data-science-in-healthcare"><i class="fa fa-check"></i>Data Science in Healthcare</a></li>
+<li class="chapter" data-level="" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html#data-science-in-e-commerce"><i class="fa fa-check"></i>Data Science in E-commerce</a></li>
+<li class="chapter" data-level="" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html#data-science-in-manufacturing"><i class="fa fa-check"></i>Data Science in Manufacturing</a></li>
+<li class="chapter" data-level="" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html#data-science-as-conversational-agents"><i class="fa fa-check"></i>Data Science as Conversational Agents</a></li>
+<li class="chapter" data-level="" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html#data-science-in-transport"><i class="fa fa-check"></i>Data Science in Transport</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="data-science-related-terms.html"><a href="data-science-related-terms.html"><i class="fa fa-check"></i><b>1.6</b> Data Science Related Terms</a><ul>
+<li class="chapter" data-level="" data-path="data-science-related-terms.html"><a href="data-science-related-terms.html#dataanalyst-and-data-scientist"><i class="fa fa-check"></i>DataAnalyst and Data Scientist</a></li>
+<li class="chapter" data-level="" data-path="data-science-related-terms.html"><a href="data-science-related-terms.html#machine-learning-and-data-science"><i class="fa fa-check"></i>Machine Learning and Data Science</a></li>
+<li class="chapter" data-level="" data-path="data-science-related-terms.html"><a href="data-science-related-terms.html#data-mining-and-data-science"><i class="fa fa-check"></i>Data Mining and Data Science</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises.html"><a href="exercises.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="tools.html"><a href="tools.html"><i class="fa fa-check"></i><b>2</b> Get Your Tools Ready</a><ul>
+<li class="chapter" data-level="2.1" data-path="brief-introductiuon-about-r-and-rstudio.html"><a href="brief-introductiuon-about-r-and-rstudio.html"><i class="fa fa-check"></i><b>2.1</b> Brief introductiuon about R and RStudio</a><ul>
+<li class="chapter" data-level="" data-path="brief-introductiuon-about-r-and-rstudio.html"><a href="brief-introductiuon-about-r-and-rstudio.html#features-of-r-programming"><i class="fa fa-check"></i>Features of R Programming</a></li>
+<li class="chapter" data-level="" data-path="brief-introductiuon-about-r-and-rstudio.html"><a href="brief-introductiuon-about-r-and-rstudio.html#r-scripts"><i class="fa fa-check"></i>R Scripts</a></li>
+<li class="chapter" data-level="" data-path="brief-introductiuon-about-r-and-rstudio.html"><a href="brief-introductiuon-about-r-and-rstudio.html#r-graphical-user-interface-rgui"><i class="fa fa-check"></i>R Graphical User Interface (RGui)</a></li>
+<li class="chapter" data-level="" data-path="brief-introductiuon-about-r-and-rstudio.html"><a href="brief-introductiuon-about-r-and-rstudio.html#rstudio"><i class="fa fa-check"></i>RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="downlaod-and-install-r-and-rstudio.html"><a href="downlaod-and-install-r-and-rstudio.html"><i class="fa fa-check"></i><b>2.2</b> Downlaod and Install R and RStudio</a><ul>
+<li class="chapter" data-level="" data-path="downlaod-and-install-r-and-rstudio.html"><a href="downlaod-and-install-r-and-rstudio.html#r-download-and-installation"><i class="fa fa-check"></i>R Download and Installation</a></li>
+<li class="chapter" data-level="" data-path="downlaod-and-install-r-and-rstudio.html"><a href="downlaod-and-install-r-and-rstudio.html#rstudio-download-and-installation"><i class="fa fa-check"></i>RStudio Download and Installation</a></li>
+<li class="chapter" data-level="" data-path="downlaod-and-install-r-and-rstudio.html"><a href="downlaod-and-install-r-and-rstudio.html#familiar-with-rstudio-interface"><i class="fa fa-check"></i>Familiar with RStudio interface</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="bootsup-your-rstudio.html"><a href="bootsup-your-rstudio.html"><i class="fa fa-check"></i><b>2.3</b> Bootsup your RStudio</a></li>
+<li class="chapter" data-level="2.4" data-path="instructions.html"><a href="instructions.html"><i class="fa fa-check"></i><b>2.4</b> Instructions</a><ul>
+<li class="chapter" data-level="" data-path="instructions.html"><a href="instructions.html#code"><i class="fa fa-check"></i>Code</a></li>
+<li class="chapter" data-level="" data-path="instructions.html"><a href="instructions.html#tips"><i class="fa fa-check"></i>Tips</a></li>
+<li class="chapter" data-level="" data-path="instructions.html"><a href="instructions.html#actions"><i class="fa fa-check"></i>Actions</a></li>
+<li class="chapter" data-level="" data-path="instructions.html"><a href="instructions.html#exercise"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="exercises-1.html"><a href="exercises-1.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="prob.html"><a href="prob.html"><i class="fa fa-check"></i><b>3</b> Understand Problem</a><ul>
+<li class="chapter" data-level="3.1" data-path="Competion.html"><a href="Competion.html"><i class="fa fa-check"></i><b>3.1</b> Kaggle Competion</a></li>
+<li class="chapter" data-level="3.2" data-path="titianic-at-kaggel.html"><a href="titianic-at-kaggel.html"><i class="fa fa-check"></i><b>3.2</b> Titianic at Kaggel</a></li>
+<li class="chapter" data-level="3.3" data-path="the-titanic-problem.html"><a href="the-titanic-problem.html"><i class="fa fa-check"></i><b>3.3</b> The Titanic Problem</a><ul>
+<li class="chapter" data-level="" data-path="the-titanic-problem.html"><a href="the-titanic-problem.html#the-challenge"><i class="fa fa-check"></i>The Challenge</a></li>
+<li class="chapter" data-level="" data-path="the-titanic-problem.html"><a href="the-titanic-problem.html#the-data"><i class="fa fa-check"></i>The Data</a></li>
+<li class="chapter" data-level="" data-path="the-titanic-problem.html"><a href="the-titanic-problem.html#the-submission"><i class="fa fa-check"></i>The Submission</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="summary-1.html"><a href="summary-1.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-2.html"><a href="exercises-2.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="understand-data.html"><a href="understand-data.html"><i class="fa fa-check"></i><b>4</b> Understand Data</a><ul>
+<li class="chapter" data-level="4.1" data-path="load-data.html"><a href="load-data.html"><i class="fa fa-check"></i><b>4.1</b> Load Data</a></li>
+<li class="chapter" data-level="4.2" data-path="assess-data-quantity.html"><a href="assess-data-quantity.html"><i class="fa fa-check"></i><b>4.2</b> Assess Data Quantity</a></li>
+<li class="chapter" data-level="4.3" data-path="general-data-attributes-assessment.html"><a href="general-data-attributes-assessment.html"><i class="fa fa-check"></i><b>4.3</b> General Data Attributes Assessment</a></li>
+<li class="chapter" data-level="4.4" data-path="actual-attributes-types-examination.html"><a href="actual-attributes-types-examination.html"><i class="fa fa-check"></i><b>4.4</b> Actual Attributes Types Examination</a></li>
+<li class="chapter" data-level="4.5" data-path="attvalue.html"><a href="attvalue.html"><i class="fa fa-check"></i><b>4.5</b> Actual Data Attributes Value Examination</a><ul>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#passengerid"><i class="fa fa-check"></i>PassengerID</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#survive"><i class="fa fa-check"></i>Survived</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#pclass"><i class="fa fa-check"></i>Pclass</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#name"><i class="fa fa-check"></i>Name</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#sex"><i class="fa fa-check"></i>Sex</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#age"><i class="fa fa-check"></i>Age</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#sibsp"><i class="fa fa-check"></i>SibSp</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#parch"><i class="fa fa-check"></i>Parch</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#ticket"><i class="fa fa-check"></i>Ticket</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#fare"><i class="fa fa-check"></i>Fare</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#cabin"><i class="fa fa-check"></i>Cabin</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#embarkded"><i class="fa fa-check"></i>Embarkded</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="data-recods-level-assessment.html"><a href="data-recods-level-assessment.html"><i class="fa fa-check"></i><b>4.6</b> Data Recods Level Assessment</a></li>
+<li class="chapter" data-level="" data-path="summary-2.html"><a href="summary-2.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-3.html"><a href="exercises-3.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="data-preparasion.html"><a href="data-preparasion.html"><i class="fa fa-check"></i><b>5</b> Data Preparasion</a><ul>
+<li class="chapter" data-level="5.1" data-path="general-data-prepartion-tasks.html"><a href="general-data-prepartion-tasks.html"><i class="fa fa-check"></i><b>5.1</b> General Data Prepartion Tasks</a></li>
+<li class="chapter" data-level="5.2" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html"><i class="fa fa-check"></i><b>5.2</b> Dealt with Miss Values</a><ul>
+<li class="chapter" data-level="" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html#cabin-attribute"><i class="fa fa-check"></i>Cabin Attribute</a></li>
+<li class="chapter" data-level="" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html#age-attribute"><i class="fa fa-check"></i>Age Attribute</a></li>
+<li class="chapter" data-level="" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html#fare-attribute"><i class="fa fa-check"></i>Fare Attribute</a></li>
+<li class="chapter" data-level="" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html#Embarked"><i class="fa fa-check"></i>Embarked Attribute</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html"><i class="fa fa-check"></i><b>5.3</b> Attribute Re-engineering</a><ul>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#title-from-name-attribute"><i class="fa fa-check"></i>Title from Name attribute</a></li>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#deck-from-cabin-attribute"><i class="fa fa-check"></i>Deck from Cabin attribute</a></li>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#extract-ticket-class-from-ticket-number"><i class="fa fa-check"></i>Extract ticket class from ticket number</a></li>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#travel-in-groups"><i class="fa fa-check"></i>Travel in Groups</a></li>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#age-in-groups"><i class="fa fa-check"></i>Age in Groups</a></li>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#farepp"><i class="fa fa-check"></i>Fare per passenger</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="build-re-engineered-dataset.html"><a href="build-re-engineered-dataset.html"><i class="fa fa-check"></i><b>5.4</b> Build Re-engineered Dataset</a></li>
+<li class="chapter" data-level="" data-path="summary-3.html"><a href="summary-3.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-4.html"><a href="exercises-4.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>6</b> Data Analysis</a><ul>
+<li class="chapter" data-level="6.1" data-path="predictive-data-analysis-pda.html"><a href="predictive-data-analysis-pda.html"><i class="fa fa-check"></i><b>6.1</b> Predictive Data Analysis (PDA)</a></li>
+<li class="chapter" data-level="6.2" data-path="process-of-predcitive-data-analysis.html"><a href="process-of-predcitive-data-analysis.html"><i class="fa fa-check"></i><b>6.2</b> Process of Predcitive Data Analysis</a><ul>
+<li class="chapter" data-level="" data-path="process-of-predcitive-data-analysis.html"><a href="process-of-predcitive-data-analysis.html#predictor-selection"><i class="fa fa-check"></i>Predictor Selection</a></li>
+<li class="chapter" data-level="" data-path="process-of-predcitive-data-analysis.html"><a href="process-of-predcitive-data-analysis.html#model-construction"><i class="fa fa-check"></i>Model Construction</a></li>
+<li class="chapter" data-level="" data-path="process-of-predcitive-data-analysis.html"><a href="process-of-predcitive-data-analysis.html#model-validation"><i class="fa fa-check"></i>Model Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="classification-as-a-specific-prediction.html"><a href="classification-as-a-specific-prediction.html"><i class="fa fa-check"></i><b>6.3</b> Classification as A Specific Prediction</a></li>
+<li class="chapter" data-level="" data-path="summary-4.html"><a href="summary-4.html"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="predictor-selection-1.html"><a href="predictor-selection-1.html"><i class="fa fa-check"></i><b>7</b> Predictor Selection</a><ul>
+<li class="chapter" data-level="7.1" data-path="predictor-selection-pricinples.html"><a href="predictor-selection-pricinples.html"><i class="fa fa-check"></i><b>7.1</b> Predictor Selection Pricinples</a></li>
+<li class="chapter" data-level="7.2" data-path="attributes-analysis.html"><a href="attributes-analysis.html"><i class="fa fa-check"></i><b>7.2</b> Attributes Analysis</a></li>
+<li class="chapter" data-level="7.3" data-path="attributes-correlation-analysis.html"><a href="attributes-correlation-analysis.html"><i class="fa fa-check"></i><b>7.3</b> Attributes Correlation Analysis</a></li>
+<li class="chapter" data-level="7.4" data-path="pca-analysis.html"><a href="pca-analysis.html"><i class="fa fa-check"></i><b>7.4</b> PCA Analysis</a></li>
+<li class="chapter" data-level="" data-path="summary-5.html"><a href="summary-5.html"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="prediction-with-decision-trees.html"><a href="prediction-with-decision-trees.html"><i class="fa fa-check"></i><b>8</b> Prediction with Decision Trees</a><ul>
+<li class="chapter" data-level="8.1" data-path="decision-tree-in-hunts-algorithm.html"><a href="decision-tree-in-hunts-algorithm.html"><i class="fa fa-check"></i><b>8.1</b> Decision Tree in Hunt’s Algorithm</a><ul>
+<li class="chapter" data-level="" data-path="decision-tree-in-hunts-algorithm.html"><a href="decision-tree-in-hunts-algorithm.html#test_condition"><i class="fa fa-check"></i>How to Form a Test Condition?</a></li>
+<li class="chapter" data-level="" data-path="decision-tree-in-hunts-algorithm.html"><a href="decision-tree-in-hunts-algorithm.html#best_split"><i class="fa fa-check"></i>How to Determine the Best Split Condition?</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="the-simplest-decision-tree-for-titanic.html"><a href="the-simplest-decision-tree-for-titanic.html"><i class="fa fa-check"></i><b>8.2</b> The Simplest Decision Tree for Titanic</a></li>
+<li class="chapter" data-level="8.3" data-path="the-decision-tree-with-core-predictors.html"><a href="the-decision-tree-with-core-predictors.html"><i class="fa fa-check"></i><b>8.3</b> The Decision Tree with Core Predictors</a></li>
+<li class="chapter" data-level="8.4" data-path="the-decision-tree-with-more-predictors.html"><a href="the-decision-tree-with-more-predictors.html"><i class="fa fa-check"></i><b>8.4</b> The Decision Tree with More Predictors</a></li>
+<li class="chapter" data-level="8.5" data-path="the-decision-tree-with-full-predictors.html"><a href="the-decision-tree-with-full-predictors.html"><i class="fa fa-check"></i><b>8.5</b> The Decision Tree with Full Predictors</a></li>
+<li class="chapter" data-level="" data-path="summary-6.html"><a href="summary-6.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-5.html"><a href="exercises-5.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="titiannic-prediction-with-random-forest.html"><a href="titiannic-prediction-with-random-forest.html"><i class="fa fa-check"></i><b>9</b> Titiannic Prediction with Random Forest</a><ul>
+<li class="chapter" data-level="9.1" data-path="steps-to-build-a-random-forest.html"><a href="steps-to-build-a-random-forest.html"><i class="fa fa-check"></i><b>9.1</b> Steps to Build a Random Forest</a></li>
+<li class="chapter" data-level="9.2" data-path="random-forest-with-key-predictors.html"><a href="random-forest-with-key-predictors.html"><i class="fa fa-check"></i><b>9.2</b> Random Forest with Key Predictors</a></li>
+<li class="chapter" data-level="9.3" data-path="random-forest-with-more-variables.html"><a href="random-forest-with-more-variables.html"><i class="fa fa-check"></i><b>9.3</b> Random Forest with More Variables</a></li>
+<li class="chapter" data-level="9.4" data-path="random-forest-with-all-variables.html"><a href="random-forest-with-all-variables.html"><i class="fa fa-check"></i><b>9.4</b> Random Forest with All Variables</a></li>
+<li class="chapter" data-level="9.5" data-path="comparision-the-three-random-forest-models.html"><a href="comparision-the-three-random-forest-models.html"><i class="fa fa-check"></i><b>9.5</b> Comparision the Three Random Forest Models</a></li>
+<li class="chapter" data-level="" data-path="summary-7.html"><a href="summary-7.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-6.html"><a href="exercises-6.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="model-cross-validation.html"><a href="model-cross-validation.html"><i class="fa fa-check"></i><b>10</b> Model Cross Validation</a><ul>
+<li class="chapter" data-level="10.1" data-path="models-underfitting-and-overfitting.html"><a href="models-underfitting-and-overfitting.html"><i class="fa fa-check"></i><b>10.1</b> Model’s Underfitting and Overfitting</a></li>
+<li class="chapter" data-level="10.2" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html"><i class="fa fa-check"></i><b>10.2</b> General Cross Validation Methods</a><ul>
+<li class="chapter" data-level="" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html#single-model-cross-validation"><i class="fa fa-check"></i>Single Model Cross Validation</a></li>
+<li class="chapter" data-level="" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html#general-procedure-of-cv"><i class="fa fa-check"></i>General Procedure of CV</a></li>
+<li class="chapter" data-level="" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html#cross-validation-on-decision-tree-models"><i class="fa fa-check"></i>Cross Validation on Decision Tree Models</a></li>
+<li class="chapter" data-level="" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html#cross-validation-on-random-forest-models"><i class="fa fa-check"></i>Cross Validation on Random Forest Models</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html"><i class="fa fa-check"></i><b>10.3</b> Multiple Models Comparison</a><ul>
+<li class="chapter" data-level="" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#regression-model-for-titanic"><i class="fa fa-check"></i>Regression Model for Titanic</a></li>
+<li class="chapter" data-level="" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#support-vector-machine-model-for-titanic"><i class="fa fa-check"></i>Support Vector Machine Model for Titanic</a></li>
+<li class="chapter" data-level="" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#neural-network-models"><i class="fa fa-check"></i>Neural Network Models</a></li>
+<li class="chapter" data-level="" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#comparision-among-different-models"><i class="fa fa-check"></i>Comparision among Different Models</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="summary-8.html"><a href="summary-8.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-7.html"><a href="exercises-7.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="fine-tune-models.html"><a href="fine-tune-models.html"><i class="fa fa-check"></i><b>11</b> Fine Tune Models</a><ul>
+<li class="chapter" data-level="11.1" data-path="tuning-a-models-predictor.html"><a href="tuning-a-models-predictor.html"><i class="fa fa-check"></i><b>11.1</b> Tuning a model’s Predictor</a></li>
+<li class="chapter" data-level="11.2" data-path="tuning-training-data-samples.html"><a href="tuning-training-data-samples.html"><i class="fa fa-check"></i><b>11.2</b> Tuning Training Data Samples</a><ul>
+<li class="chapter" data-level="" data-path="tuning-training-data-samples.html"><a href="tuning-training-data-samples.html#set-prediction-accuracy-benchmark"><i class="fa fa-check"></i>Set Prediction Accuracy Benchmark</a></li>
+<li class="chapter" data-level="" data-path="tuning-training-data-samples.html"><a href="tuning-training-data-samples.html#folds-cv-repeat-10-times"><i class="fa fa-check"></i>10 Folds CV Repeat 10 Times</a></li>
+<li class="chapter" data-level="" data-path="tuning-training-data-samples.html"><a href="tuning-training-data-samples.html#folds-cv-repeat-10-times-1"><i class="fa fa-check"></i>5 Folds CV Repeat 10 Times</a></li>
+<li class="chapter" data-level="" data-path="tuning-training-data-samples.html"><a href="tuning-training-data-samples.html#folds-cv-repeat-10-times-2"><i class="fa fa-check"></i>3 Folds CV Repeat 10 Times</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="tuning-models-parameters.html"><a href="tuning-models-parameters.html"><i class="fa fa-check"></i><b>11.3</b> Tuning Model’s Parameters</a><ul>
+<li class="chapter" data-level="" data-path="tuning-models-parameters.html"><a href="tuning-models-parameters.html#random-search"><i class="fa fa-check"></i>Random Search</a></li>
+<li class="chapter" data-level="" data-path="tuning-models-parameters.html"><a href="tuning-models-parameters.html#grid-search"><i class="fa fa-check"></i>Grid Search</a></li>
+<li class="chapter" data-level="" data-path="tuning-models-parameters.html"><a href="tuning-models-parameters.html#manual-search"><i class="fa fa-check"></i>Manual Search</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="summary-9.html"><a href="summary-9.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-8.html"><a href="exercises-8.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="report.html"><a href="report.html"><i class="fa fa-check"></i><b>12</b> Report</a><ul>
+<li class="chapter" data-level="12.1" data-path="content-of-report.html"><a href="content-of-report.html"><i class="fa fa-check"></i><b>12.1</b> Content of Report</a></li>
+<li class="chapter" data-level="12.2" data-path="result-explainition.html"><a href="result-explainition.html"><i class="fa fa-check"></i><b>12.2</b> Result Explainition</a></li>
+<li class="chapter" data-level="12.3" data-path="model-interpretation.html"><a href="model-interpretation.html"><i class="fa fa-check"></i><b>12.3</b> Model Interpretation</a><ul>
+<li class="chapter" data-level="" data-path="model-interpretation.html"><a href="model-interpretation.html#models-performance-measure"><i class="fa fa-check"></i>Model’s Performance Measure</a></li>
+<li class="chapter" data-level="" data-path="model-interpretation.html"><a href="model-interpretation.html#visualise-models-prediction"><i class="fa fa-check"></i>Visualise Model’s Prediction</a></li>
+<li class="chapter" data-level="" data-path="model-interpretation.html"><a href="model-interpretation.html#importance-of-the-models-predictors"><i class="fa fa-check"></i>Importance of the Model’s Predictors</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="further-analysis.html"><a href="further-analysis.html"><i class="fa fa-check"></i><b>12.4</b> Further Analysis</a></li>
+<li class="chapter" data-level="" data-path="summary-10.html"><a href="summary-10.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-9.html"><a href="exercises-9.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix-apendix-the-r-code-of-the-entire-project.html"><a href="appendix-apendix-the-r-code-of-the-entire-project.html"><i class="fa fa-check"></i>(APPENDIX) Apendix: The R code of the entire project</a><ul>
+<li class="chapter" data-level="" data-path="titanicdataanalysis1-understand-data-r.html"><a href="titanicdataanalysis1-understand-data-r.html"><i class="fa fa-check"></i>TitanicDataAnalysis1_Understand_Data.R</a></li>
+<li class="chapter" data-level="" data-path="titanicdataanalysis2-datapreprocess-r.html"><a href="titanicdataanalysis2-datapreprocess-r.html"><i class="fa fa-check"></i>TitanicDataAnalysis2_Data+Preprocess.R</a></li>
+<li class="chapter" data-level="" data-path="titanicdataanalysis3-model-construction-r.html"><a href="titanicdataanalysis3-model-construction-r.html"><i class="fa fa-check"></i>TitanicDataAnalysis3_Model_Construction.R</a></li>
+<li class="chapter" data-level="" data-path="titanicdataanalysis4-model-cross-validation-r.html"><a href="titanicdataanalysis4-model-cross-validation-r.html"><i class="fa fa-check"></i>TitanicDataAnalysis4_Model_Cross_Validation.R</a></li>
+<li class="chapter" data-level="" data-path="titanicdataanalysis5-model-fine-tune-r.html"><a href="titanicdataanalysis5-model-fine-tune-r.html"><i class="fa fa-check"></i>TitanicDataAnalysis5_Model_Fine_Tune.R</a></li>
+<li class="chapter" data-level="" data-path="titanicdataanalysis6-analyse-report-r.html"><a href="titanicdataanalysis6-analyse-report-r.html"><i class="fa fa-check"></i>TitanicDataAnalysis6_Analyse_Report.R</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Do A Data Science Project in 10 Days</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="decision-tree-in-hunts-algorithm" class="section level2">
+<h2><span class="header-section-number">8.1</span> Decision Tree in Hunt’s Algorithm</h2>
+<p>Hunt’s algorithm builds a decision tree in a recursive fashion by partitioning the training dataset into successively <em>purer</em> subsets. Hunt’s algorithm takes three input values:</p>
+<ol style="list-style-type: decimal">
+<li>A training dataset, <span class="math inline">\(D\)</span> with a number of attributes,</li>
+<li>A subset of attributes <span class="math inline">\(Att_{list}\)</span> and its testing criterion together to form a <code>'test condition'</code>, such as <code>'age&gt;=25'</code> is a test condition, where, <code>'age'</code> is the attribute and <code>'&gt;=25'</code> is the test criterion.</li>
+<li>A <code>Attribute_selection_method</code>, it refers a procedure to determine the best splitting.</li>
+</ol>
+<p>The general recursive procedure is defined as below <span class="citation">(Pang-Ning Tan <a href="#ref-Tan2005" role="doc-biblioref">2005</a>)</span>:</p>
+<ol style="list-style-type: decimal">
+<li>Create a node <span class="math inline">\(N\)</span>, suppose the training dataset when reach to note <span class="math inline">\(N\)</span> is <span class="math inline">\(D_{N}\)</span>. Initially, <span class="math inline">\(D_{N}\)</span> is the entire training set <span class="math inline">\(D\)</span>. Do the following:</li>
+<li>If <span class="math inline">\(D_{t}\)</span> contains records that belong the same class <span class="math inline">\(y_{t}\)</span>, then <span class="math inline">\(t\)</span> is a leaf node labelled as <span class="math inline">\(y_{t}\)</span>;</li>
+<li>If <span class="math inline">\(D_{t}\)</span> is not an empty set but <span class="math inline">\(Att_{list}\)</span> is empty, (there is no more test attributes left untested), then <span class="math inline">\(t\)</span> is a leaf node labelled by the label of the majority records in the dataset;</li>
+<li>If <span class="math inline">\(D_{t}\)</span> contains records that belong to more than one class and <span class="math inline">\(Att_{list}\)</span> is not empty, use <code>Attribute_selection_method</code> to choose next <strong>best attribute</strong> from the <span class="math inline">\(Att_{list}\)</span> and remove that list from <span class="math inline">\(Att_{list}\)</span>. use the attribute and its condition as next test condition.</li>
+<li>Repeat steps 2,3 and 4 until all the records in the subset belong to the same class.</li>
+</ol>
+<p>There are two fundamental problems that need to be sorted before Hunt’s algorithm can work:</p>
+<ol style="list-style-type: decimal">
+<li>How to form a ‘test condition’? particularly when non-binary attributes exist?</li>
+<li>How to define the ‘best test conditions’, so very loop the best test condition can be used in a decision tree?</li>
+</ol>
+<div id="test_condition" class="section level3 unnumbered">
+<h3>How to Form a Test Condition?</h3>
+<p>Decision tree algorithms must provide a method for expressing a test condition and its corresponding outcomes for different attribute types.</p>
+<ol style="list-style-type: decimal">
+<li>Binary Attributes. The test condition for a binary attribute is simple because it only generates two potential outcomes, as shown in figure <a href="decision-tree-in-hunts-algorithm.html#fig:sex">8.2</a>.</li>
+</ol>
+<div class="figure" style="text-align: center"><span id="fig:sex"></span>
+<img src="images/Sex.PNG" alt="Test condition for binary attributes." width="50%" />
+<p class="caption">
+Figure 8.2: Test condition for binary attributes.
+</p>
+</div>
+<ol start="2" style="list-style-type: decimal">
+<li>No-binary attributes. No-binary attributes depend on the types of nominal or ordinal, it can have different ways of the split. A nominal attribute can have many values, its test condition can be expressed in two ways, as shown in Figure <a href="decision-tree-in-hunts-algorithm.html#fig:age2">8.3</a>. For a multiway split, see Figure <a href="decision-tree-in-hunts-algorithm.html#fig:age2">8.3</a>(a), the number of outcomes depends on the number of distinct values for the corresponding attribute. For example, if an attribute such as age has three distinct values: youth, m_aged, or senior. Its test condition will produce a three-way split or a binary split. Figure <a href="decision-tree-in-hunts-algorithm.html#fig:age2">8.3</a>(b) illustrates three different ways of grouping the attribute values for age into two subsets.</li>
+</ol>
+<img src="images/age1.PNG" width="50%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center"><span id="fig:age2"></span>
+<img src="images/age2.PNG" alt="Test condition for no-binary attributes." width="100%" />
+<p class="caption">
+Figure 8.3: Test condition for no-binary attributes.
+</p>
+</div>
+<ol start="3" style="list-style-type: decimal">
+<li>Continuous Attributes. For continuous attributes, the test condition can be constructed as a comparison test <span class="math inline">\((A&lt;v)\)</span> or <span class="math inline">\((A≥v)\)</span> with binary outcomes, or a range query with outcomes of the form <span class="math inline">\(v_i≤A&lt;v_{i+1}\)</span>, For <span class="math inline">\(i=1,…,k\)</span>. The difference between these approaches is shown in Figure <a href="decision-tree-in-hunts-algorithm.html#fig:fare">8.4</a>. For the binary case, the decision tree algorithm must consider all possible split positions v, and it selects the one that produces the best partition. For the multiway split, the algorithm must consider all possible ranges of continuous values.</li>
+</ol>
+<div class="figure" style="text-align: center"><span id="fig:fare"></span>
+<img src="images/Fare.PNG" alt="Test condition for continuous attributes." width="100%" />
+<p class="caption">
+Figure 8.4: Test condition for continuous attributes.
+</p>
+</div>
+</div>
+<div id="best_split" class="section level3 unnumbered">
+<h3>How to Determine the Best Split Condition?</h3>
+<p>The method used to define the best split makes different decision tree algorithms. There are many measures that can be used to determine the best way to split the records. These measures are defined in terms of the class distribution of the records before and after splitting. The best splitting is the one that has more <em>purity</em> after the splitting. If we were to split <span class="math inline">\(D\)</span> into smaller partitions according to the outcomes of the splitting criterion, ideally each partition after splitting would be pure (i.e., all the records that fall into a given partition would belong to the same class). Instead of defining a split’s purity, the impurity of its child node is used. There are a number of commonly used impurity measurements: <em>Entropy</em>, <em>Gini Index</em> and <em>Classification Error</em>.</p>
+<p><strong>Entropy:</strong> measures the degree of uncertainty, impurity, or disorder. The formula for calculate entropy is as shown below:</p>
+<p><span class="math display" id="eq:entropy">\[\begin{equation} 
+E(x)= ∑_{i=1}^{n}p_ilog_2(p_i),
+  \tag{8.1}
+\end{equation}\]</span></p>
+<p>Where <span class="math inline">\(p\)</span> represents the probability and <span class="math inline">\(E(x)\)</span> represents the entropy.</p>
+<p><strong>Gini Index:</strong> also called Gini impurity, measures the degree of probability of a particular variable being incorrectly classified when it is chosen randomly. The degree of the Gini index varies between zero and one, where zero denotes that all elements belong to a certain class or only one class exists, and one denotes that the elements are randomly distributed across various classes. A Gini index of 0.5 denotes equally distributed elements into some classes.</p>
+<p>The formula used to calculate <em>Gini</em> index is shown below:</p>
+<p><span class="math display" id="eq:Gini">\[\begin{equation} 
+GINI(x) = 1- ∑_{i=1}^{n}p_i^2,
+  \tag{8.2}
+\end{equation}\]</span></p>
+<p>Where <span class="math inline">\(p_i\)</span> is the probability of an object being classified to a particular class.</p>
+<p><strong>Classification Error</strong> measures the misclassified class labels. It is calculated with the formula shows below:
+<span class="math display" id="eq:clerror">\[\begin{equation} 
+Classification error(x)= 1 - max_{i}p_i.
+  \tag{8.3}
+\end{equation}\]</span></p>
+<p>Among these three impurity measurements, <em>Gini</em> is Used by the CART (classification and regression tree) algorithm for classification trees, and <em>Entropy</em> is Used by the ID3, C4.5, and C5.0 tree-generation algorithms.</p>
+<p>With the above explanation, we can now say that the aims of a decision tree algorithm are to reduce the Entropy level from the root to the leaves and the best tree is the one that takes order from the most to the least in reducing the Entropy level.</p>
+<p>The good news is that we do not need to calculate the impurity of each test condition to build a decision tree manually. Most tools have the tree construction built-in already. We will use the R package called <em>rpart</em> to build decision trees for our Titanic prediction problem.</p>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Tan2005">
+<p>Pang-Ning Tan, Vipin Kumar, Michael Steinbach. 2005. <em>Introduction to Data Mining</em>. 1st ed. Addison Wesley.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="prediction-with-decision-trees.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="the-simplest-decision-tree-for-titanic.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": true,
+"twitter": true,
+"linkedin": true,
+"weibo": true,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+},
+"search": true,
+"info": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

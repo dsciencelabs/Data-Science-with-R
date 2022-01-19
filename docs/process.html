@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1.3 Process of Doing Data Science | Do A Data Science Project in 10 Days</title>
+  <meta name="description" content="This is a data science project practice book. It was initially written for my Big Data course to help students to run a quick data analytical project and to understand 1. the data analytical process, the typical tasks and the methods, techniques and the algorithms need to accomplish these tasks. During convid19, the unicersity has adopted on-line teaching. So the students can not access to the university labs and HPC facilities. Gaining an experience of doing a data science project becomes individual students self-learning in isolation. This book aimed to help them to read through it and follow instructions to complete the sample propject by themslef. However, it is required by many other students who want to know about data analytics, machine learning and particularly practical issues, to gain experience and confidence of doing data analysis. So it is aimed for beginners and have no much knowledge of data Science. the format for this book is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1.3 Process of Doing Data Science | Do A Data Science Project in 10 Days" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://bookdown.org/Do-Data-Science-in-10days/" />
+  <meta property="og:image" content="https://bookdown.org/Do-Data-Science-in-10days//images/cover.png" />
+  <meta property="og:description" content="This is a data science project practice book. It was initially written for my Big Data course to help students to run a quick data analytical project and to understand 1. the data analytical process, the typical tasks and the methods, techniques and the algorithms need to accomplish these tasks. During convid19, the unicersity has adopted on-line teaching. So the students can not access to the university labs and HPC facilities. Gaining an experience of doing a data science project becomes individual students self-learning in isolation. This book aimed to help them to read through it and follow instructions to complete the sample propject by themslef. However, it is required by many other students who want to know about data analytics, machine learning and particularly practical issues, to gain experience and confidence of doing data analysis. So it is aimed for beginners and have no much knowledge of data Science. the format for this book is bookdown::gitbook." />
+  <meta name="github-repo" content="GangminLi/Do-Data-Science-with-R" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1.3 Process of Doing Data Science | Do A Data Science Project in 10 Days" />
+  
+  <meta name="twitter:description" content="This is a data science project practice book. It was initially written for my Big Data course to help students to run a quick data analytical project and to understand 1. the data analytical process, the typical tasks and the methods, techniques and the algorithms need to accomplish these tasks. During convid19, the unicersity has adopted on-line teaching. So the students can not access to the university labs and HPC facilities. Gaining an experience of doing a data science project becomes individual students self-learning in isolation. This book aimed to help them to read through it and follow instructions to complete the sample propject by themslef. However, it is required by many other students who want to know about data analytics, machine learning and particularly practical issues, to gain experience and confidence of doing data analysis. So it is aimed for beginners and have no much knowledge of data Science. the format for this book is bookdown::gitbook." />
+  <meta name="twitter:image" content="https://bookdown.org/Do-Data-Science-in-10days//images/cover.png" />
+
+<meta name="author" content="Gangmin Li" />
+
+
+<meta name="date" content="2021-03-07" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="what-is-data-scientist.html"/>
+<link rel="next" href="tools-used-in-doing-a-data-science-project.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Do Data Science in 10 Days</a></li>
+
+<li class="divider"></li>
+<li><a href="index.html#section"></a>
+<ul>
+<li class="chapter" data-level="" data-path="what-is-this-book.html"><a href="what-is-this-book.html"><i class="fa fa-check"></i>What is This Book?</a></li>
+<li class="chapter" data-level="" data-path="structure-of-the-book.html"><a href="structure-of-the-book.html"><i class="fa fa-check"></i>Structure of the Book</a></li>
+<li class="chapter" data-level="" data-path="what-can-this-book-offer-you.html"><a href="what-can-this-book-offer-you.html"><i class="fa fa-check"></i>What Can This Book Offer You?</a></li>
+<li class="chapter" data-level="" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i>Notes</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="what-is-data-science.html"><a href="what-is-data-science.html"><i class="fa fa-check"></i><b>1.1</b> What is Data Science?</a>
+<ul>
+<li class="chapter" data-level="" data-path="what-is-data-science.html"><a href="what-is-data-science.html#data-science-as-discovery-of-data-insight"><i class="fa fa-check"></i>Data Science as Discovery of Data Insight</a></li>
+<li class="chapter" data-level="" data-path="what-is-data-science.html"><a href="what-is-data-science.html#data-science-as-development-of-data-product"><i class="fa fa-check"></i>Data Science as Development of Data Product</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="what-is-data-scientist.html"><a href="what-is-data-scientist.html"><i class="fa fa-check"></i><b>1.2</b> What is Data Scientist?</a>
+<ul>
+<li class="chapter" data-level="" data-path="what-is-data-scientist.html"><a href="what-is-data-scientist.html#the-requisite-skill-set"><i class="fa fa-check"></i>The Requisite Skill Set</a></li>
+<li class="chapter" data-level="" data-path="what-is-data-scientist.html"><a href="what-is-data-scientist.html#how-to-become-a-data-scientist"><i class="fa fa-check"></i>How to Become a Data Scientist?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="process.html"><a href="process.html"><i class="fa fa-check"></i><b>1.3</b> Process of Doing Data Science</a>
+<ul>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#step1"><i class="fa fa-check"></i>Step 1: Understand the Problem - Define Objectives</a></li>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#step2"><i class="fa fa-check"></i>Step 2: Understand Data - Knowing your Raw Materials</a></li>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#preprocess"><i class="fa fa-check"></i>Step 3: Data Preprocessing - Get your Data Ready</a></li>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#analyse"><i class="fa fa-check"></i>Step 4: Data Analyese - Building Models</a></li>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#step-5-results-interpretation-and-evaluation"><i class="fa fa-check"></i>Step 5: Results Interpretation and Evaluation</a></li>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#step-6-data-report-and-communication"><i class="fa fa-check"></i>Step 6: Data Report and Communication</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html"><i class="fa fa-check"></i><b>1.4</b> Tools used in Doing a Data Science Project</a>
+<ul>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#r"><i class="fa fa-check"></i>R</a></li>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#python"><i class="fa fa-check"></i>Python</a></li>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#sql"><i class="fa fa-check"></i>SQL</a></li>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#hadoop"><i class="fa fa-check"></i>Hadoop</a></li>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#tableau"><i class="fa fa-check"></i>Tableau</a></li>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#weka"><i class="fa fa-check"></i>Weka</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html"><i class="fa fa-check"></i><b>1.5</b> Applications of Data Science</a>
+<ul>
+<li class="chapter" data-level="" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html#data-science-in-healthcare"><i class="fa fa-check"></i>Data Science in Healthcare</a></li>
+<li class="chapter" data-level="" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html#data-science-in-e-commerce"><i class="fa fa-check"></i>Data Science in E-commerce</a></li>
+<li class="chapter" data-level="" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html#data-science-in-manufacturing"><i class="fa fa-check"></i>Data Science in Manufacturing</a></li>
+<li class="chapter" data-level="" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html#data-science-as-conversational-agents"><i class="fa fa-check"></i>Data Science as Conversational Agents</a></li>
+<li class="chapter" data-level="" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html#data-science-in-transport"><i class="fa fa-check"></i>Data Science in Transport</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="data-science-related-terms.html"><a href="data-science-related-terms.html"><i class="fa fa-check"></i><b>1.6</b> Data Science Related Terms</a>
+<ul>
+<li class="chapter" data-level="" data-path="data-science-related-terms.html"><a href="data-science-related-terms.html#dataanalyst-and-data-scientist"><i class="fa fa-check"></i>DataAnalyst and Data Scientist</a></li>
+<li class="chapter" data-level="" data-path="data-science-related-terms.html"><a href="data-science-related-terms.html#machine-learning-and-data-science"><i class="fa fa-check"></i>Machine Learning and Data Science</a></li>
+<li class="chapter" data-level="" data-path="data-science-related-terms.html"><a href="data-science-related-terms.html#data-mining-and-data-science"><i class="fa fa-check"></i>Data Mining and Data Science</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises.html"><a href="exercises.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="tools.html"><a href="tools.html"><i class="fa fa-check"></i><b>2</b> Get Your Tools Ready</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="brief-introductiuon-about-r-and-rstudio.html"><a href="brief-introductiuon-about-r-and-rstudio.html"><i class="fa fa-check"></i><b>2.1</b> Brief introductiuon about R and RStudio</a>
+<ul>
+<li class="chapter" data-level="" data-path="brief-introductiuon-about-r-and-rstudio.html"><a href="brief-introductiuon-about-r-and-rstudio.html#features-of-r-programming"><i class="fa fa-check"></i>Features of R Programming</a></li>
+<li class="chapter" data-level="" data-path="brief-introductiuon-about-r-and-rstudio.html"><a href="brief-introductiuon-about-r-and-rstudio.html#r-scripts"><i class="fa fa-check"></i>R Scripts</a></li>
+<li class="chapter" data-level="" data-path="brief-introductiuon-about-r-and-rstudio.html"><a href="brief-introductiuon-about-r-and-rstudio.html#r-graphical-user-interface-rgui"><i class="fa fa-check"></i>R Graphical User Interface (RGui)</a></li>
+<li class="chapter" data-level="" data-path="brief-introductiuon-about-r-and-rstudio.html"><a href="brief-introductiuon-about-r-and-rstudio.html#rstudio"><i class="fa fa-check"></i>RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="downlaod-and-install-r-and-rstudio.html"><a href="downlaod-and-install-r-and-rstudio.html"><i class="fa fa-check"></i><b>2.2</b> Downlaod and Install R and RStudio</a>
+<ul>
+<li class="chapter" data-level="" data-path="downlaod-and-install-r-and-rstudio.html"><a href="downlaod-and-install-r-and-rstudio.html#r-download-and-installation"><i class="fa fa-check"></i>R Download and Installation</a></li>
+<li class="chapter" data-level="" data-path="downlaod-and-install-r-and-rstudio.html"><a href="downlaod-and-install-r-and-rstudio.html#rstudio-download-and-installation"><i class="fa fa-check"></i>RStudio Download and Installation</a></li>
+<li class="chapter" data-level="" data-path="downlaod-and-install-r-and-rstudio.html"><a href="downlaod-and-install-r-and-rstudio.html#familiar-with-rstudio-interface"><i class="fa fa-check"></i>Familiar with RStudio interface</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="bootsup-your-rstudio.html"><a href="bootsup-your-rstudio.html"><i class="fa fa-check"></i><b>2.3</b> Bootsup your RStudio</a></li>
+<li class="chapter" data-level="2.4" data-path="instructions.html"><a href="instructions.html"><i class="fa fa-check"></i><b>2.4</b> Instructions</a>
+<ul>
+<li class="chapter" data-level="" data-path="instructions.html"><a href="instructions.html#code"><i class="fa fa-check"></i>Code</a></li>
+<li class="chapter" data-level="" data-path="instructions.html"><a href="instructions.html#tips"><i class="fa fa-check"></i>Tips</a></li>
+<li class="chapter" data-level="" data-path="instructions.html"><a href="instructions.html#actions"><i class="fa fa-check"></i>Actions</a></li>
+<li class="chapter" data-level="" data-path="instructions.html"><a href="instructions.html#exercise"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="exercises-1.html"><a href="exercises-1.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="prob.html"><a href="prob.html"><i class="fa fa-check"></i><b>3</b> Understand Problem</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="Competion.html"><a href="Competion.html"><i class="fa fa-check"></i><b>3.1</b> Kaggle Competion</a></li>
+<li class="chapter" data-level="3.2" data-path="titianic-at-kaggel.html"><a href="titianic-at-kaggel.html"><i class="fa fa-check"></i><b>3.2</b> Titianic at Kaggel</a></li>
+<li class="chapter" data-level="3.3" data-path="the-titanic-problem.html"><a href="the-titanic-problem.html"><i class="fa fa-check"></i><b>3.3</b> The Titanic Problem</a>
+<ul>
+<li class="chapter" data-level="" data-path="the-titanic-problem.html"><a href="the-titanic-problem.html#the-challenge"><i class="fa fa-check"></i>The Challenge</a></li>
+<li class="chapter" data-level="" data-path="the-titanic-problem.html"><a href="the-titanic-problem.html#the-data"><i class="fa fa-check"></i>The Data</a></li>
+<li class="chapter" data-level="" data-path="the-titanic-problem.html"><a href="the-titanic-problem.html#the-submission"><i class="fa fa-check"></i>The Submission</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="summary-1.html"><a href="summary-1.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-2.html"><a href="exercises-2.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="understand-data.html"><a href="understand-data.html"><i class="fa fa-check"></i><b>4</b> Understand Data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="load-data.html"><a href="load-data.html"><i class="fa fa-check"></i><b>4.1</b> Load Data</a></li>
+<li class="chapter" data-level="4.2" data-path="assess-data-quantity.html"><a href="assess-data-quantity.html"><i class="fa fa-check"></i><b>4.2</b> Assess Data Quantity</a></li>
+<li class="chapter" data-level="4.3" data-path="general-data-attributes-assessment.html"><a href="general-data-attributes-assessment.html"><i class="fa fa-check"></i><b>4.3</b> General Data Attributes Assessment</a></li>
+<li class="chapter" data-level="4.4" data-path="actual-attributes-types-examination.html"><a href="actual-attributes-types-examination.html"><i class="fa fa-check"></i><b>4.4</b> Actual Attributes Types Examination</a></li>
+<li class="chapter" data-level="4.5" data-path="attvalue.html"><a href="attvalue.html"><i class="fa fa-check"></i><b>4.5</b> Actual Data Attributes Value Examination</a>
+<ul>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#passengerid"><i class="fa fa-check"></i>PassengerID</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#survive"><i class="fa fa-check"></i>Survived</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#pclass"><i class="fa fa-check"></i>Pclass</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#name"><i class="fa fa-check"></i>Name</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#sex"><i class="fa fa-check"></i>Sex</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#age"><i class="fa fa-check"></i>Age</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#sibsp"><i class="fa fa-check"></i>SibSp</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#parch"><i class="fa fa-check"></i>Parch</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#ticket"><i class="fa fa-check"></i>Ticket</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#fare"><i class="fa fa-check"></i>Fare</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#cabin"><i class="fa fa-check"></i>Cabin</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#embarkded"><i class="fa fa-check"></i>Embarkded</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="data-recods-level-assessment.html"><a href="data-recods-level-assessment.html"><i class="fa fa-check"></i><b>4.6</b> Data Recods Level Assessment</a></li>
+<li class="chapter" data-level="" data-path="summary-2.html"><a href="summary-2.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-3.html"><a href="exercises-3.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="data-preparasion.html"><a href="data-preparasion.html"><i class="fa fa-check"></i><b>5</b> Data Preparasion</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="general-data-prepartion-tasks.html"><a href="general-data-prepartion-tasks.html"><i class="fa fa-check"></i><b>5.1</b> General Data Prepartion Tasks</a></li>
+<li class="chapter" data-level="5.2" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html"><i class="fa fa-check"></i><b>5.2</b> Dealt with Miss Values</a>
+<ul>
+<li class="chapter" data-level="" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html#cabin-attribute"><i class="fa fa-check"></i>Cabin Attribute</a></li>
+<li class="chapter" data-level="" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html#age-attribute"><i class="fa fa-check"></i>Age Attribute</a></li>
+<li class="chapter" data-level="" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html#fare-attribute"><i class="fa fa-check"></i>Fare Attribute</a></li>
+<li class="chapter" data-level="" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html#Embarked"><i class="fa fa-check"></i>Embarked Attribute</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html"><i class="fa fa-check"></i><b>5.3</b> Attribute Re-engineering</a>
+<ul>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#title-from-name-attribute"><i class="fa fa-check"></i>Title from Name attribute</a></li>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#deck-from-cabin-attribute"><i class="fa fa-check"></i>Deck from Cabin attribute</a></li>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#extract-ticket-class-from-ticket-number"><i class="fa fa-check"></i>Extract ticket class from ticket number</a></li>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#travel-in-groups"><i class="fa fa-check"></i>Travel in Groups</a></li>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#age-in-groups"><i class="fa fa-check"></i>Age in Groups</a></li>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#farepp"><i class="fa fa-check"></i>Fare per passenger</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="build-re-engineered-dataset.html"><a href="build-re-engineered-dataset.html"><i class="fa fa-check"></i><b>5.4</b> Build Re-engineered Dataset</a></li>
+<li class="chapter" data-level="" data-path="summary-3.html"><a href="summary-3.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-4.html"><a href="exercises-4.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>6</b> Data Analysis</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="predictive-data-analysis-pda.html"><a href="predictive-data-analysis-pda.html"><i class="fa fa-check"></i><b>6.1</b> Predictive Data Analysis (PDA)</a></li>
+<li class="chapter" data-level="6.2" data-path="process-of-predcitive-data-analysis.html"><a href="process-of-predcitive-data-analysis.html"><i class="fa fa-check"></i><b>6.2</b> Process of Predcitive Data Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="process-of-predcitive-data-analysis.html"><a href="process-of-predcitive-data-analysis.html#predictor-selection"><i class="fa fa-check"></i>Predictor Selection</a></li>
+<li class="chapter" data-level="" data-path="process-of-predcitive-data-analysis.html"><a href="process-of-predcitive-data-analysis.html#model-construction"><i class="fa fa-check"></i>Model Construction</a></li>
+<li class="chapter" data-level="" data-path="process-of-predcitive-data-analysis.html"><a href="process-of-predcitive-data-analysis.html#model-validation"><i class="fa fa-check"></i>Model Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="classification-as-a-specific-prediction.html"><a href="classification-as-a-specific-prediction.html"><i class="fa fa-check"></i><b>6.3</b> Classification as A Specific Prediction</a></li>
+<li class="chapter" data-level="" data-path="summary-4.html"><a href="summary-4.html"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="predictor-selection-1.html"><a href="predictor-selection-1.html"><i class="fa fa-check"></i><b>7</b> Predictor Selection</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="predictor-selection-pricinples.html"><a href="predictor-selection-pricinples.html"><i class="fa fa-check"></i><b>7.1</b> Predictor Selection Pricinples</a></li>
+<li class="chapter" data-level="7.2" data-path="attributes-analysis.html"><a href="attributes-analysis.html"><i class="fa fa-check"></i><b>7.2</b> Attributes Analysis</a></li>
+<li class="chapter" data-level="7.3" data-path="attributes-correlation-analysis.html"><a href="attributes-correlation-analysis.html"><i class="fa fa-check"></i><b>7.3</b> Attributes Correlation Analysis</a></li>
+<li class="chapter" data-level="7.4" data-path="pca-analysis.html"><a href="pca-analysis.html"><i class="fa fa-check"></i><b>7.4</b> PCA Analysis</a></li>
+<li class="chapter" data-level="" data-path="summary-5.html"><a href="summary-5.html"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="prediction-with-decision-trees.html"><a href="prediction-with-decision-trees.html"><i class="fa fa-check"></i><b>8</b> Prediction with Decision Trees</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="decision-tree-in-hunts-algorithm.html"><a href="decision-tree-in-hunts-algorithm.html"><i class="fa fa-check"></i><b>8.1</b> Decision Tree in Hunt’s Algorithm</a>
+<ul>
+<li class="chapter" data-level="" data-path="decision-tree-in-hunts-algorithm.html"><a href="decision-tree-in-hunts-algorithm.html#test_condition"><i class="fa fa-check"></i>How to Form a Test Condition?</a></li>
+<li class="chapter" data-level="" data-path="decision-tree-in-hunts-algorithm.html"><a href="decision-tree-in-hunts-algorithm.html#best_split"><i class="fa fa-check"></i>How to Determine the Best Split Condition?</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="the-simplest-decision-tree-for-titanic.html"><a href="the-simplest-decision-tree-for-titanic.html"><i class="fa fa-check"></i><b>8.2</b> The Simplest Decision Tree for Titanic</a></li>
+<li class="chapter" data-level="8.3" data-path="the-decision-tree-with-core-predictors.html"><a href="the-decision-tree-with-core-predictors.html"><i class="fa fa-check"></i><b>8.3</b> The Decision Tree with Core Predictors</a></li>
+<li class="chapter" data-level="8.4" data-path="the-decision-tree-with-more-predictors.html"><a href="the-decision-tree-with-more-predictors.html"><i class="fa fa-check"></i><b>8.4</b> The Decision Tree with More Predictors</a></li>
+<li class="chapter" data-level="8.5" data-path="the-decision-tree-with-full-predictors.html"><a href="the-decision-tree-with-full-predictors.html"><i class="fa fa-check"></i><b>8.5</b> The Decision Tree with Full Predictors</a></li>
+<li class="chapter" data-level="" data-path="summary-6.html"><a href="summary-6.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-5.html"><a href="exercises-5.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="titiannic-prediction-with-random-forest.html"><a href="titiannic-prediction-with-random-forest.html"><i class="fa fa-check"></i><b>9</b> Titiannic Prediction with Random Forest</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="steps-to-build-a-random-forest.html"><a href="steps-to-build-a-random-forest.html"><i class="fa fa-check"></i><b>9.1</b> Steps to Build a Random Forest</a></li>
+<li class="chapter" data-level="9.2" data-path="random-forest-with-key-predictors.html"><a href="random-forest-with-key-predictors.html"><i class="fa fa-check"></i><b>9.2</b> Random Forest with Key Predictors</a></li>
+<li class="chapter" data-level="9.3" data-path="random-forest-with-more-variables.html"><a href="random-forest-with-more-variables.html"><i class="fa fa-check"></i><b>9.3</b> Random Forest with More Variables</a></li>
+<li class="chapter" data-level="9.4" data-path="random-forest-with-all-variables.html"><a href="random-forest-with-all-variables.html"><i class="fa fa-check"></i><b>9.4</b> Random Forest with All Variables</a></li>
+<li class="chapter" data-level="9.5" data-path="comparision-the-three-random-forest-models.html"><a href="comparision-the-three-random-forest-models.html"><i class="fa fa-check"></i><b>9.5</b> Comparision the Three Random Forest Models</a></li>
+<li class="chapter" data-level="" data-path="summary-7.html"><a href="summary-7.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-6.html"><a href="exercises-6.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="model-cross-validation.html"><a href="model-cross-validation.html"><i class="fa fa-check"></i><b>10</b> Model Cross Validation</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="models-underfitting-and-overfitting.html"><a href="models-underfitting-and-overfitting.html"><i class="fa fa-check"></i><b>10.1</b> Model’s Underfitting and Overfitting</a></li>
+<li class="chapter" data-level="10.2" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html"><i class="fa fa-check"></i><b>10.2</b> General Cross Validation Methods</a>
+<ul>
+<li class="chapter" data-level="" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html#single-model-cross-validation"><i class="fa fa-check"></i>Single Model Cross Validation</a></li>
+<li class="chapter" data-level="" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html#general-procedure-of-cv"><i class="fa fa-check"></i>General Procedure of CV</a></li>
+<li class="chapter" data-level="" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html#cross-validation-on-decision-tree-models"><i class="fa fa-check"></i>Cross Validation on Decision Tree Models</a></li>
+<li class="chapter" data-level="" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html#cross-validation-on-random-forest-models"><i class="fa fa-check"></i>Cross Validation on Random Forest Models</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html"><i class="fa fa-check"></i><b>10.3</b> Multiple Models Comparison</a>
+<ul>
+<li class="chapter" data-level="" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#regression-model-for-titanic"><i class="fa fa-check"></i>Regression Model for Titanic</a></li>
+<li class="chapter" data-level="" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#support-vector-machine-model-for-titanic"><i class="fa fa-check"></i>Support Vector Machine Model for Titanic</a></li>
+<li class="chapter" data-level="" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#neural-network-models"><i class="fa fa-check"></i>Neural Network Models</a></li>
+<li class="chapter" data-level="" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#comparision-among-different-models"><i class="fa fa-check"></i>Comparision among Different Models</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="summary-8.html"><a href="summary-8.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-7.html"><a href="exercises-7.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="fine-tune-models.html"><a href="fine-tune-models.html"><i class="fa fa-check"></i><b>11</b> Fine Tune Models</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="tuning-a-models-predictor.html"><a href="tuning-a-models-predictor.html"><i class="fa fa-check"></i><b>11.1</b> Tuning a model’s Predictor</a></li>
+<li class="chapter" data-level="11.2" data-path="tuning-training-data-samples.html"><a href="tuning-training-data-samples.html"><i class="fa fa-check"></i><b>11.2</b> Tuning Training Data Samples</a>
+<ul>
+<li class="chapter" data-level="" data-path="tuning-training-data-samples.html"><a href="tuning-training-data-samples.html#set-prediction-accuracy-benchmark"><i class="fa fa-check"></i>Set Prediction Accuracy Benchmark</a></li>
+<li class="chapter" data-level="" data-path="tuning-training-data-samples.html"><a href="tuning-training-data-samples.html#folds-cv-repeat-10-times"><i class="fa fa-check"></i>10 Folds CV Repeat 10 Times</a></li>
+<li class="chapter" data-level="" data-path="tuning-training-data-samples.html"><a href="tuning-training-data-samples.html#folds-cv-repeat-10-times-1"><i class="fa fa-check"></i>5 Folds CV Repeat 10 Times</a></li>
+<li class="chapter" data-level="" data-path="tuning-training-data-samples.html"><a href="tuning-training-data-samples.html#folds-cv-repeat-10-times-2"><i class="fa fa-check"></i>3 Folds CV Repeat 10 Times</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="tuning-models-parameters.html"><a href="tuning-models-parameters.html"><i class="fa fa-check"></i><b>11.3</b> Tuning Model’s Parameters</a>
+<ul>
+<li class="chapter" data-level="" data-path="tuning-models-parameters.html"><a href="tuning-models-parameters.html#random-search"><i class="fa fa-check"></i>Random Search</a></li>
+<li class="chapter" data-level="" data-path="tuning-models-parameters.html"><a href="tuning-models-parameters.html#grid-search"><i class="fa fa-check"></i>Grid Search</a></li>
+<li class="chapter" data-level="" data-path="tuning-models-parameters.html"><a href="tuning-models-parameters.html#manual-search"><i class="fa fa-check"></i>Manual Search</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="summary-9.html"><a href="summary-9.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-8.html"><a href="exercises-8.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="report.html"><a href="report.html"><i class="fa fa-check"></i><b>12</b> Report</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="content-of-report.html"><a href="content-of-report.html"><i class="fa fa-check"></i><b>12.1</b> Content of Report</a></li>
+<li class="chapter" data-level="12.2" data-path="result-explainition.html"><a href="result-explainition.html"><i class="fa fa-check"></i><b>12.2</b> Result Explainition</a></li>
+<li class="chapter" data-level="12.3" data-path="model-interpretation.html"><a href="model-interpretation.html"><i class="fa fa-check"></i><b>12.3</b> Model Interpretation</a>
+<ul>
+<li class="chapter" data-level="" data-path="model-interpretation.html"><a href="model-interpretation.html#models-performance-measure"><i class="fa fa-check"></i>Model’s Performance Measure</a></li>
+<li class="chapter" data-level="" data-path="model-interpretation.html"><a href="model-interpretation.html#visualise-models-prediction"><i class="fa fa-check"></i>Visualise Model’s Prediction</a></li>
+<li class="chapter" data-level="" data-path="model-interpretation.html"><a href="model-interpretation.html#importance-of-the-models-predictors"><i class="fa fa-check"></i>Importance of the Model’s Predictors</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="further-analysis.html"><a href="further-analysis.html"><i class="fa fa-check"></i><b>12.4</b> Further Analysis</a></li>
+<li class="chapter" data-level="" data-path="summary-10.html"><a href="summary-10.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-9.html"><a href="exercises-9.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="apendix-the-r-code-of-the-entire-project.html"><a href="apendix-the-r-code-of-the-entire-project.html"><i class="fa fa-check"></i>Apendix: The R code of the entire project</a>
+<ul>
+<li class="chapter" data-level="" data-path="UnderstandData.html"><a href="UnderstandData.html"><i class="fa fa-check"></i>TitanicDataAnalysis1_Understand_Data.R</a></li>
+<li class="chapter" data-level="" data-path="DataPreprocess.html"><a href="DataPreprocess.html"><i class="fa fa-check"></i>TitanicDataAnalysis2_Data_Preprocess.R</a></li>
+<li class="chapter" data-level="" data-path="ModelConstruction.html"><a href="ModelConstruction.html"><i class="fa fa-check"></i>TitanicDataAnalysis3_Model_Construction.R</a></li>
+<li class="chapter" data-level="" data-path="ModelCrossValidation.html"><a href="ModelCrossValidation.html"><i class="fa fa-check"></i>TitanicDataAnalysis4_Model_Cross_Validation.R</a></li>
+<li class="chapter" data-level="" data-path="ModelFineTune.html"><a href="ModelFineTune.html"><i class="fa fa-check"></i>TitanicDataAnalysis5_Model_Fine_Tune.R</a></li>
+<li class="chapter" data-level="" data-path="AnalyseReport.html"><a href="AnalyseReport.html"><i class="fa fa-check"></i>TitanicDataAnalysis6_Analyse_Report.R</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Do A Data Science Project in 10 Days</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="process" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Process of Doing Data Science</h2>
+<p>Understand what data science is about is just the start of becoming a data scientist. Once the goal is set. The next task is to select the correct path and work hard to reach your destination. The path is important which can be shorter or longer, or direct and smooth, or curvy and bumpy. It is vital to follow a short and smooth path. This path is the data science project process. Figure <a href="process.html#fig:process">1.3</a> is the 6 steps process, which is inspired by the CRISP (Cross Industry Standard Process for Data Mining) <span class="citation">(<a href="#ref-Chapman2000" role="doc-biblioref">Pete Chapman and Wirth 2000</a>)</span>, <span class="citation">(<a href="#ref-Shearer2000" role="doc-biblioref">Shearer 2000</a>)</span>, and KDD (knowledge discovery in databases) process <span class="citation">(<a href="#ref-Li2018" role="doc-biblioref">Li 2018</a>)</span>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:process"></span>
+<img src="Capture/process.png" alt="Process of doing Data Science" width="100%" />
+<p class="caption">
+Figure 1.3: Process of doing Data Science
+</p>
+</div>
+<div id="step1" class="section level3 unnumbered">
+<h3>Step 1: Understand the Problem - Define Objectives</h3>
+<p>Any data analysis must begin with business issues. With business issues, a number of questions should be asked. These questions have to be the right questions and measurable, clear, and concise. Define analysis question is regarded as define a Data Requirements engineering and to get a data project specification. It starts from a business issue and asking relevant questions, only after you fully understand the problem and the issues you may be able to turn a practical problem into analytical questions.</p>
+<p>For example, start with a business issue: A contractor is experiencing rising costs and is no longer able to submit competitive contract proposals. One of many questions to solve this business problem might include: Can the company reduce its staff without compromising quality? Or, can the company find an alternative supplier on the production chain?</p>
+<p>Once you have questions, you can start to think about the data required for analysis. The data required for analysis is based on questions. The data necessary as inputs to the analysis can then be identified (e.g., Staff skills and performance). Specific variables regarding a staff member (e.g., Age and Income) may be specified and obtained. The data type can be defined as numerical or categorical.</p>
+<p>After you defined your analytical questions. It is important to set a clear evaluation of your project to measurement how the success of your project.</p>
+<p>This generally breaks down into two sub-steps: A) Decide what to measure, and B) Decide how to measure it.</p>
+<p><strong>A) What To Measure?</strong></p>
+<p>Using the contractor example, consider what kind of data you’d need to answer your key question. In this case, you would need to know the number and cost of current staff and the percentage of time they spend on necessary business functions. This is what is called in business as KPI - Key performance indicators. In answering this question, you likely need to answer many sub-questions (e.g., Are staff currently under-utilized? If so, what process improvements would help?). Finally, in your decision on what to measure, be sure to include any reasonable objections any stakeholders might have (e.g., If staff is reduced, how would the company respond to surges in demand?).</p>
+<p><strong>B) How To Measure? </strong></p>
+<p>Thinking about how you measure the success of your data science project, the deep end is to measure some key performance indicators. They are the data you have chosen to use in the previous step. So measure your data is just as important, especially before the data collection phase, because your measuring process either backs up or discredits your project later on. Key questions to ask for this step include:</p>
+<ul>
+<li>What is your time frame? (e.g., annual versus quarterly costs)</li>
+<li>What is your unit of measure? (e.g., USD versus Euro)</li>
+<li>What factors should be included? (e.g., just annual salary versus annual salary plus the cost of staff benefits)</li>
+</ul>
+</div>
+<div id="step2" class="section level3 unnumbered">
+<h3>Step 2: Understand Data - Knowing your Raw Materials</h3>
+<p>The second step is to understand data. It includes <strong>Data collection</strong> and <strong>Data Validation</strong>. With the problem understood and analytical questions defined and your validation criteria and measurements set, It is time to collect data.</p>
+<div id="data-collection" class="section level4 unnumbered">
+<h4>Data Collection</h4>
+<p>Before collect data, the data source has to be determined based on the relevance. A variety of data sources may be assessed and accessed to get relevant data. These data sources may include existing databases, or organization’s file system, or a third-party service, or even open web sources. They could provide redundant, or complementary, sometimes conflicting data. it has to be cautious to select the right data source from the very beginning. sometimes you need to gather data via observation or interviews, then develop an interview template ahead of time to ensure consistency. it is a good idea to Keep your collected data organized in a log with collection dates and add any source notes as you go (including any data normalization performed). This practice validates your data and any conclusions down the road.</p>
+<p>Data Collection is the actual process of gathering data on targeted variables identified as data requirements. The emphasis is on ensuring correct and accurate data collection, which means correct procedure was taken and appropriate measurements were adopted. the maximum efforts were spent to ensure the data quality. Remember that data Collection provides both a baseline to measure and a target to improve for a successful data science project.</p>
+</div>
+<div id="data-validation" class="section level4 unnumbered">
+<h4>Data Validation</h4>
+<p>Data validation is the process to Assess data quality. It is to ensure the collected data have reached quality requirements identified in step 1, that is, they are useful and correct. The usefulness is the most important aspect. Regardless of how accurate your data collections can be, if it is not useful, anything that follows is just a waste. It is hard to define the usefulness. depends on the problem at hand and the requirements for the find al delivery. The usefulness can vary from a strong correlation between the raw data and the expected outcomes, to direct prediction power from the raw data to the consequence variables. Generally, data validation can include:</p>
+<ul>
+<li>Data type validation</li>
+<li>Range and constraint validation</li>
+<li>Code and cross-reference validation</li>
+<li>Structured validation</li>
+<li>Consistency validation</li>
+<li>Relevancy validation</li>
+</ul>
+</div>
+</div>
+<div id="preprocess" class="section level3 unnumbered">
+<h3>Step 3: Data Preprocessing - Get your Data Ready</h3>
+<p>Data preprocessing is a step that takes data processing methods and techniques to transforms raw data into a formatted and understandable form and ready for analyzing. Real-world data is often incomplete, inconsistent, and is likely to contain many errors. Data preprocessing is a proven method of resolving such issues. Tasks of data preprocessing may include:</p>
+<ul>
+<li><p><strong>Data cleaning</strong>. The process of detecting and correcting (or removing) corrupt or inaccurate records from a recordset, table, or database. It normally includes identifying incomplete, incorrect, inaccurate, or irrelevant data and then replacing, modifying, or deleting the dirty or coarse data. After cleansing, a data set should be consistent with other data sets.</p></li>
+<li><p><strong>Data editing</strong>. The process involves changing and adjusting of collected data. The purpose is to ensure the quality of the collected data. Data editing should be done by fully understand the data collected and the data requirement specification. Editing data without them can be disastrous.</p></li>
+<li><p><strong>Data reduction</strong>. The process and methods used to reduce data quantity to fit for analyzing. Raw data set collected or selected for analysis can be huge, then it could drastically slow down the analysis process. Reducing the size of the data set without jeopardizing the data analysis results is often desired. It includes records’ number reduction and data attributes reduction. Methods used to reduce data records size include <strong>Sampling</strong> and <strong>Modelings</strong> (e.g., regression or log-linear models or histograms, clusters, etc). Methods used for attributes reduction include <strong>Feature selection</strong> and <strong>Dimension reduction</strong>. Feature selection means the removal of irrelevant and redundant features. such an operation should not lose information the data set has. Data analysis algorithms work better if the dimensionality, which is the number of attributes in a data object is low. Data compression techniques (e.g., wavelet transforms and principal components analysis), attribute subset selection (e.g., removing irrelevant attributes as discussed in the previous paragraph), and attribute construction (e.g., where a small set of more useful attributes is derived from the large numbers of attributes in the original data set) are useful techniques.</p></li>
+<li><p><strong>Data transformation</strong> sometimes referred to as <strong>data munging</strong> or <strong>data wrangling</strong>. It is the process of transforming and mapping data from one data form into another format with the intent of making it more appropriate and valuable for downstream analytics. It is often that data analysis method requires data to be analyzed have a certain format or possesses certain attributes. For example, classification algorithms require that the data be in the form of categorical (nominal) attributes; algorithms that find association patterns require that the data be in the form of binary attributes. Thus, it is often necessary to transform a continuous attribute into a categorical attribute, which is called <strong>Discretization</strong>, and both continuous and discrete attributes may need to be transformed into one or more binary attributes, which is called <strong>Banalization</strong>. Other methods include <strong>Scaling</strong> and <strong>normalization</strong>. Scaling changes the bounds of the data and can be useful, for example, when you are working with data in different units. Normalization scales data sets to a smaller range such as [0.0, 1.0].</p></li>
+<li><p><strong>Data re-engineering</strong>
+Re-engineering data is necessary when raw data come from many different data sources and in a different format. Data re-engineering similar to data transformation can be done at both a record level and an attribute level. Record level re-engineering is also called data <strong>Integration</strong>, which integrates a variety of data into one file or place and in one format for analysis. for predictive analysis with a model, data re-engineering is also including split a given data set into two subsets called “Training” and “Test” Set.</p></li>
+</ul>
+</div>
+<div id="analyse" class="section level3 unnumbered">
+<h3>Step 4: Data Analyese - Building Models</h3>
+<p>After your collected data being preprocessed and suitable for analysis. Now you can drill down and attempt to answer your question from <a href="process.html#step1">Step 1</a> with the actions called Data Analyzing. It is the core activity in the data science project process by writing, executing, and refining computer programs that utilize some analytical methods and algorithms to obtain insights from data sets. There are three broad categories of data analytical methods: <strong>Descriptive data analysis (DDA)</strong>, <strong>Exploratory data analysis (EDA)</strong>, and <strong>Predictive data analysis (PDA)</strong>. DDA and EDA use
+quantitative and statistical methods on data sets and data attribute measurements and their value distributions while DDA focus on numeric summary and EDA emphasis on graphical (plot) mean, PDA involves model building and machine learning.
+In a data science project, data analyzing is generally starting from Descriptive analysis and goes further with Exploratory analysis, and finally end up with a tested and optimized prediction model for predicting. However, it does not necessarily mean that the methods used in a data analysis project have to stick in this order. As matter of fact, the most project involves a recursive process and a mixture of all the three methods. For example, An exploratory analysis can be utilized in a feature engineering step to prepare a predictor of a prediction model, which is used to predict some missing values of a particular attribute in a given dataset for an accurate description of the attribute value distribution.</p>
+<div id="descriptive-data-analysis" class="section level4 unnumbered">
+<h4><strong>Descriptive data analysis</strong></h4>
+<p>It is the simplest type of analysis. It describes and summarizes data sets quantitatively. Descriptive analysis generally starts with univariate analysis, meaning describing a single variable (can also be called an attribute, column, or field) of the data. The appropriate depends on the level of measurement. For nominal variables, a frequency table and a listing of the modes are sufficient. For ordinal variables, the median can be calculated as a measure of central tendency and the range (and variations of it) as a measure of dispersion. For interval level variables, the arithmetic mean (average) and standard deviation are added to the toolbox and, for ratio level variables, we could add the geometric mean and harmonic mean as measures of central tendency and the coefficient of variation as a measure of dispersion. However, there are many other possible statistics that cover areas such as location (“middle” of the data), dispersion (range or spread of data), and shape of the distribution. Moving up to two variables, descriptive analysis can involve measures of association such as computing a correlation coefficient or covariance. Descriptive analysis’s goal is to describe the key features of the sample numerically. It should shed light on the key numbers that summarize distributions within the data, may describe or show the relationships among variables with metrics that describe association, or by tables that cross-tabulation counts. Descriptive analysis is typically the first step on the data analysis ladder, which only tries to get a sense of the data.</p>
+</div>
+<div id="explorative-data-analysis" class="section level4 unnumbered">
+<h4><strong>Explorative data analysis</strong></h4>
+<p>Descriptive analysis is very important. However, numerical summaries can only get you so far. One problem is that it can only convert a large number of values down to a few summary numbers. Unsurprisingly, different samples with different distributions, shapes, and properties can result in the same summary statistics. This will cause problems. When you are looking at a simple single summary statistic, the mean of a single variable, there can be a lot of possible “solutions” or samples. The typical example is Anscombe’s quartet <span class="citation">(<a href="#ref-Anscombe1973" role="doc-biblioref">Anscombe 1973</a>)</span>, it comprises four datasets that have nearly identical simple statistical properties, yet appear very different when graphed. Most kinds of statistical calculations rest on assumptions about the behavior of the data. Those assumptions may be false, and then the calculations may be misleading. We ought always to try and check whether the assumptions are reasonably correct, and if they are wrong we ought to be able to perceive in what ways they are wrong. Graphs are very valuable for these purposes.</p>
+<p>EDA allows us to challenge or confirm our assumptions about the data. It is a good tool to be used in <a href="process.html#preprocess">data prerpocess</a>. We often have pretty good expectations of what unclean data might look like, such as outliers, missing data, and other anomalies, perhaps more so than our expectations of what clean data might look like. The more we understood data, we could develop our intuition of what factors and possible relations at are play. EDA, with its broad suite of ways to view the data points and relationships, provides us a range of lenses with which to study the story that data is telling us. That in turn, helps us to come up with new hypotheses of what might be happening. Further, if we understood which variables we can control, which levers we have to work within a system to drive the metrics such as business revenue or customer conversion in the desired direction. EDA can also highlight gaps in our knowledge and which experiments might make sense to run to fill in those gaps.</p>
+<p>The basic tools of EDA are plots, graphs, and summary statistics. Generally speaking, it’s a method of systematically going through the data, plotting distributions of all variables (using box plots), plotting time series of data, transforming variables, looking at all pairwise relationships between variables using scatterplot matrices, and generating summary statistics for all of them or identifying outliers.</p>
+</div>
+<div id="predictive" class="section level4 unnumbered">
+<h4><strong>Predictive data analysis </strong></h4>
+<p>Predictive analysis builds upon <strong>inferential analysis</strong>, which is to learn about relationships among variables from an existing training data set and develop a model that can predict values of attributes for new, incomplete, or future data points. The inferential analysis is a type of analysis that from a dataset sample in hand infer some information, which might be parameters, distributions, or relationships about the broader population from which the sample came. We typically infer metrics about the population from a sample because data collection is too expensive, impractical, or even impossible to obtain all data. The typical process of inferential analysis includes testing hypotheses and deriving estimates.
+There is a whole slew of approaches and tools in predictive analysis. <strong>Regression</strong> is the broadest family of tools. Within that, however, are a number of variants (lasso, ridge, robust, etc.) to deal with different characteristics of the data. Of particular interest and power is <strong>Logistic Regression</strong> which can be used to predict classes. For instance, spam/not spam used to be mostly predicted with a <strong>Naïve Bayes predictor</strong> but nowadays logistic regression is more common. Other techniques and that come under the term <strong>Machine Learning</strong> include neural networks, tree-based approaches such as classification and regression trees, random forests, support vector machines (SVM), and k-nearest neighbors.</p>
+</div>
+</div>
+<div id="step-5-results-interpretation-and-evaluation" class="section level3 unnumbered">
+<h3>Step 5: Results Interpretation and Evaluation</h3>
+<p>After analyzing your data and get some answers to your original questions, it is possible that you need to conduct further research and more analysis. Let us suppose that you are happy with the analysis results you have. It is finally time to interpret your results. As you interpret your analysis, keep in mind that you cannot ever prove a hypothesis true: rather, you can only fail to reject the hypothesis. Meaning that no matter how much data you collect, chance could always interfere with your results. Interpreting the results of the analysis, you should think of how close the results address the original problems by asking yourself these key questions:</p>
+<ul>
+<li>Does the data answer your original question? How?</li>
+<li>Does the data help you defend against any objections? How?</li>
+<li>Are there any limitations on your conclusions, any angles you haven’t considered?</li>
+</ul>
+<p>If your interpretation of the data holds up under all of these questions and considerations, then you likely have come to a productive conclusion. However, there could be a chance that you may find you might need to revise your original question or collect more data and you may need to roll the ball from the starting line. Again. Either way, this initial analysis of trends, correlations, variations, and outliers is not completely wasted. They help you focus your data analysis on better answering your question and any objections others might have. That is the next step report and communication.</p>
+</div>
+<div id="step-6-data-report-and-communication" class="section level3 unnumbered">
+<h3>Step 6: Data Report and Communication</h3>
+<p>Whereas the analysis phase involves programming and runs programs on different computer platforms, the reporting involves narrative the results of the analysis, thinking about how close the results address the original problems, and communicating about the outputs of analyses with interesting parties in many cases in visual formats.
+During this step, data analysis tools and software are helpful but visual tools are intuitive and worth a lot of words. Visio, Tableau (<a href="https://www.tableau.com/" class="uri">https://www.tableau.com/</a>), Minitab (<a href="https://www.minitab.com/" class="uri">https://www.minitab.com/</a>), and Stata (<a href="https://www.stata.com/" class="uri">https://www.stata.com/</a>) are all good software packages for advanced statistical data analysis. There are also plenty of open source data visualization tools available.</p>
+<p>It is important to note that the above 6 steps process is not a linear process. Any discovery of useful relationships and valuable patterns is enabled by a set of iterative activities. Iteration can occur in a single step or in a few steps at any point in the process.</p>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Anscombe1973" class="csl-entry">
+Anscombe, F. J. 1973. <span>“Graphs in Statistical Analysis.”</span> <em>American Statistician</em> 27 (1). <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet.">https://en.wikipedia.org/wiki/Anscombe%27s_quartet.</a>
+</div>
+<div id="ref-Li2018" class="csl-entry">
+Li, Gagnmin. 2018. <em>Fundation of Big Data Analytics: Concepts, Technologies, Methods and Business</em>. 1st ed. Beijing, China: Science press.
+</div>
+<div id="ref-Chapman2000" class="csl-entry">
+Pete Chapman, Randy Kerber, Julian Clinton, and Rudiger Wirth. 2000. <em>CRISP-DM 1.0 Step-by-Step Data Mining Guides</em>. <a href="https://www.the-modeling-agency.com/crisp-dm.pdf">https://www.the-modeling-agency.com/crisp-dm.pdf</a>.
+</div>
+<div id="ref-Shearer2000" class="csl-entry">
+Shearer, C. 2000. <span>“The CRISP-DM Model: The New Blueprint for Data Mining.”</span> <em>Data Warehousing</em> 5: 13–22.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="what-is-data-scientist.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tools-used-in-doing-a-data-science-project.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": true,
+"twitter": true,
+"linkedin": true,
+"weibo": true,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+},
+"info": true
+});
+});
+</script>
+
+</body>
+
+</html>

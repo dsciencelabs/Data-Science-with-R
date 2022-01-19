@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>10.2 General Cross Validation Methods | Do A Data Science Project in 10 Days</title>
+  <meta name="description" content="This is a data science project practice book. It was initially written for my Big Data course to help students to run a quick data analytical project and to understand 1. the data analytical process, the typical tasks and the methods, techniques and the algorithms need to accomplish these tasks. During convid19, the unicersity has adopted on-line teaching. So the students can not access to the university labs and HPC facilities. Gaining an experience of doing a data science project becomes individual students self-learning in isolation. This book aimed to help them to read through it and follow instructions to complete the sample propject by themslef. However, it is required by many other students who want to know about data analytics, machine learning and particularly practical issues, to gain experience and confidence of doing data analysis. So it is aimed for beginners and have no much knowledge of data Science. the format for this book is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="10.2 General Cross Validation Methods | Do A Data Science Project in 10 Days" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://bookdown.org/Do-Data-Science-in-10days/" />
+  <meta property="og:image" content="https://bookdown.org/Do-Data-Science-in-10days/images/cover.png" />
+  <meta property="og:description" content="This is a data science project practice book. It was initially written for my Big Data course to help students to run a quick data analytical project and to understand 1. the data analytical process, the typical tasks and the methods, techniques and the algorithms need to accomplish these tasks. During convid19, the unicersity has adopted on-line teaching. So the students can not access to the university labs and HPC facilities. Gaining an experience of doing a data science project becomes individual students self-learning in isolation. This book aimed to help them to read through it and follow instructions to complete the sample propject by themslef. However, it is required by many other students who want to know about data analytics, machine learning and particularly practical issues, to gain experience and confidence of doing data analysis. So it is aimed for beginners and have no much knowledge of data Science. the format for this book is bookdown::gitbook." />
+  <meta name="github-repo" content="GangminLi/Do-Data-Science-with-R" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="10.2 General Cross Validation Methods | Do A Data Science Project in 10 Days" />
+  
+  <meta name="twitter:description" content="This is a data science project practice book. It was initially written for my Big Data course to help students to run a quick data analytical project and to understand 1. the data analytical process, the typical tasks and the methods, techniques and the algorithms need to accomplish these tasks. During convid19, the unicersity has adopted on-line teaching. So the students can not access to the university labs and HPC facilities. Gaining an experience of doing a data science project becomes individual students self-learning in isolation. This book aimed to help them to read through it and follow instructions to complete the sample propject by themslef. However, it is required by many other students who want to know about data analytics, machine learning and particularly practical issues, to gain experience and confidence of doing data analysis. So it is aimed for beginners and have no much knowledge of data Science. the format for this book is bookdown::gitbook." />
+  <meta name="twitter:image" content="https://bookdown.org/Do-Data-Science-in-10days/images/cover.png" />
+
+<meta name="author" content="Gangmin Li" />
+
+
+<meta name="date" content="2021-03-07" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="models-underfitting-and-overfitting.html"/>
+<link rel="next" href="multiple-models-comparison.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Do Data Science in 10 Days</a></li>
+
+<li class="divider"></li>
+<li><a href="index.html#section"></a><ul>
+<li class="chapter" data-level="" data-path="what-is-this-book.html"><a href="what-is-this-book.html"><i class="fa fa-check"></i>What is This Book?</a></li>
+<li class="chapter" data-level="" data-path="structure-of-the-book.html"><a href="structure-of-the-book.html"><i class="fa fa-check"></i>Structure of the Book</a></li>
+<li class="chapter" data-level="" data-path="what-can-this-book-offer-you.html"><a href="what-can-this-book-offer-you.html"><i class="fa fa-check"></i>What Can This Book Offer You?</a></li>
+<li class="chapter" data-level="" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i>Notes</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="what-is-data-science.html"><a href="what-is-data-science.html"><i class="fa fa-check"></i><b>1.1</b> What is Data Science?</a><ul>
+<li class="chapter" data-level="" data-path="what-is-data-science.html"><a href="what-is-data-science.html#data-science-as-discovery-of-data-insight"><i class="fa fa-check"></i>Data Science as Discovery of Data Insight</a></li>
+<li class="chapter" data-level="" data-path="what-is-data-science.html"><a href="what-is-data-science.html#data-science-as-development-of-data-product"><i class="fa fa-check"></i>Data Science as Development of Data Product</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="what-is-data-scientist.html"><a href="what-is-data-scientist.html"><i class="fa fa-check"></i><b>1.2</b> What is Data Scientist?</a><ul>
+<li class="chapter" data-level="" data-path="what-is-data-scientist.html"><a href="what-is-data-scientist.html#the-requisite-skill-set"><i class="fa fa-check"></i>The Requisite Skill Set</a></li>
+<li class="chapter" data-level="" data-path="what-is-data-scientist.html"><a href="what-is-data-scientist.html#how-to-become-a-data-scientist"><i class="fa fa-check"></i>How to Become a Data Scientist?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="process.html"><a href="process.html"><i class="fa fa-check"></i><b>1.3</b> Process of Doing Data Science</a><ul>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#step1"><i class="fa fa-check"></i>Step 1: Understand the Problem - Define Objectives</a></li>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#step2"><i class="fa fa-check"></i>Step 2: Understand Data - Knowing your Raw Materials</a></li>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#preprocess"><i class="fa fa-check"></i>Step 3: Data Preprocessing - Get your Data Ready</a></li>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#analyse"><i class="fa fa-check"></i>Step 4: Data Analyese - Building Models</a></li>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#step-5-results-interpretation-and-evaluation"><i class="fa fa-check"></i>Step 5: Results Interpretation and Evaluation</a></li>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#step-6-data-report-and-communication"><i class="fa fa-check"></i>Step 6: Data Report and Communication</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html"><i class="fa fa-check"></i><b>1.4</b> Tools used in Doing a Data Science Project</a><ul>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#r"><i class="fa fa-check"></i>R</a></li>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#python"><i class="fa fa-check"></i>Python</a></li>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#sql"><i class="fa fa-check"></i>SQL</a></li>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#hadoop"><i class="fa fa-check"></i>Hadoop</a></li>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#tableau"><i class="fa fa-check"></i>Tableau</a></li>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#weka"><i class="fa fa-check"></i>Weka</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html"><i class="fa fa-check"></i><b>1.5</b> Applications of Data Science</a><ul>
+<li class="chapter" data-level="" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html#data-science-in-healthcare"><i class="fa fa-check"></i>Data Science in Healthcare</a></li>
+<li class="chapter" data-level="" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html#data-science-in-e-commerce"><i class="fa fa-check"></i>Data Science in E-commerce</a></li>
+<li class="chapter" data-level="" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html#data-science-in-manufacturing"><i class="fa fa-check"></i>Data Science in Manufacturing</a></li>
+<li class="chapter" data-level="" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html#data-science-as-conversational-agents"><i class="fa fa-check"></i>Data Science as Conversational Agents</a></li>
+<li class="chapter" data-level="" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html#data-science-in-transport"><i class="fa fa-check"></i>Data Science in Transport</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="data-science-related-terms.html"><a href="data-science-related-terms.html"><i class="fa fa-check"></i><b>1.6</b> Data Science Related Terms</a><ul>
+<li class="chapter" data-level="" data-path="data-science-related-terms.html"><a href="data-science-related-terms.html#dataanalyst-and-data-scientist"><i class="fa fa-check"></i>DataAnalyst and Data Scientist</a></li>
+<li class="chapter" data-level="" data-path="data-science-related-terms.html"><a href="data-science-related-terms.html#machine-learning-and-data-science"><i class="fa fa-check"></i>Machine Learning and Data Science</a></li>
+<li class="chapter" data-level="" data-path="data-science-related-terms.html"><a href="data-science-related-terms.html#data-mining-and-data-science"><i class="fa fa-check"></i>Data Mining and Data Science</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises.html"><a href="exercises.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="tools.html"><a href="tools.html"><i class="fa fa-check"></i><b>2</b> Get Your Tools Ready</a><ul>
+<li class="chapter" data-level="2.1" data-path="brief-introductiuon-about-r-and-rstudio.html"><a href="brief-introductiuon-about-r-and-rstudio.html"><i class="fa fa-check"></i><b>2.1</b> Brief introductiuon about R and RStudio</a><ul>
+<li class="chapter" data-level="" data-path="brief-introductiuon-about-r-and-rstudio.html"><a href="brief-introductiuon-about-r-and-rstudio.html#features-of-r-programming"><i class="fa fa-check"></i>Features of R Programming</a></li>
+<li class="chapter" data-level="" data-path="brief-introductiuon-about-r-and-rstudio.html"><a href="brief-introductiuon-about-r-and-rstudio.html#r-scripts"><i class="fa fa-check"></i>R Scripts</a></li>
+<li class="chapter" data-level="" data-path="brief-introductiuon-about-r-and-rstudio.html"><a href="brief-introductiuon-about-r-and-rstudio.html#r-graphical-user-interface-rgui"><i class="fa fa-check"></i>R Graphical User Interface (RGui)</a></li>
+<li class="chapter" data-level="" data-path="brief-introductiuon-about-r-and-rstudio.html"><a href="brief-introductiuon-about-r-and-rstudio.html#rstudio"><i class="fa fa-check"></i>RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="downlaod-and-install-r-and-rstudio.html"><a href="downlaod-and-install-r-and-rstudio.html"><i class="fa fa-check"></i><b>2.2</b> Downlaod and Install R and RStudio</a><ul>
+<li class="chapter" data-level="" data-path="downlaod-and-install-r-and-rstudio.html"><a href="downlaod-and-install-r-and-rstudio.html#r-download-and-installation"><i class="fa fa-check"></i>R Download and Installation</a></li>
+<li class="chapter" data-level="" data-path="downlaod-and-install-r-and-rstudio.html"><a href="downlaod-and-install-r-and-rstudio.html#rstudio-download-and-installation"><i class="fa fa-check"></i>RStudio Download and Installation</a></li>
+<li class="chapter" data-level="" data-path="downlaod-and-install-r-and-rstudio.html"><a href="downlaod-and-install-r-and-rstudio.html#familiar-with-rstudio-interface"><i class="fa fa-check"></i>Familiar with RStudio interface</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="bootsup-your-rstudio.html"><a href="bootsup-your-rstudio.html"><i class="fa fa-check"></i><b>2.3</b> Bootsup your RStudio</a></li>
+<li class="chapter" data-level="2.4" data-path="instructions.html"><a href="instructions.html"><i class="fa fa-check"></i><b>2.4</b> Instructions</a><ul>
+<li class="chapter" data-level="" data-path="instructions.html"><a href="instructions.html#code"><i class="fa fa-check"></i>Code</a></li>
+<li class="chapter" data-level="" data-path="instructions.html"><a href="instructions.html#tips"><i class="fa fa-check"></i>Tips</a></li>
+<li class="chapter" data-level="" data-path="instructions.html"><a href="instructions.html#actions"><i class="fa fa-check"></i>Actions</a></li>
+<li class="chapter" data-level="" data-path="instructions.html"><a href="instructions.html#exercise"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="exercises-1.html"><a href="exercises-1.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="prob.html"><a href="prob.html"><i class="fa fa-check"></i><b>3</b> Understand Problem</a><ul>
+<li class="chapter" data-level="3.1" data-path="Competion.html"><a href="Competion.html"><i class="fa fa-check"></i><b>3.1</b> Kaggle Competion</a></li>
+<li class="chapter" data-level="3.2" data-path="titianic-at-kaggel.html"><a href="titianic-at-kaggel.html"><i class="fa fa-check"></i><b>3.2</b> Titianic at Kaggel</a></li>
+<li class="chapter" data-level="3.3" data-path="the-titanic-problem.html"><a href="the-titanic-problem.html"><i class="fa fa-check"></i><b>3.3</b> The Titanic Problem</a><ul>
+<li class="chapter" data-level="" data-path="the-titanic-problem.html"><a href="the-titanic-problem.html#the-challenge"><i class="fa fa-check"></i>The Challenge</a></li>
+<li class="chapter" data-level="" data-path="the-titanic-problem.html"><a href="the-titanic-problem.html#the-data"><i class="fa fa-check"></i>The Data</a></li>
+<li class="chapter" data-level="" data-path="the-titanic-problem.html"><a href="the-titanic-problem.html#the-submission"><i class="fa fa-check"></i>The Submission</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="summary-1.html"><a href="summary-1.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-2.html"><a href="exercises-2.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="understand-data.html"><a href="understand-data.html"><i class="fa fa-check"></i><b>4</b> Understand Data</a><ul>
+<li class="chapter" data-level="4.1" data-path="load-data.html"><a href="load-data.html"><i class="fa fa-check"></i><b>4.1</b> Load Data</a></li>
+<li class="chapter" data-level="4.2" data-path="assess-data-quantity.html"><a href="assess-data-quantity.html"><i class="fa fa-check"></i><b>4.2</b> Assess Data Quantity</a></li>
+<li class="chapter" data-level="4.3" data-path="general-data-attributes-assessment.html"><a href="general-data-attributes-assessment.html"><i class="fa fa-check"></i><b>4.3</b> General Data Attributes Assessment</a></li>
+<li class="chapter" data-level="4.4" data-path="actual-attributes-types-examination.html"><a href="actual-attributes-types-examination.html"><i class="fa fa-check"></i><b>4.4</b> Actual Attributes Types Examination</a></li>
+<li class="chapter" data-level="4.5" data-path="attvalue.html"><a href="attvalue.html"><i class="fa fa-check"></i><b>4.5</b> Actual Data Attributes Value Examination</a><ul>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#passengerid"><i class="fa fa-check"></i>PassengerID</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#survive"><i class="fa fa-check"></i>Survived</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#pclass"><i class="fa fa-check"></i>Pclass</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#name"><i class="fa fa-check"></i>Name</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#sex"><i class="fa fa-check"></i>Sex</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#age"><i class="fa fa-check"></i>Age</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#sibsp"><i class="fa fa-check"></i>SibSp</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#parch"><i class="fa fa-check"></i>Parch</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#ticket"><i class="fa fa-check"></i>Ticket</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#fare"><i class="fa fa-check"></i>Fare</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#cabin"><i class="fa fa-check"></i>Cabin</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#embarkded"><i class="fa fa-check"></i>Embarkded</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="data-recods-level-assessment.html"><a href="data-recods-level-assessment.html"><i class="fa fa-check"></i><b>4.6</b> Data Recods Level Assessment</a></li>
+<li class="chapter" data-level="" data-path="summary-2.html"><a href="summary-2.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-3.html"><a href="exercises-3.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="data-preparasion.html"><a href="data-preparasion.html"><i class="fa fa-check"></i><b>5</b> Data Preparasion</a><ul>
+<li class="chapter" data-level="5.1" data-path="general-data-prepartion-tasks.html"><a href="general-data-prepartion-tasks.html"><i class="fa fa-check"></i><b>5.1</b> General Data Prepartion Tasks</a></li>
+<li class="chapter" data-level="5.2" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html"><i class="fa fa-check"></i><b>5.2</b> Dealt with Miss Values</a><ul>
+<li class="chapter" data-level="" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html#cabin-attribute"><i class="fa fa-check"></i>Cabin Attribute</a></li>
+<li class="chapter" data-level="" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html#age-attribute"><i class="fa fa-check"></i>Age Attribute</a></li>
+<li class="chapter" data-level="" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html#fare-attribute"><i class="fa fa-check"></i>Fare Attribute</a></li>
+<li class="chapter" data-level="" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html#Embarked"><i class="fa fa-check"></i>Embarked Attribute</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html"><i class="fa fa-check"></i><b>5.3</b> Attribute Re-engineering</a><ul>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#title-from-name-attribute"><i class="fa fa-check"></i>Title from Name attribute</a></li>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#deck-from-cabin-attribute"><i class="fa fa-check"></i>Deck from Cabin attribute</a></li>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#extract-ticket-class-from-ticket-number"><i class="fa fa-check"></i>Extract ticket class from ticket number</a></li>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#travel-in-groups"><i class="fa fa-check"></i>Travel in Groups</a></li>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#age-in-groups"><i class="fa fa-check"></i>Age in Groups</a></li>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#farepp"><i class="fa fa-check"></i>Fare per passenger</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="build-re-engineered-dataset.html"><a href="build-re-engineered-dataset.html"><i class="fa fa-check"></i><b>5.4</b> Build Re-engineered Dataset</a></li>
+<li class="chapter" data-level="" data-path="summary-3.html"><a href="summary-3.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-4.html"><a href="exercises-4.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>6</b> Data Analysis</a><ul>
+<li class="chapter" data-level="6.1" data-path="predictive-data-analysis-pda.html"><a href="predictive-data-analysis-pda.html"><i class="fa fa-check"></i><b>6.1</b> Predictive Data Analysis (PDA)</a></li>
+<li class="chapter" data-level="6.2" data-path="process-of-predcitive-data-analysis.html"><a href="process-of-predcitive-data-analysis.html"><i class="fa fa-check"></i><b>6.2</b> Process of Predcitive Data Analysis</a><ul>
+<li class="chapter" data-level="" data-path="process-of-predcitive-data-analysis.html"><a href="process-of-predcitive-data-analysis.html#predictor-selection"><i class="fa fa-check"></i>Predictor Selection</a></li>
+<li class="chapter" data-level="" data-path="process-of-predcitive-data-analysis.html"><a href="process-of-predcitive-data-analysis.html#model-construction"><i class="fa fa-check"></i>Model Construction</a></li>
+<li class="chapter" data-level="" data-path="process-of-predcitive-data-analysis.html"><a href="process-of-predcitive-data-analysis.html#model-validation"><i class="fa fa-check"></i>Model Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="classification-as-a-specific-prediction.html"><a href="classification-as-a-specific-prediction.html"><i class="fa fa-check"></i><b>6.3</b> Classification as A Specific Prediction</a></li>
+<li class="chapter" data-level="" data-path="summary-4.html"><a href="summary-4.html"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="predictor-selection-1.html"><a href="predictor-selection-1.html"><i class="fa fa-check"></i><b>7</b> Predictor Selection</a><ul>
+<li class="chapter" data-level="7.1" data-path="predictor-selection-pricinples.html"><a href="predictor-selection-pricinples.html"><i class="fa fa-check"></i><b>7.1</b> Predictor Selection Pricinples</a></li>
+<li class="chapter" data-level="7.2" data-path="attributes-analysis.html"><a href="attributes-analysis.html"><i class="fa fa-check"></i><b>7.2</b> Attributes Analysis</a></li>
+<li class="chapter" data-level="7.3" data-path="attributes-correlation-analysis.html"><a href="attributes-correlation-analysis.html"><i class="fa fa-check"></i><b>7.3</b> Attributes Correlation Analysis</a></li>
+<li class="chapter" data-level="7.4" data-path="pca-analysis.html"><a href="pca-analysis.html"><i class="fa fa-check"></i><b>7.4</b> PCA Analysis</a></li>
+<li class="chapter" data-level="" data-path="summary-5.html"><a href="summary-5.html"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="prediction-with-decision-trees.html"><a href="prediction-with-decision-trees.html"><i class="fa fa-check"></i><b>8</b> Prediction with Decision Trees</a><ul>
+<li class="chapter" data-level="8.1" data-path="decision-tree-in-hunts-algorithm.html"><a href="decision-tree-in-hunts-algorithm.html"><i class="fa fa-check"></i><b>8.1</b> Decision Tree in Hunt’s Algorithm</a><ul>
+<li class="chapter" data-level="" data-path="decision-tree-in-hunts-algorithm.html"><a href="decision-tree-in-hunts-algorithm.html#test_condition"><i class="fa fa-check"></i>How to Form a Test Condition?</a></li>
+<li class="chapter" data-level="" data-path="decision-tree-in-hunts-algorithm.html"><a href="decision-tree-in-hunts-algorithm.html#best_split"><i class="fa fa-check"></i>How to Determine the Best Split Condition?</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="the-simplest-decision-tree-for-titanic.html"><a href="the-simplest-decision-tree-for-titanic.html"><i class="fa fa-check"></i><b>8.2</b> The Simplest Decision Tree for Titanic</a></li>
+<li class="chapter" data-level="8.3" data-path="the-decision-tree-with-core-predictors.html"><a href="the-decision-tree-with-core-predictors.html"><i class="fa fa-check"></i><b>8.3</b> The Decision Tree with Core Predictors</a></li>
+<li class="chapter" data-level="8.4" data-path="the-decision-tree-with-more-predictors.html"><a href="the-decision-tree-with-more-predictors.html"><i class="fa fa-check"></i><b>8.4</b> The Decision Tree with More Predictors</a></li>
+<li class="chapter" data-level="8.5" data-path="the-decision-tree-with-full-predictors.html"><a href="the-decision-tree-with-full-predictors.html"><i class="fa fa-check"></i><b>8.5</b> The Decision Tree with Full Predictors</a></li>
+<li class="chapter" data-level="" data-path="summary-6.html"><a href="summary-6.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-5.html"><a href="exercises-5.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="titiannic-prediction-with-random-forest.html"><a href="titiannic-prediction-with-random-forest.html"><i class="fa fa-check"></i><b>9</b> Titiannic Prediction with Random Forest</a><ul>
+<li class="chapter" data-level="9.1" data-path="steps-to-build-a-random-forest.html"><a href="steps-to-build-a-random-forest.html"><i class="fa fa-check"></i><b>9.1</b> Steps to Build a Random Forest</a></li>
+<li class="chapter" data-level="9.2" data-path="random-forest-with-key-predictors.html"><a href="random-forest-with-key-predictors.html"><i class="fa fa-check"></i><b>9.2</b> Random Forest with Key Predictors</a></li>
+<li class="chapter" data-level="9.3" data-path="random-forest-with-more-variables.html"><a href="random-forest-with-more-variables.html"><i class="fa fa-check"></i><b>9.3</b> Random Forest with More Variables</a></li>
+<li class="chapter" data-level="9.4" data-path="random-forest-with-all-variables.html"><a href="random-forest-with-all-variables.html"><i class="fa fa-check"></i><b>9.4</b> Random Forest with All Variables</a></li>
+<li class="chapter" data-level="9.5" data-path="comparision-the-three-random-forest-models.html"><a href="comparision-the-three-random-forest-models.html"><i class="fa fa-check"></i><b>9.5</b> Comparision the Three Random Forest Models</a></li>
+<li class="chapter" data-level="" data-path="summary-7.html"><a href="summary-7.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-6.html"><a href="exercises-6.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="model-cross-validation.html"><a href="model-cross-validation.html"><i class="fa fa-check"></i><b>10</b> Model Cross Validation</a><ul>
+<li class="chapter" data-level="10.1" data-path="models-underfitting-and-overfitting.html"><a href="models-underfitting-and-overfitting.html"><i class="fa fa-check"></i><b>10.1</b> Model’s Underfitting and Overfitting</a></li>
+<li class="chapter" data-level="10.2" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html"><i class="fa fa-check"></i><b>10.2</b> General Cross Validation Methods</a><ul>
+<li class="chapter" data-level="" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html#single-model-cross-validation"><i class="fa fa-check"></i>Single Model Cross Validation</a></li>
+<li class="chapter" data-level="" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html#general-procedure-of-cv"><i class="fa fa-check"></i>General Procedure of CV</a></li>
+<li class="chapter" data-level="" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html#cross-validation-on-decision-tree-models"><i class="fa fa-check"></i>Cross Validation on Decision Tree Models</a></li>
+<li class="chapter" data-level="" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html#cross-validation-on-random-forest-models"><i class="fa fa-check"></i>Cross Validation on Random Forest Models</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html"><i class="fa fa-check"></i><b>10.3</b> Multiple Models Comparison</a><ul>
+<li class="chapter" data-level="" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#regression-model-for-titanic"><i class="fa fa-check"></i>Regression Model for Titanic</a></li>
+<li class="chapter" data-level="" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#support-vector-machine-model-for-titanic"><i class="fa fa-check"></i>Support Vector Machine Model for Titanic</a></li>
+<li class="chapter" data-level="" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#neural-network-models"><i class="fa fa-check"></i>Neural Network Models</a></li>
+<li class="chapter" data-level="" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#comparision-among-different-models"><i class="fa fa-check"></i>Comparision among Different Models</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="summary-8.html"><a href="summary-8.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-7.html"><a href="exercises-7.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="fine-tune-models.html"><a href="fine-tune-models.html"><i class="fa fa-check"></i><b>11</b> Fine Tune Models</a><ul>
+<li class="chapter" data-level="11.1" data-path="tuning-a-models-predictor.html"><a href="tuning-a-models-predictor.html"><i class="fa fa-check"></i><b>11.1</b> Tuning a model’s Predictor</a></li>
+<li class="chapter" data-level="11.2" data-path="tuning-training-data-samples.html"><a href="tuning-training-data-samples.html"><i class="fa fa-check"></i><b>11.2</b> Tuning Training Data Samples</a><ul>
+<li class="chapter" data-level="" data-path="tuning-training-data-samples.html"><a href="tuning-training-data-samples.html#set-prediction-accuracy-benchmark"><i class="fa fa-check"></i>Set Prediction Accuracy Benchmark</a></li>
+<li class="chapter" data-level="" data-path="tuning-training-data-samples.html"><a href="tuning-training-data-samples.html#folds-cv-repeat-10-times"><i class="fa fa-check"></i>10 Folds CV Repeat 10 Times</a></li>
+<li class="chapter" data-level="" data-path="tuning-training-data-samples.html"><a href="tuning-training-data-samples.html#folds-cv-repeat-10-times-1"><i class="fa fa-check"></i>5 Folds CV Repeat 10 Times</a></li>
+<li class="chapter" data-level="" data-path="tuning-training-data-samples.html"><a href="tuning-training-data-samples.html#folds-cv-repeat-10-times-2"><i class="fa fa-check"></i>3 Folds CV Repeat 10 Times</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="tuning-models-parameters.html"><a href="tuning-models-parameters.html"><i class="fa fa-check"></i><b>11.3</b> Tuning Model’s Parameters</a><ul>
+<li class="chapter" data-level="" data-path="tuning-models-parameters.html"><a href="tuning-models-parameters.html#random-search"><i class="fa fa-check"></i>Random Search</a></li>
+<li class="chapter" data-level="" data-path="tuning-models-parameters.html"><a href="tuning-models-parameters.html#grid-search"><i class="fa fa-check"></i>Grid Search</a></li>
+<li class="chapter" data-level="" data-path="tuning-models-parameters.html"><a href="tuning-models-parameters.html#manual-search"><i class="fa fa-check"></i>Manual Search</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="summary-9.html"><a href="summary-9.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-8.html"><a href="exercises-8.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="report.html"><a href="report.html"><i class="fa fa-check"></i><b>12</b> Report</a><ul>
+<li class="chapter" data-level="12.1" data-path="content-of-report.html"><a href="content-of-report.html"><i class="fa fa-check"></i><b>12.1</b> Content of Report</a></li>
+<li class="chapter" data-level="12.2" data-path="result-explainition.html"><a href="result-explainition.html"><i class="fa fa-check"></i><b>12.2</b> Result Explainition</a></li>
+<li class="chapter" data-level="12.3" data-path="model-interpretation.html"><a href="model-interpretation.html"><i class="fa fa-check"></i><b>12.3</b> Model Interpretation</a><ul>
+<li class="chapter" data-level="" data-path="model-interpretation.html"><a href="model-interpretation.html#models-performance-measure"><i class="fa fa-check"></i>Model’s Performance Measure</a></li>
+<li class="chapter" data-level="" data-path="model-interpretation.html"><a href="model-interpretation.html#visualise-models-prediction"><i class="fa fa-check"></i>Visualise Model’s Prediction</a></li>
+<li class="chapter" data-level="" data-path="model-interpretation.html"><a href="model-interpretation.html#importance-of-the-models-predictors"><i class="fa fa-check"></i>Importance of the Model’s Predictors</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="further-analysis.html"><a href="further-analysis.html"><i class="fa fa-check"></i><b>12.4</b> Further Analysis</a></li>
+<li class="chapter" data-level="" data-path="summary-10.html"><a href="summary-10.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-9.html"><a href="exercises-9.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix-apendix-the-r-code-of-the-entire-project.html"><a href="appendix-apendix-the-r-code-of-the-entire-project.html"><i class="fa fa-check"></i>(APPENDIX) Apendix: The R code of the entire project</a><ul>
+<li class="chapter" data-level="" data-path="titanicdataanalysis1-understand-data-r.html"><a href="titanicdataanalysis1-understand-data-r.html"><i class="fa fa-check"></i>TitanicDataAnalysis1_Understand_Data.R</a></li>
+<li class="chapter" data-level="" data-path="titanicdataanalysis2-datapreprocess-r.html"><a href="titanicdataanalysis2-datapreprocess-r.html"><i class="fa fa-check"></i>TitanicDataAnalysis2_Data+Preprocess.R</a></li>
+<li class="chapter" data-level="" data-path="titanicdataanalysis3-model-construction-r.html"><a href="titanicdataanalysis3-model-construction-r.html"><i class="fa fa-check"></i>TitanicDataAnalysis3_Model_Construction.R</a></li>
+<li class="chapter" data-level="" data-path="titanicdataanalysis4-model-cross-validation-r.html"><a href="titanicdataanalysis4-model-cross-validation-r.html"><i class="fa fa-check"></i>TitanicDataAnalysis4_Model_Cross_Validation.R</a></li>
+<li class="chapter" data-level="" data-path="titanicdataanalysis5-model-fine-tune-r.html"><a href="titanicdataanalysis5-model-fine-tune-r.html"><i class="fa fa-check"></i>TitanicDataAnalysis5_Model_Fine_Tune.R</a></li>
+<li class="chapter" data-level="" data-path="titanicdataanalysis6-analyse-report-r.html"><a href="titanicdataanalysis6-analyse-report-r.html"><i class="fa fa-check"></i>TitanicDataAnalysis6_Analyse_Report.R</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Do A Data Science Project in 10 Days</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="general-cross-validation-methods" class="section level2">
+<h2><span class="header-section-number">10.2</span> General Cross Validation Methods</h2>
+<p>There are two general CV methods that can be used to validate a prediction model:</p>
+<ol style="list-style-type: decimal">
+<li>Single model CV.</li>
+<li>Multiple models comparison.</li>
+</ol>
+<div id="single-model-cross-validation" class="section level3 unnumbered">
+<h3>Single Model Cross Validation</h3>
+<p>The goal of a single model CV is to test the model’s ability to predict new data that was not seen and not used in model construction. So, the problem can be spotted like overfitting or selection bias, in addition, it can also give an insight on how the model will generalize to an independent dataset or an unknown dataset.</p>
+<p>One round of CV involves partitioning a sample of data into complementary subsets, performing the analysis on one subset (called the <em>training set</em>), and validating the analysis on the other subset (called the <em>validation set</em>). To reduce variability, in most methods multiple rounds of CV are performed using different partitions, and the validation results are combined (e.g. averaged) over the rounds to give an estimate of the model’s predictive performance.</p>
+<p>There are two major cross-validation methods: exhaustive CV and non-exhaustive CV.</p>
+<ul>
+<li><p><strong>Exhaustive CV</strong> learn and test on all possible ways to divide the original sample into a training and a validation set. <strong>Leave-p-out CV (LpO CV)</strong> is an exhaustive cross-validation method. It involves using <span class="math inline">\(p\)</span> data samples as the validation dataset and the remaining data samples as the training dataset. This is repeated over and over until all possible ways to divide the original data sample into a training and a validation dataset <span class="math inline">\(p\)</span>.</p></li>
+<li><p><strong>Non-exhaustive cross-validation</strong>, in the contrary, does not compute all the possible ways of splitting the original data sample but still has a certain coverage. <strong><span class="math inline">\(k\)</span>-fold CV</strong> is typical non-exhaustive cross-validation.</p></li>
+</ul>
+<div class="figure" style="text-align: center"><span id="fig:k-fold"></span>
+<img src="images/k-fold.png" alt="K-Folds Cross Validation" width="100%" />
+<p class="caption">
+Figure 10.2: K-Folds Cross Validation
+</p>
+</div>
+<p>In <span class="math inline">\(k\)</span>-fold CV, the original data sample is randomly partitioned into <span class="math inline">\(k\)</span> equal-sized sub-samples. Of the k sub-samples, a single subsample is retained as the validation dataset for testing the model, and the remaining <span class="math inline">\(k\)</span> − 1 sub-samples are used as training data. The CV process is then repeated <span class="math inline">\(k\)</span> times, with each of the <span class="math inline">\(k\)</span> sub-samples used exactly once as the validation data. The <span class="math inline">\(k\)</span> results can then be averaged to produce a single estimation. The advantage of this method over repeated random sub-sampling is that all observations are used for both training and validation, and each observation is used for validation exactly once. <code>10-fold</code> CV is commonly used in practice.</p>
+</div>
+<div id="general-procedure-of-cv" class="section level3 unnumbered">
+<h3>General Procedure of CV</h3>
+<p>The general process of Cross-Validation is as follows:</p>
+<ol style="list-style-type: decimal">
+<li><p>Split the entire data randomly into <span class="math inline">\(K\)</span> folds (value of <span class="math inline">\(K\)</span> shouldn’t be too small or too high, ideally we choose 5 to 10 depending on the data size). The higher value of <span class="math inline">\(K\)</span> leads to a less biased model (but large variance might lead to overfitting), whereas the lower value of <span class="math inline">\(K\)</span> is similar to the train-test split approach we saw before.</p></li>
+<li><p>Then fit the model using the <span class="math inline">\(K - 1\)</span> folds and validate the model using the remaining <span class="math inline">\(K\)</span>th fold. Note down the scores/errors.</p></li>
+<li><p>Repeat this process until every <span class="math inline">\(K\)</span> fold serves as the test set. Then take the average of your recorded scores. That will be the performance metric for the model.</p></li>
+</ol>
+<p>We will use examples to demonstrate this procedure.</p>
+</div>
+<div id="cross-validation-on-decision-tree-models" class="section level3 unnumbered">
+<h3>Cross Validation on Decision Tree Models</h3>
+<p>We have produced four decision tree models in Chapter 8. Let us do cross-validation on <code>model2</code> and <code>model3</code> since they have identical predictors with the random forest <code>RF_model1</code> and <code>RF_model2</code> which we will do cross-validation later.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="general-cross-validation-methods.html#cb2-1"></a><span class="kw">library</span>(caret)</span>
+<span id="cb2-2"><a href="general-cross-validation-methods.html#cb2-2"></a><span class="kw">library</span>(rpart)</span>
+<span id="cb2-3"><a href="general-cross-validation-methods.html#cb2-3"></a><span class="kw">library</span>(rpart.plot)</span>
+<span id="cb2-4"><a href="general-cross-validation-methods.html#cb2-4"></a></span>
+<span id="cb2-5"><a href="general-cross-validation-methods.html#cb2-5"></a><span class="co">#read Re-engineered dataset</span></span>
+<span id="cb2-6"><a href="general-cross-validation-methods.html#cb2-6"></a>RE_data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./data/RE_data.csv&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb2-7"><a href="general-cross-validation-methods.html#cb2-7"></a></span>
+<span id="cb2-8"><a href="general-cross-validation-methods.html#cb2-8"></a><span class="co">#Factorize response variable</span></span>
+<span id="cb2-9"><a href="general-cross-validation-methods.html#cb2-9"></a>RE_data<span class="op">$</span>Survived &lt;-<span class="st"> </span><span class="kw">factor</span>(RE_data<span class="op">$</span>Survived)</span>
+<span id="cb2-10"><a href="general-cross-validation-methods.html#cb2-10"></a></span>
+<span id="cb2-11"><a href="general-cross-validation-methods.html#cb2-11"></a><span class="co">#Separate Train and test data.</span></span>
+<span id="cb2-12"><a href="general-cross-validation-methods.html#cb2-12"></a>train &lt;-<span class="st"> </span>RE_data[<span class="dv">1</span><span class="op">:</span><span class="dv">891</span>, ]</span>
+<span id="cb2-13"><a href="general-cross-validation-methods.html#cb2-13"></a>test &lt;-<span class="st"> </span>RE_data[<span class="dv">892</span><span class="op">:</span><span class="dv">1309</span>, ]</span>
+<span id="cb2-14"><a href="general-cross-validation-methods.html#cb2-14"></a></span>
+<span id="cb2-15"><a href="general-cross-validation-methods.html#cb2-15"></a><span class="co">#setup model&#39;s train and valid dataset</span></span>
+<span id="cb2-16"><a href="general-cross-validation-methods.html#cb2-16"></a><span class="kw">set.seed</span>(<span class="dv">1000</span>)</span>
+<span id="cb2-17"><a href="general-cross-validation-methods.html#cb2-17"></a>samp &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(train), <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span><span class="kw">nrow</span>(train))</span>
+<span id="cb2-18"><a href="general-cross-validation-methods.html#cb2-18"></a>trainData &lt;-<span class="st"> </span>train[samp, ]</span>
+<span id="cb2-19"><a href="general-cross-validation-methods.html#cb2-19"></a>validData &lt;-<span class="st"> </span>train[<span class="op">-</span>samp, ]</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="general-cross-validation-methods.html#cb3-1"></a><span class="co"># set random for reproduction</span></span>
+<span id="cb3-2"><a href="general-cross-validation-methods.html#cb3-2"></a><span class="kw">set.seed</span>(<span class="dv">3214</span>)</span>
+<span id="cb3-3"><a href="general-cross-validation-methods.html#cb3-3"></a><span class="co"># specify parameters for cross validation</span></span>
+<span id="cb3-4"><a href="general-cross-validation-methods.html#cb3-4"></a>control &lt;-<span class="st"> </span><span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;repeatedcv&quot;</span>, </span>
+<span id="cb3-5"><a href="general-cross-validation-methods.html#cb3-5"></a>                        <span class="dt">number =</span> <span class="dv">10</span>, <span class="co"># number of folds</span></span>
+<span id="cb3-6"><a href="general-cross-validation-methods.html#cb3-6"></a>                        <span class="dt">repeats =</span> <span class="dv">5</span>, <span class="co"># repeat times</span></span>
+<span id="cb3-7"><a href="general-cross-validation-methods.html#cb3-7"></a>                        <span class="dt">search =</span> <span class="st">&quot;grid&quot;</span>)</span></code></pre></div>
+<p>Our cross validation settings are: <code>10 folds</code>, and <code>repeat 5</code> times, with <code>Grid</code> search the optimal parameter. The detailed meaning of each settings refers to <a href="http://topepo.github.io/caret/data-splitting.html" class="uri">http://topepo.github.io/caret/data-splitting.html</a>.</p>
+<p>Let us do cross validation (CV) for Tree <em>model2</em>,</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="general-cross-validation-methods.html#cb4-1"></a><span class="kw">set.seed</span>(<span class="dv">1010</span>)</span>
+<span id="cb4-2"><a href="general-cross-validation-methods.html#cb4-2"></a><span class="co"># Create model from cross validation train data</span></span>
+<span id="cb4-3"><a href="general-cross-validation-methods.html#cb4-3"></a><span class="co">#  Tree_model2_cv &lt;- train(Survived ~ Sex + Pclass + HasCabinNum + Deck + Fare_pp,</span></span>
+<span id="cb4-4"><a href="general-cross-validation-methods.html#cb4-4"></a><span class="co">#                       data = trainData,</span></span>
+<span id="cb4-5"><a href="general-cross-validation-methods.html#cb4-5"></a><span class="co">#                       method = &quot;rpart&quot;,</span></span>
+<span id="cb4-6"><a href="general-cross-validation-methods.html#cb4-6"></a><span class="co">#                       trControl = control)</span></span>
+<span id="cb4-7"><a href="general-cross-validation-methods.html#cb4-7"></a><span class="co"># # Due to the computation cost once a model is trained. </span></span>
+<span id="cb4-8"><a href="general-cross-validation-methods.html#cb4-8"></a><span class="co"># # it is better to save it and load later rather than compute a gain</span></span>
+<span id="cb4-9"><a href="general-cross-validation-methods.html#cb4-9"></a><span class="co"># save(Tree_model2_cv, file = &quot;./data/Tree_model2_cv.rda&quot;)</span></span>
+<span id="cb4-10"><a href="general-cross-validation-methods.html#cb4-10"></a><span class="kw">load</span>(<span class="st">&quot;./data/Tree_model2_cv.rda&quot;</span>)</span>
+<span id="cb4-11"><a href="general-cross-validation-methods.html#cb4-11"></a></span>
+<span id="cb4-12"><a href="general-cross-validation-methods.html#cb4-12"></a><span class="kw">print.train</span>(Tree_model2_cv)</span></code></pre></div>
+<pre><code>## CART 
+## 
+## 712 samples
+##   5 predictor
+##   2 classes: &#39;0&#39;, &#39;1&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 5 times) 
+## Summary of sample sizes: 641, 640, 640, 641, 641, 642, ... 
+## Resampling results across tuning parameters:
+## 
+##   cp          Accuracy   Kappa    
+##   0.00887199  0.8253404  0.6003541
+##   0.03041825  0.7955233  0.5418574
+##   0.43726236  0.6908918  0.2281378
+## 
+## Accuracy was used to select the optimal model using the largest value.
+## The final value used for the model was cp = 0.00887199.</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="general-cross-validation-methods.html#cb6-1"></a>model_accuracy &lt;-<span class="st"> </span><span class="kw">format</span>(Tree_model2_cv<span class="op">$</span>results<span class="op">$</span>Accuracy[<span class="dv">1</span>], <span class="dt">digits =</span> <span class="dv">4</span>)</span>
+<span id="cb6-2"><a href="general-cross-validation-methods.html#cb6-2"></a><span class="kw">paste</span>(<span class="st">&quot;Estimated accuracy:&quot;</span>, model_accuracy)</span></code></pre></div>
+<pre><code>## [1] &quot;Estimated accuracy: 0.8253&quot;</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="general-cross-validation-methods.html#cb8-1"></a><span class="co"># Model estimated accuracy is 82.53.</span></span></code></pre></div>
+<p>Display details of the cross validation model,</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="general-cross-validation-methods.html#cb9-1"></a><span class="co">#Visualize cross validation tree</span></span>
+<span id="cb9-2"><a href="general-cross-validation-methods.html#cb9-2"></a><span class="kw">rpart.plot</span>(Tree_model2_cv<span class="op">$</span>finalModel, <span class="dt">extra=</span><span class="dv">4</span>)</span>
+<span id="cb9-3"><a href="general-cross-validation-methods.html#cb9-3"></a><span class="kw">plot.train</span>(Tree_model2_cv)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:model2CV"></span>
+<img src="10-model-cross-validation_files/figure-html/model2CV-1.svg" alt="Decision Tree CV model2." width="50%" /><img src="10-model-cross-validation_files/figure-html/model2CV-2.svg" alt="Decision Tree CV model2." width="50%" />
+<p class="caption">
+Figure 10.3: Decision Tree CV model2.
+</p>
+</div>
+<p>Let us record the model’s accuracy on <em>trainData</em>, <em>validData</em>, and <em>test</em> dataset. Remember <em>trainData</em> and <em>validData</em> are randomly partitioned from the <em>train</em> dataset.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="general-cross-validation-methods.html#cb10-1"></a><span class="co">### Access accuracy on different datasets</span></span>
+<span id="cb10-2"><a href="general-cross-validation-methods.html#cb10-2"></a><span class="co"># prediction&#39;s Confusion Matrix on the trainData </span></span>
+<span id="cb10-3"><a href="general-cross-validation-methods.html#cb10-3"></a>predict_train &lt;-<span class="kw">predict</span>(Tree_model2_cv, trainData)</span>
+<span id="cb10-4"><a href="general-cross-validation-methods.html#cb10-4"></a>conMat &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(predict_train, trainData<span class="op">$</span>Survived)</span>
+<span id="cb10-5"><a href="general-cross-validation-methods.html#cb10-5"></a>conMat<span class="op">$</span>table</span></code></pre></div>
+<pre><code>##           Reference
+## Prediction   0   1
+##          0 431 104
+##          1  18 159</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="general-cross-validation-methods.html#cb12-1"></a><span class="co"># prediction&#39;s Accuracy on the trainData </span></span>
+<span id="cb12-2"><a href="general-cross-validation-methods.html#cb12-2"></a>predict_train_accuracy &lt;-<span class="st"> </span><span class="kw">format</span>(conMat<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dt">digits=</span><span class="dv">4</span>)</span>
+<span id="cb12-3"><a href="general-cross-validation-methods.html#cb12-3"></a><span class="kw">paste</span>(<span class="st">&quot;trainData Accuracy:&quot;</span>, predict_train_accuracy)</span></code></pre></div>
+<pre><code>## [1] &quot;trainData Accuracy: 0.8287&quot;</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="general-cross-validation-methods.html#cb14-1"></a><span class="co"># prediction&#39;s Confusion Matrix on the validData</span></span>
+<span id="cb14-2"><a href="general-cross-validation-methods.html#cb14-2"></a>predict_valid &lt;-<span class="kw">predict</span>(Tree_model2_cv, validData)</span>
+<span id="cb14-3"><a href="general-cross-validation-methods.html#cb14-3"></a>conMat &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(predict_valid, validData<span class="op">$</span>Survived)</span>
+<span id="cb14-4"><a href="general-cross-validation-methods.html#cb14-4"></a>conMat<span class="op">$</span>table</span></code></pre></div>
+<pre><code>##           Reference
+## Prediction  0  1
+##          0 93 36
+##          1  7 43</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="general-cross-validation-methods.html#cb16-1"></a><span class="co"># prediction&#39;s Accuracy on the validData</span></span>
+<span id="cb16-2"><a href="general-cross-validation-methods.html#cb16-2"></a>predict_valid_accuracy &lt;-<span class="st"> </span><span class="kw">format</span>(conMat<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dt">digits=</span><span class="dv">4</span>)</span>
+<span id="cb16-3"><a href="general-cross-validation-methods.html#cb16-3"></a><span class="kw">paste</span>(<span class="st">&quot;viladData Accuracy:&quot;</span>, predict_valid_accuracy)</span></code></pre></div>
+<pre><code>## [1] &quot;viladData Accuracy: 0.7598&quot;</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="general-cross-validation-methods.html#cb18-1"></a><span class="co"># predict on test</span></span>
+<span id="cb18-2"><a href="general-cross-validation-methods.html#cb18-2"></a>predict_test &lt;-<span class="kw">predict</span>(Tree_model2_cv, test)</span>
+<span id="cb18-3"><a href="general-cross-validation-methods.html#cb18-3"></a>submit &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">PassengerId =</span> test<span class="op">$</span>PassengerId, <span class="dt">Survived =</span> <span class="kw">as.factor</span>(predict_test))</span>
+<span id="cb18-4"><a href="general-cross-validation-methods.html#cb18-4"></a><span class="kw">write.csv</span>(submit, <span class="dt">file =</span> <span class="st">&quot;./data/Tree_model2_CV.CSV&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb18-5"><a href="general-cross-validation-methods.html#cb18-5"></a><span class="co"># test accuracy 0.75837</span></span>
+<span id="cb18-6"><a href="general-cross-validation-methods.html#cb18-6"></a><span class="kw">paste</span>(<span class="st">&quot;Test Accuracy:&quot;</span>, <span class="fl">0.7584</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;Test Accuracy: 0.7584&quot;</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="general-cross-validation-methods.html#cb20-1"></a><span class="co"># accumulate model&#39;s accuracy</span></span>
+<span id="cb20-2"><a href="general-cross-validation-methods.html#cb20-2"></a>name &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Esti Accu&quot;</span>, <span class="st">&quot;Train Accu&quot;</span>, <span class="st">&quot;Valid Accu&quot;</span>, <span class="st">&quot;Test Accu&quot;</span>)</span>
+<span id="cb20-3"><a href="general-cross-validation-methods.html#cb20-3"></a>Tree_model2_CV_accuracy &lt;-<span class="st"> </span><span class="kw">c</span>(model_accuracy, predict_train_accuracy, predict_valid_accuracy, <span class="fl">0.7584</span>)</span>
+<span id="cb20-4"><a href="general-cross-validation-methods.html#cb20-4"></a><span class="kw">names</span>(Tree_model2_CV_accuracy) &lt;-<span class="st"> </span>name</span>
+<span id="cb20-5"><a href="general-cross-validation-methods.html#cb20-5"></a>Tree_model2_CV_accuracy</span></code></pre></div>
+<pre><code>##  Esti Accu Train Accu Valid Accu  Test Accu 
+##   &quot;0.8253&quot;   &quot;0.8287&quot;   &quot;0.7598&quot;   &quot;0.7584&quot;</code></pre>
+<p>We can see the tree differences from Figure @ref(fig:tree_model2_CV) and Figure <a href="#fig:tree2"><strong>??</strong></a>. We can also see that despite the model tried the best parameters, the prediction accuracy on the test dataset is dropped from 0.76555 (default decision tree) to 0.75837. It shows that the model construction has reached the best since the change of the tree structure does not increase the accuracy.</p>
+<p>The drop of the accuracy may caused by the reduction of the size of the training dataset. It reflects the second possible cause of the overfitting, that is the size of the training sample. Recall that decision tree <code>model2</code> was trained on the <code>train</code> dataset and now it is trained on the <code>trainData</code>. the later is a random subset of the <code>train</code> dataset and only has 80 percent of the data samples. That is to say, the smaller of the training dataset the more chance of the inaccurate prediction accuracy on the test dataset (overfitting or underfitting).</p>
+<p>Let us do cross validation on tree <em>model3</em>,</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="general-cross-validation-methods.html#cb22-1"></a><span class="co"># CV on model3</span></span>
+<span id="cb22-2"><a href="general-cross-validation-methods.html#cb22-2"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb22-3"><a href="general-cross-validation-methods.html#cb22-3"></a><span class="co"># Tree_model3_cv &lt;- train(Survived ~ Sex + Fare_pp + Pclass + Title + Age_group + Group_size + Ticket_class  + Embarked,</span></span>
+<span id="cb22-4"><a href="general-cross-validation-methods.html#cb22-4"></a><span class="co"># </span></span>
+<span id="cb22-5"><a href="general-cross-validation-methods.html#cb22-5"></a><span class="co">#                        data = trainData,</span></span>
+<span id="cb22-6"><a href="general-cross-validation-methods.html#cb22-6"></a><span class="co">#                        method = &quot;rpart&quot;,</span></span>
+<span id="cb22-7"><a href="general-cross-validation-methods.html#cb22-7"></a><span class="co">#                        trControl = control)</span></span>
+<span id="cb22-8"><a href="general-cross-validation-methods.html#cb22-8"></a><span class="co"># </span></span>
+<span id="cb22-9"><a href="general-cross-validation-methods.html#cb22-9"></a><span class="co"># save(Tree_model3_cv, file = &quot;./data/Tree_model3_cv.rda&quot;)</span></span>
+<span id="cb22-10"><a href="general-cross-validation-methods.html#cb22-10"></a><span class="kw">load</span>(<span class="st">&quot;./data/Tree_model3_cv.rda&quot;</span>)</span>
+<span id="cb22-11"><a href="general-cross-validation-methods.html#cb22-11"></a><span class="co"># show model details</span></span>
+<span id="cb22-12"><a href="general-cross-validation-methods.html#cb22-12"></a><span class="kw">print.train</span>(Tree_model3_cv)</span></code></pre></div>
+<pre><code>## CART 
+## 
+## 712 samples
+##   8 predictor
+##   2 classes: &#39;0&#39;, &#39;1&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 5 times) 
+## Summary of sample sizes: 641, 641, 641, 641, 641, 641, ... 
+## Resampling results across tuning parameters:
+## 
+##   cp          Accuracy   Kappa    
+##   0.03802281  0.8209755  0.6124019
+##   0.05323194  0.7934831  0.5627884
+##   0.42585551  0.6979987  0.2637528
+## 
+## Accuracy was used to select the optimal model using the largest value.
+## The final value used for the model was cp = 0.03802281.</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="general-cross-validation-methods.html#cb24-1"></a><span class="co"># record accuracy</span></span>
+<span id="cb24-2"><a href="general-cross-validation-methods.html#cb24-2"></a>model_accuracy &lt;-<span class="st"> </span><span class="kw">format</span>(Tree_model3_cv<span class="op">$</span>results<span class="op">$</span>Accuracy[<span class="dv">1</span>], <span class="dt">digits =</span> <span class="dv">4</span>)</span>
+<span id="cb24-3"><a href="general-cross-validation-methods.html#cb24-3"></a><span class="kw">paste</span>(<span class="st">&quot;Estimated accuracy:&quot;</span>, model_accuracy)</span></code></pre></div>
+<pre><code>## [1] &quot;Estimated accuracy: 0.821&quot;</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="general-cross-validation-methods.html#cb26-1"></a><span class="co"># accuracy is 0.82.</span></span></code></pre></div>
+<p>Visualize model,</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="general-cross-validation-methods.html#cb27-1"></a><span class="co">#Visualize cross validation tree</span></span>
+<span id="cb27-2"><a href="general-cross-validation-methods.html#cb27-2"></a><span class="kw">rpart.plot</span>(Tree_model3_cv<span class="op">$</span>finalModel, <span class="dt">extra=</span><span class="dv">4</span>)</span>
+<span id="cb27-3"><a href="general-cross-validation-methods.html#cb27-3"></a><span class="kw">plot.train</span>(Tree_model3_cv)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:treemodel3CV"></span>
+<img src="10-model-cross-validation_files/figure-html/treemodel3CV-1.svg" alt="Decision Tree CV model3." width="50%" /><img src="10-model-cross-validation_files/figure-html/treemodel3CV-2.svg" alt="Decision Tree CV model3." width="50%" />
+<p class="caption">
+Figure 10.4: Decision Tree CV model3.
+</p>
+</div>
+<p>Record model’s accuracy,</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="general-cross-validation-methods.html#cb28-1"></a><span class="co">### Access accuracy on different datasets</span></span>
+<span id="cb28-2"><a href="general-cross-validation-methods.html#cb28-2"></a><span class="co"># prediction&#39;s Confusion Matrix on the trainData </span></span>
+<span id="cb28-3"><a href="general-cross-validation-methods.html#cb28-3"></a>predict_train &lt;-<span class="kw">predict</span>(Tree_model3_cv, trainData)</span>
+<span id="cb28-4"><a href="general-cross-validation-methods.html#cb28-4"></a>conMat &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(predict_train, trainData<span class="op">$</span>Survived)</span>
+<span id="cb28-5"><a href="general-cross-validation-methods.html#cb28-5"></a>conMat<span class="op">$</span>table</span></code></pre></div>
+<pre><code>##           Reference
+## Prediction   0   1
+##          0 387  61
+##          1  62 202</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="general-cross-validation-methods.html#cb30-1"></a><span class="co"># prediction&#39;s Accuracy on the trainData </span></span>
+<span id="cb30-2"><a href="general-cross-validation-methods.html#cb30-2"></a>predict_train_accuracy &lt;-<span class="st"> </span><span class="kw">format</span>(conMat<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dt">digits=</span><span class="dv">4</span>)</span>
+<span id="cb30-3"><a href="general-cross-validation-methods.html#cb30-3"></a><span class="kw">paste</span>(<span class="st">&quot;trainData Accuracy:&quot;</span>, predict_train_accuracy)</span></code></pre></div>
+<pre><code>## [1] &quot;trainData Accuracy: 0.8272&quot;</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="general-cross-validation-methods.html#cb32-1"></a><span class="co"># prediction&#39;s Confusion Matrix on the validData</span></span>
+<span id="cb32-2"><a href="general-cross-validation-methods.html#cb32-2"></a>predict_valid &lt;-<span class="kw">predict</span>(Tree_model3_cv, validData)</span>
+<span id="cb32-3"><a href="general-cross-validation-methods.html#cb32-3"></a>conMat &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(predict_valid, validData<span class="op">$</span>Survived)</span>
+<span id="cb32-4"><a href="general-cross-validation-methods.html#cb32-4"></a>conMat<span class="op">$</span>table</span></code></pre></div>
+<pre><code>##           Reference
+## Prediction  0  1
+##          0 90 24
+##          1 10 55</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="general-cross-validation-methods.html#cb34-1"></a><span class="co"># prediction&#39;s Accuracy on the validData </span></span>
+<span id="cb34-2"><a href="general-cross-validation-methods.html#cb34-2"></a>predict_valid_accuracy &lt;-<span class="st"> </span><span class="kw">format</span>(conMat<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dt">digits=</span><span class="dv">4</span>)</span>
+<span id="cb34-3"><a href="general-cross-validation-methods.html#cb34-3"></a><span class="kw">paste</span>(<span class="st">&quot;validData Accuracy:&quot;</span>, predict_valid_accuracy)</span></code></pre></div>
+<pre><code>## [1] &quot;validData Accuracy: 0.8101&quot;</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="general-cross-validation-methods.html#cb36-1"></a><span class="co">#predict on test</span></span>
+<span id="cb36-2"><a href="general-cross-validation-methods.html#cb36-2"></a>predict_test &lt;-<span class="kw">predict</span>(Tree_model3_cv, test)</span>
+<span id="cb36-3"><a href="general-cross-validation-methods.html#cb36-3"></a>submit &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">PassengerId =</span> test<span class="op">$</span>PassengerId, <span class="dt">Survived =</span> <span class="kw">as.factor</span>(predict_test))</span>
+<span id="cb36-4"><a href="general-cross-validation-methods.html#cb36-4"></a><span class="kw">write.csv</span>(submit, <span class="dt">file =</span> <span class="st">&quot;./data/Tree_model3_CV.CSV&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb36-5"><a href="general-cross-validation-methods.html#cb36-5"></a></span>
+<span id="cb36-6"><a href="general-cross-validation-methods.html#cb36-6"></a><span class="co">## test accuracy is 0.77751</span></span>
+<span id="cb36-7"><a href="general-cross-validation-methods.html#cb36-7"></a><span class="kw">paste</span>(<span class="st">&quot;Test Accuracy:&quot;</span>, <span class="fl">0.7775</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;Test Accuracy: 0.7775&quot;</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="general-cross-validation-methods.html#cb38-1"></a><span class="co"># accumulate model&#39;s accuracy</span></span>
+<span id="cb38-2"><a href="general-cross-validation-methods.html#cb38-2"></a>Tree_model3_CV_accuracy &lt;-<span class="st"> </span><span class="kw">c</span>(model_accuracy, predict_train_accuracy, predict_valid_accuracy, <span class="fl">0.7775</span>)</span>
+<span id="cb38-3"><a href="general-cross-validation-methods.html#cb38-3"></a><span class="kw">names</span>(Tree_model3_CV_accuracy) &lt;-<span class="st"> </span>name</span>
+<span id="cb38-4"><a href="general-cross-validation-methods.html#cb38-4"></a>Tree_model3_CV_accuracy</span></code></pre></div>
+<pre><code>##  Esti Accu Train Accu Valid Accu  Test Accu 
+##    &quot;0.821&quot;   &quot;0.8272&quot;   &quot;0.8101&quot;   &quot;0.7775&quot;</code></pre>
+<p>The results show a consistent prediction accuracy. The accuracy of the test dataset has been increased from 0.77033 (Tree model3) to 0.7775. The point perhaps is that the increase of predictors does improve the accuracy (so far).</p>
+<p>Based on the two cross-validations we have done to the two decision tree models: <code>model2</code> and <code>model3</code>, we can conclude that the decision tree model’s default settings are nearly their best. This is because after the cross-validations with <code>10 folds</code> and <code>repeat 5 times</code> and <code>Grid</code> search have been carried, we did not manage to improve the models’ accuracy.</p>
+</div>
+<div id="cross-validation-on-random-forest-models" class="section level3 unnumbered">
+<h3>Cross Validation on Random Forest Models</h3>
+<p>Now, Let us try the same cross validation on the two random forest models constructed in Chapter 9.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="general-cross-validation-methods.html#cb40-1"></a><span class="co"># set seed for reproduction</span></span>
+<span id="cb40-2"><a href="general-cross-validation-methods.html#cb40-2"></a><span class="kw">set.seed</span>(<span class="dv">2307</span>)</span>
+<span id="cb40-3"><a href="general-cross-validation-methods.html#cb40-3"></a>RF_model1_cv &lt;-<span class="st"> </span><span class="kw">train</span>(Survived <span class="op">~</span><span class="st"> </span>Sex <span class="op">+</span><span class="st"> </span>Pclass <span class="op">+</span><span class="st"> </span>HasCabinNum <span class="op">+</span><span class="st">      </span>Deck <span class="op">+</span><span class="st"> </span>Fare_pp,</span>
+<span id="cb40-4"><a href="general-cross-validation-methods.html#cb40-4"></a>                       <span class="dt">data =</span> trainData,</span>
+<span id="cb40-5"><a href="general-cross-validation-methods.html#cb40-5"></a>                       <span class="dt">method =</span> <span class="st">&quot;rf&quot;</span>,</span>
+<span id="cb40-6"><a href="general-cross-validation-methods.html#cb40-6"></a>                       <span class="dt">trControl =</span> control)</span>
+<span id="cb40-7"><a href="general-cross-validation-methods.html#cb40-7"></a><span class="kw">save</span>(RF_model1_cv, <span class="dt">file =</span> <span class="st">&quot;./data/RF_model1_cv.rda&quot;</span>)</span>
+<span id="cb40-8"><a href="general-cross-validation-methods.html#cb40-8"></a><span class="kw">load</span>(<span class="st">&quot;./data/RF_model1_cv.rda&quot;</span>)</span>
+<span id="cb40-9"><a href="general-cross-validation-methods.html#cb40-9"></a></span>
+<span id="cb40-10"><a href="general-cross-validation-methods.html#cb40-10"></a><span class="co"># Show CV mdoel&#39;s details</span></span>
+<span id="cb40-11"><a href="general-cross-validation-methods.html#cb40-11"></a><span class="kw">print</span>(RF_model1_cv)</span></code></pre></div>
+<pre><code>## Random Forest 
+## 
+## 712 samples
+##   5 predictor
+##   2 classes: &#39;0&#39;, &#39;1&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 5 times) 
+## Summary of sample sizes: 641, 642, 640, 641, 641, 641, ... 
+## Resampling results across tuning parameters:
+## 
+##   mtry  Accuracy   Kappa    
+##    2    0.7615079  0.4382518
+##    7    0.8401691  0.6412818
+##   12    0.8284042  0.6263444
+## 
+## Accuracy was used to select the optimal model using the largest value.
+## The final value used for the model was mtry = 7.</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="general-cross-validation-methods.html#cb42-1"></a><span class="kw">print</span>(RF_model1_cv<span class="op">$</span>results)</span></code></pre></div>
+<pre><code>##   mtry  Accuracy     Kappa AccuracySD    KappaSD
+## 1    2 0.7615079 0.4382518 0.05265318 0.13042865
+## 2    7 0.8401691 0.6412818 0.04046572 0.09332728
+## 3   12 0.8284042 0.6263444 0.04617175 0.10032573</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="general-cross-validation-methods.html#cb44-1"></a><span class="co"># Record model&#39;s accuracy</span></span>
+<span id="cb44-2"><a href="general-cross-validation-methods.html#cb44-2"></a>model_accuracy &lt;-<span class="st"> </span><span class="kw">format</span>(RF_model1_cv<span class="op">$</span>results<span class="op">$</span>Accuracy[<span class="dv">2</span>], <span class="dt">digits =</span> <span class="dv">4</span>)</span>
+<span id="cb44-3"><a href="general-cross-validation-methods.html#cb44-3"></a><span class="kw">paste</span>(<span class="st">&quot;Estimated accuracy:&quot;</span>, model_accuracy)</span></code></pre></div>
+<pre><code>## [1] &quot;Estimated accuracy: 0.8402&quot;</code></pre>
+<p>We can see that the best model parameters are <code>mtry = 7</code> and <code>ntree = 500</code>, The trained model’s best accuracy is 83.88%.</p>
+<p>Let us verify on validate dataset and make prediction on the test dataset.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="general-cross-validation-methods.html#cb46-1"></a><span class="co">### Access accuracy on different datasets</span></span>
+<span id="cb46-2"><a href="general-cross-validation-methods.html#cb46-2"></a><span class="co"># prediction&#39;s Confusion Matrix on the trainData </span></span>
+<span id="cb46-3"><a href="general-cross-validation-methods.html#cb46-3"></a>predict_train &lt;-<span class="kw">predict</span>(RF_model1_cv, trainData)</span>
+<span id="cb46-4"><a href="general-cross-validation-methods.html#cb46-4"></a>conMat &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(predict_train, trainData<span class="op">$</span>Survived)</span>
+<span id="cb46-5"><a href="general-cross-validation-methods.html#cb46-5"></a>conMat<span class="op">$</span>table</span></code></pre></div>
+<pre><code>##           Reference
+## Prediction   0   1
+##          0 432  69
+##          1  17 194</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="general-cross-validation-methods.html#cb48-1"></a><span class="co"># prediction&#39;s Accuracy on the trainData </span></span>
+<span id="cb48-2"><a href="general-cross-validation-methods.html#cb48-2"></a>predict_train_accuracy &lt;-<span class="st"> </span><span class="kw">format</span>(conMat<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dt">digits=</span><span class="dv">4</span>)</span>
+<span id="cb48-3"><a href="general-cross-validation-methods.html#cb48-3"></a><span class="kw">paste</span>(<span class="st">&quot;trainData Accuracy:&quot;</span>, predict_train_accuracy)</span></code></pre></div>
+<pre><code>## [1] &quot;trainData Accuracy: 0.8792&quot;</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="general-cross-validation-methods.html#cb50-1"></a><span class="co"># prediction&#39;s Confusion Matrix on the validData</span></span>
+<span id="cb50-2"><a href="general-cross-validation-methods.html#cb50-2"></a>predict_valid &lt;-<span class="kw">predict</span>(RF_model1_cv, validData)</span>
+<span id="cb50-3"><a href="general-cross-validation-methods.html#cb50-3"></a>conMat &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(predict_valid, validData<span class="op">$</span>Survived)</span>
+<span id="cb50-4"><a href="general-cross-validation-methods.html#cb50-4"></a>conMat<span class="op">$</span>table</span></code></pre></div>
+<pre><code>##           Reference
+## Prediction  0  1
+##          0 88 34
+##          1 12 45</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="general-cross-validation-methods.html#cb52-1"></a><span class="co"># prediction&#39;s Accuracy on the validData </span></span>
+<span id="cb52-2"><a href="general-cross-validation-methods.html#cb52-2"></a>predict_valid_accuracy &lt;-<span class="st"> </span><span class="kw">format</span>(conMat<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dt">digits=</span><span class="dv">4</span>)</span>
+<span id="cb52-3"><a href="general-cross-validation-methods.html#cb52-3"></a><span class="kw">paste</span>(<span class="st">&quot;validData Accuracy:&quot;</span>, predict_valid_accuracy)</span></code></pre></div>
+<pre><code>## [1] &quot;validData Accuracy: 0.743&quot;</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="general-cross-validation-methods.html#cb54-1"></a><span class="co"># predict on test</span></span>
+<span id="cb54-2"><a href="general-cross-validation-methods.html#cb54-2"></a>predict_test &lt;-<span class="kw">predict</span>(RF_model1_cv, test)</span>
+<span id="cb54-3"><a href="general-cross-validation-methods.html#cb54-3"></a>submit &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">PassengerId =</span> test<span class="op">$</span>PassengerId, <span class="dt">Survived =</span> <span class="kw">as.factor</span>(predict_test))</span>
+<span id="cb54-4"><a href="general-cross-validation-methods.html#cb54-4"></a><span class="kw">write.csv</span>(submit, <span class="dt">file =</span> <span class="st">&quot;./data/RF_model1_CV.CSV&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb54-5"><a href="general-cross-validation-methods.html#cb54-5"></a></span>
+<span id="cb54-6"><a href="general-cross-validation-methods.html#cb54-6"></a><span class="co">## test accuracy 0.74641</span></span>
+<span id="cb54-7"><a href="general-cross-validation-methods.html#cb54-7"></a><span class="kw">paste</span>(<span class="st">&quot;Test Accuracy:&quot;</span>, <span class="fl">0.7464</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;Test Accuracy: 0.7464&quot;</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="general-cross-validation-methods.html#cb56-1"></a><span class="co"># accumulate model&#39;s accuracy</span></span>
+<span id="cb56-2"><a href="general-cross-validation-methods.html#cb56-2"></a>RF_model1_cv_accuracy &lt;-<span class="st"> </span><span class="kw">c</span>(model_accuracy, predict_train_accuracy, predict_valid_accuracy, <span class="fl">0.7464</span>)</span>
+<span id="cb56-3"><a href="general-cross-validation-methods.html#cb56-3"></a><span class="kw">names</span>(RF_model1_cv_accuracy) &lt;-<span class="st"> </span>name</span>
+<span id="cb56-4"><a href="general-cross-validation-methods.html#cb56-4"></a>RF_model1_cv_accuracy</span></code></pre></div>
+<pre><code>##  Esti Accu Train Accu Valid Accu  Test Accu 
+##   &quot;0.8402&quot;   &quot;0.8792&quot;    &quot;0.743&quot;   &quot;0.7464&quot;</code></pre>
+<p>The <code>trainData</code> set was randomly selected 80 percent of train dataset, the random forest parameter was set to <code>mtry = 7</code>, <code>ntree = 500</code> and the cross-validation settings were <code>fold = 10</code> and <code>repeats= 5</code>. They all combined together trained a CV model. The model’s prediction accuracy is pretty bad with 74.6% on the test dataset. The random forest model <code>RF_model1</code> using the same predictors and the default random forest settings (<code>mtry = 1</code>, <code>ntree = 500</code>), trained on no split train dataset has a prediction accuracy of 0.76555.</p>
+<p>Let us try on random forest <code>model2</code>,</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="general-cross-validation-methods.html#cb58-1"></a><span class="co"># set seed for reproduction</span></span>
+<span id="cb58-2"><a href="general-cross-validation-methods.html#cb58-2"></a><span class="kw">set.seed</span>(<span class="dv">2300</span>)</span>
+<span id="cb58-3"><a href="general-cross-validation-methods.html#cb58-3"></a></span>
+<span id="cb58-4"><a href="general-cross-validation-methods.html#cb58-4"></a><span class="co"># RF_model2_cv &lt;- train(Survived ~ Sex + Fare_pp + Pclass + Title + Age_group + Group_size + Ticket_class + Embarked,</span></span>
+<span id="cb58-5"><a href="general-cross-validation-methods.html#cb58-5"></a><span class="co">#                        data = trainData, </span></span>
+<span id="cb58-6"><a href="general-cross-validation-methods.html#cb58-6"></a><span class="co">#                        method = &quot;rf&quot;, </span></span>
+<span id="cb58-7"><a href="general-cross-validation-methods.html#cb58-7"></a><span class="co">#                        trControl = control)</span></span>
+<span id="cb58-8"><a href="general-cross-validation-methods.html#cb58-8"></a><span class="co"># # This model will be used in chapter 12. so it is saved into a file for late to be loaded</span></span>
+<span id="cb58-9"><a href="general-cross-validation-methods.html#cb58-9"></a><span class="co"># save(RF_model2_cv, file = &quot;./data/RF_model2_cv.rda&quot;)</span></span>
+<span id="cb58-10"><a href="general-cross-validation-methods.html#cb58-10"></a></span>
+<span id="cb58-11"><a href="general-cross-validation-methods.html#cb58-11"></a><span class="kw">load</span>(<span class="st">&quot;./data/RF_model2_cv.rda&quot;</span>)</span>
+<span id="cb58-12"><a href="general-cross-validation-methods.html#cb58-12"></a></span>
+<span id="cb58-13"><a href="general-cross-validation-methods.html#cb58-13"></a><span class="co"># Show CV mdoel&#39;s details</span></span>
+<span id="cb58-14"><a href="general-cross-validation-methods.html#cb58-14"></a><span class="kw">print</span>(RF_model2_cv)</span></code></pre></div>
+<pre><code>## Random Forest 
+## 
+## 712 samples
+##   8 predictor
+##   2 classes: &#39;0&#39;, &#39;1&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 5 times) 
+## Summary of sample sizes: 641, 640, 642, 641, 640, 641, ... 
+## Resampling results across tuning parameters:
+## 
+##   mtry  Accuracy   Kappa    
+##    2    0.8105369  0.5725714
+##   17    0.8404408  0.6518406
+##   32    0.8312040  0.6320845
+## 
+## Accuracy was used to select the optimal model using the largest value.
+## The final value used for the model was mtry = 17.</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="general-cross-validation-methods.html#cb60-1"></a><span class="kw">print</span>(RF_model2_cv<span class="op">$</span>results)</span></code></pre></div>
+<pre><code>##   mtry  Accuracy     Kappa AccuracySD   KappaSD
+## 1    2 0.8105369 0.5725714 0.04319425 0.1018195
+## 2   17 0.8404408 0.6518406 0.04065381 0.0900002
+## 3   32 0.8312040 0.6320845 0.04514800 0.1001118</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="general-cross-validation-methods.html#cb62-1"></a><span class="co"># Record model&#39;s accuracy</span></span>
+<span id="cb62-2"><a href="general-cross-validation-methods.html#cb62-2"></a>mode2_accuracy &lt;-<span class="st"> </span><span class="kw">format</span>(RF_model2_cv<span class="op">$</span>results<span class="op">$</span>Accuracy[<span class="dv">2</span>], <span class="dt">digits =</span> <span class="dv">4</span>)</span>
+<span id="cb62-3"><a href="general-cross-validation-methods.html#cb62-3"></a><span class="kw">paste</span>(<span class="st">&quot;Estimated accuracy:&quot;</span>, mode2_accuracy)</span></code></pre></div>
+<pre><code>## [1] &quot;Estimated accuracy: 0.8404&quot;</code></pre>
+<p>Let us calculate model’s accuracy,</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="general-cross-validation-methods.html#cb64-1"></a><span class="co">### Access accuracy on different datasets</span></span>
+<span id="cb64-2"><a href="general-cross-validation-methods.html#cb64-2"></a><span class="co"># prediction&#39;s Confusion Matrix on the trainData </span></span>
+<span id="cb64-3"><a href="general-cross-validation-methods.html#cb64-3"></a>predict_train &lt;-<span class="kw">predict</span>(RF_model2_cv, trainData)</span>
+<span id="cb64-4"><a href="general-cross-validation-methods.html#cb64-4"></a>conMat &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(predict_train, trainData<span class="op">$</span>Survived)</span>
+<span id="cb64-5"><a href="general-cross-validation-methods.html#cb64-5"></a>conMat<span class="op">$</span>table</span></code></pre></div>
+<pre><code>##           Reference
+## Prediction   0   1
+##          0 441  19
+##          1   8 244</code></pre>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="general-cross-validation-methods.html#cb66-1"></a><span class="co"># prediction&#39;s Accuracy on the trainData </span></span>
+<span id="cb66-2"><a href="general-cross-validation-methods.html#cb66-2"></a>predict_train_accuracy &lt;-<span class="st"> </span><span class="kw">format</span>(conMat<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dt">digits=</span><span class="dv">4</span>)</span>
+<span id="cb66-3"><a href="general-cross-validation-methods.html#cb66-3"></a><span class="kw">paste</span>(<span class="st">&quot;trainData Accuracy:&quot;</span>, predict_train_accuracy)</span></code></pre></div>
+<pre><code>## [1] &quot;trainData Accuracy: 0.9621&quot;</code></pre>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="general-cross-validation-methods.html#cb68-1"></a><span class="co"># prediction&#39;s Confusion Matrix on the validData</span></span>
+<span id="cb68-2"><a href="general-cross-validation-methods.html#cb68-2"></a>predict_valid &lt;-<span class="kw">predict</span>(RF_model2_cv, validData)</span>
+<span id="cb68-3"><a href="general-cross-validation-methods.html#cb68-3"></a>conMat &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(predict_valid, validData<span class="op">$</span>Survived)</span>
+<span id="cb68-4"><a href="general-cross-validation-methods.html#cb68-4"></a>conMat<span class="op">$</span>table</span></code></pre></div>
+<pre><code>##           Reference
+## Prediction  0  1
+##          0 86 30
+##          1 14 49</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="general-cross-validation-methods.html#cb70-1"></a><span class="co"># prediction&#39;s Accuracy on the validData </span></span>
+<span id="cb70-2"><a href="general-cross-validation-methods.html#cb70-2"></a>predict_valid_accuracy &lt;-<span class="st"> </span><span class="kw">format</span>(conMat<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dt">digits=</span><span class="dv">4</span>)</span>
+<span id="cb70-3"><a href="general-cross-validation-methods.html#cb70-3"></a><span class="kw">paste</span>(<span class="st">&quot;validData Accuracy:&quot;</span>, predict_valid_accuracy)</span></code></pre></div>
+<pre><code>## [1] &quot;validData Accuracy: 0.7542&quot;</code></pre>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="general-cross-validation-methods.html#cb72-1"></a><span class="co">#predict on test</span></span>
+<span id="cb72-2"><a href="general-cross-validation-methods.html#cb72-2"></a>predict_test &lt;-<span class="kw">predict</span>(RF_model2_cv, test)</span>
+<span id="cb72-3"><a href="general-cross-validation-methods.html#cb72-3"></a>submit &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">PassengerId =</span> test<span class="op">$</span>PassengerId, <span class="dt">Survived =</span> <span class="kw">as.factor</span>(predict_test))</span>
+<span id="cb72-4"><a href="general-cross-validation-methods.html#cb72-4"></a><span class="kw">write.csv</span>(submit, <span class="dt">file =</span> <span class="st">&quot;./data/RF_model2_CV.CSV&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb72-5"><a href="general-cross-validation-methods.html#cb72-5"></a></span>
+<span id="cb72-6"><a href="general-cross-validation-methods.html#cb72-6"></a><span class="co">## test accuracy 0.75119</span></span>
+<span id="cb72-7"><a href="general-cross-validation-methods.html#cb72-7"></a><span class="kw">paste</span>(<span class="st">&quot;Test Accuracy:&quot;</span>, <span class="fl">0.7512</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;Test Accuracy: 0.7512&quot;</code></pre>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="general-cross-validation-methods.html#cb74-1"></a><span class="co"># accumulate model&#39;s accuracy</span></span>
+<span id="cb74-2"><a href="general-cross-validation-methods.html#cb74-2"></a>RF_model2_cv_accuracy &lt;-<span class="st"> </span><span class="kw">c</span>(mode2_accuracy, predict_train_accuracy, predict_valid_accuracy, <span class="fl">0.7512</span>)</span>
+<span id="cb74-3"><a href="general-cross-validation-methods.html#cb74-3"></a><span class="kw">names</span>(RF_model2_cv_accuracy) &lt;-<span class="st"> </span>name</span>
+<span id="cb74-4"><a href="general-cross-validation-methods.html#cb74-4"></a>RF_model2_cv_accuracy</span></code></pre></div>
+<pre><code>##  Esti Accu Train Accu Valid Accu  Test Accu 
+##   &quot;0.8404&quot;   &quot;0.9621&quot;   &quot;0.7542&quot;   &quot;0.7512&quot;</code></pre>
+<p>We have used <code>10 folds</code> and <code>repeated 5 times</code> cross-validation with 80% of the train dataset to build and validate 4 models: two from <em>decision tree</em> and two from <em>random forest</em>. The different accuracy measurements with different datasets have been collected. Let us put them into one table and plot them in the graph, so we can make a comparison.</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="general-cross-validation-methods.html#cb76-1"></a><span class="kw">library</span>(tidyr)</span>
+<span id="cb76-2"><a href="general-cross-validation-methods.html#cb76-2"></a>Model &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Tree_Modlel2&quot;</span>,<span class="st">&quot;Tree_Model3&quot;</span>,<span class="st">&quot;RF_model1&quot;</span>,<span class="st">&quot;RF_model2&quot;</span>)</span>
+<span id="cb76-3"><a href="general-cross-validation-methods.html#cb76-3"></a></span>
+<span id="cb76-4"><a href="general-cross-validation-methods.html#cb76-4"></a><span class="co"># Show individual models&#39; accuracy</span></span>
+<span id="cb76-5"><a href="general-cross-validation-methods.html#cb76-5"></a>Tree_model2_CV_accuracy</span></code></pre></div>
+<pre><code>##  Esti Accu Train Accu Valid Accu  Test Accu 
+##   &quot;0.8253&quot;   &quot;0.8287&quot;   &quot;0.7598&quot;   &quot;0.7584&quot;</code></pre>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="general-cross-validation-methods.html#cb78-1"></a>Tree_model3_CV_accuracy</span></code></pre></div>
+<pre><code>##  Esti Accu Train Accu Valid Accu  Test Accu 
+##    &quot;0.821&quot;   &quot;0.8272&quot;   &quot;0.8101&quot;   &quot;0.7775&quot;</code></pre>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="general-cross-validation-methods.html#cb80-1"></a>RF_model1_cv_accuracy</span></code></pre></div>
+<pre><code>##  Esti Accu Train Accu Valid Accu  Test Accu 
+##   &quot;0.8402&quot;   &quot;0.8792&quot;    &quot;0.743&quot;   &quot;0.7464&quot;</code></pre>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="general-cross-validation-methods.html#cb82-1"></a>RF_model2_cv_accuracy</span></code></pre></div>
+<pre><code>##  Esti Accu Train Accu Valid Accu  Test Accu 
+##   &quot;0.8404&quot;   &quot;0.9621&quot;   &quot;0.7542&quot;   &quot;0.7512&quot;</code></pre>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="general-cross-validation-methods.html#cb84-1"></a><span class="co">#preparee for table construction</span></span>
+<span id="cb84-2"><a href="general-cross-validation-methods.html#cb84-2"></a>Pre &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Sex, Pclass, HasCabinNum, Deck, Fare_pp&quot;</span>, <span class="st">&quot;Sex, Fare_pp, Pclass, Title, Age_group, Group_size, Ticket_class, Embarked&quot;</span>, <span class="st">&quot;Sex, Pclass, HasCabinNum, Deck, Fare_pp&quot;</span>, <span class="st">&quot;Sex, Fare_pp, Pclass, Title, Age_group, Group_size, Ticket_class, Embarked&quot;</span>)</span>
+<span id="cb84-3"><a href="general-cross-validation-methods.html#cb84-3"></a><span class="co">#</span></span>
+<span id="cb84-4"><a href="general-cross-validation-methods.html#cb84-4"></a>Learn &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">as.numeric</span>(Tree_model2_CV_accuracy[<span class="dv">1</span>])<span class="op">*</span><span class="dv">100</span>, <span class="kw">as.numeric</span>(Tree_model3_CV_accuracy[<span class="dv">1</span>])<span class="op">*</span><span class="dv">100</span>, <span class="kw">as.numeric</span>(RF_model1_cv_accuracy[<span class="dv">1</span>])<span class="op">*</span><span class="dv">100</span>, <span class="kw">as.numeric</span>(RF_model2_cv_accuracy[<span class="dv">1</span>])<span class="op">*</span><span class="dv">100</span>)</span>
+<span id="cb84-5"><a href="general-cross-validation-methods.html#cb84-5"></a><span class="co">#</span></span>
+<span id="cb84-6"><a href="general-cross-validation-methods.html#cb84-6"></a>Train &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">as.numeric</span>(Tree_model2_CV_accuracy[<span class="dv">2</span>])<span class="op">*</span><span class="dv">100</span>, <span class="kw">as.numeric</span>(Tree_model3_CV_accuracy[<span class="dv">2</span>])<span class="op">*</span><span class="dv">100</span>, <span class="kw">as.numeric</span>(RF_model1_cv_accuracy[<span class="dv">2</span>])<span class="op">*</span><span class="dv">100</span>, <span class="kw">as.numeric</span>(RF_model2_cv_accuracy[<span class="dv">2</span>])<span class="op">*</span><span class="dv">100</span>)</span>
+<span id="cb84-7"><a href="general-cross-validation-methods.html#cb84-7"></a><span class="co">#</span></span>
+<span id="cb84-8"><a href="general-cross-validation-methods.html#cb84-8"></a>Valid &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">as.numeric</span>(Tree_model2_CV_accuracy[<span class="dv">3</span>])<span class="op">*</span><span class="dv">100</span>, <span class="kw">as.numeric</span>(Tree_model3_CV_accuracy[<span class="dv">3</span>])<span class="op">*</span><span class="dv">100</span>, <span class="kw">as.numeric</span>(RF_model1_cv_accuracy[<span class="dv">3</span>])<span class="op">*</span><span class="dv">100</span>, <span class="kw">as.numeric</span>(RF_model2_cv_accuracy[<span class="dv">3</span>])<span class="op">*</span><span class="dv">100</span>)</span>
+<span id="cb84-9"><a href="general-cross-validation-methods.html#cb84-9"></a><span class="co">#</span></span>
+<span id="cb84-10"><a href="general-cross-validation-methods.html#cb84-10"></a>Test &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">as.numeric</span>(Tree_model2_CV_accuracy[<span class="dv">4</span>])<span class="op">*</span><span class="dv">100</span>, <span class="kw">as.numeric</span>(Tree_model3_CV_accuracy[<span class="dv">4</span>])<span class="op">*</span><span class="dv">100</span>, <span class="kw">as.numeric</span>(RF_model1_cv_accuracy[<span class="dv">4</span>])<span class="op">*</span><span class="dv">100</span>, <span class="kw">as.numeric</span>(RF_model2_cv_accuracy[<span class="dv">4</span>])<span class="op">*</span><span class="dv">100</span>)</span>
+<span id="cb84-11"><a href="general-cross-validation-methods.html#cb84-11"></a></span>
+<span id="cb84-12"><a href="general-cross-validation-methods.html#cb84-12"></a><span class="co"># Construct Dataframe for table and plot</span></span>
+<span id="cb84-13"><a href="general-cross-validation-methods.html#cb84-13"></a>df1 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(Model, Pre, Learn, Train, Valid, Test)</span>
+<span id="cb84-14"><a href="general-cross-validation-methods.html#cb84-14"></a>df2 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(Model, Learn, Train, Valid, Test)</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="general-cross-validation-methods.html#cb85-1"></a><span class="co"># show in table</span></span>
+<span id="cb85-2"><a href="general-cross-validation-methods.html#cb85-2"></a>knitr<span class="op">::</span><span class="kw">kable</span>(df1, <span class="dt">longtable =</span> <span class="ot">TRUE</span>, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>, <span class="dt">digits =</span> <span class="dv">2</span>, <span class="dt">col.names =</span><span class="kw">c</span>(<span class="st">&quot;Models&quot;</span>, <span class="st">&quot;Predictors&quot;</span>, <span class="st">&quot;Accuracy on Learn&quot;</span>, <span class="st">&quot;Accuracy on Train&quot;</span>, <span class="st">&quot;Accuracy on Valid&quot;</span>,  <span class="st">&quot;Accuracy on Test&quot;</span>), </span>
+<span id="cb85-3"><a href="general-cross-validation-methods.html#cb85-3"></a>  <span class="dt">caption =</span> <span class="st">&#39;The Comparision among 4 CV models&#39;</span></span>
+<span id="cb85-4"><a href="general-cross-validation-methods.html#cb85-4"></a>)</span></code></pre></div>
+<table style="width:100%;">
+<caption><span id="tab:CVmodelcom">Table 10.1: </span>The Comparision among 4 CV models</caption>
+<colgroup>
+<col width="8%" />
+<col width="47%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Models</th>
+<th align="left">Predictors</th>
+<th align="right">Accuracy on Learn</th>
+<th align="right">Accuracy on Train</th>
+<th align="right">Accuracy on Valid</th>
+<th align="right">Accuracy on Test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Tree_Modlel2</td>
+<td align="left">Sex, Pclass, HasCabinNum, Deck, Fare_pp</td>
+<td align="right">82.53</td>
+<td align="right">82.87</td>
+<td align="right">75.98</td>
+<td align="right">75.84</td>
+</tr>
+<tr class="even">
+<td align="left">Tree_Model3</td>
+<td align="left">Sex, Fare_pp, Pclass, Title, Age_group, Group_size, Ticket_class, Embarked</td>
+<td align="right">82.10</td>
+<td align="right">82.72</td>
+<td align="right">81.01</td>
+<td align="right">77.75</td>
+</tr>
+<tr class="odd">
+<td align="left">RF_model1</td>
+<td align="left">Sex, Pclass, HasCabinNum, Deck, Fare_pp</td>
+<td align="right">84.02</td>
+<td align="right">87.92</td>
+<td align="right">74.30</td>
+<td align="right">74.64</td>
+</tr>
+<tr class="even">
+<td align="left">RF_model2</td>
+<td align="left">Sex, Fare_pp, Pclass, Title, Age_group, Group_size, Ticket_class, Embarked</td>
+<td align="right">84.04</td>
+<td align="right">96.21</td>
+<td align="right">75.42</td>
+<td align="right">75.12</td>
+</tr>
+</tbody>
+</table>
+<p>Plot results in bar chat.</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="general-cross-validation-methods.html#cb86-1"></a>df.long &lt;-<span class="st"> </span><span class="kw">gather</span>(df2, Dataset, Accuracy, <span class="op">-</span>Model, <span class="dt">factor_key =</span><span class="ot">TRUE</span>)</span>
+<span id="cb86-2"><a href="general-cross-validation-methods.html#cb86-2"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> df.long, <span class="kw">aes</span>(<span class="dt">x =</span> Model, <span class="dt">y =</span> Accuracy, <span class="dt">fill =</span> Dataset)) <span class="op">+</span></span>
+<span id="cb86-3"><a href="general-cross-validation-methods.html#cb86-3"></a><span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>()) </span></code></pre></div>
+<div class="figure"><span id="fig:CVmodelcompare"></span>
+<img src="10-model-cross-validation_files/figure-html/CVmodelcompare-1.svg" alt="Cross valid models' accuracy on model learning, Traindata dataset. Validdata and Test dataset." width="672" />
+<p class="caption">
+Figure 10.5: Cross valid models’ accuracy on model learning, Traindata dataset. Validdata and Test dataset.
+</p>
+</div>
+<p>From the cross-validation results, we can conclude that:</p>
+<ol style="list-style-type: decimal">
+<li>Both decision tree and random forest models default settings are good settings. Despite the dynamic search for the best parameters, the changes in the parameter settings do not affect the prediction accuracy much. So both default settings for the prediction model are acceptable.</li>
+<li>Change of training dataset for model building from <em>train dataset</em> to its subset <em>trainData</em>, in <code>10-fold</code> and <code>5-repeat</code> cross-validation settings, does not change the order of models’ performance in terms of decision tree and random forest. It, however, when considering a single model, does suggest that the number of samples used for a model construction has an impact on the model’s prediction results.</li>
+<li>It is clear that the random forest models have overfitting.</li>
+<li>It does not provide a conclusive result that a decision tree is better than a random forest or vice versa.</li>
+</ol>
+<p>A general rule seems to suggest that, the more predictors and the more samples used in a model’s construction (training), the more likely the model will suffer from overfitting and vice versa.</p>
+<p>Therefore to choose a model for real prediction (production), we should choose the model that has the smallest accuracy decrease from the model’s training to its verification by the cross-validation.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="models-underfitting-and-overfitting.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="multiple-models-comparison.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": true,
+"twitter": true,
+"linkedin": true,
+"weibo": true,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+},
+"search": true,
+"info": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

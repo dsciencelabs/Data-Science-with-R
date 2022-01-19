@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5.2 Dealt with Miss Values | Do A Data Science Project in 10 Days</title>
+  <meta name="description" content="This is a data science project practice book. It was initially written for my Big Data course to help students to run a quick data analytical project and to understand 1. the data analytical process, the typical tasks and the methods, techniques and the algorithms need to accomplish these tasks. During convid19, the unicersity has adopted on-line teaching. So the students can not access to the university labs and HPC facilities. Gaining an experience of doing a data science project becomes individual students self-learning in isolation. This book aimed to help them to read through it and follow instructions to complete the sample propject by themslef. However, it is required by many other students who want to know about data analytics, machine learning and particularly practical issues, to gain experience and confidence of doing data analysis. So it is aimed for beginners and have no much knowledge of data Science. the format for this book is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5.2 Dealt with Miss Values | Do A Data Science Project in 10 Days" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://bookdown.org/Do-Data-Science-in-10days/" />
+  <meta property="og:image" content="https://bookdown.org/Do-Data-Science-in-10days/images/cover.png" />
+  <meta property="og:description" content="This is a data science project practice book. It was initially written for my Big Data course to help students to run a quick data analytical project and to understand 1. the data analytical process, the typical tasks and the methods, techniques and the algorithms need to accomplish these tasks. During convid19, the unicersity has adopted on-line teaching. So the students can not access to the university labs and HPC facilities. Gaining an experience of doing a data science project becomes individual students self-learning in isolation. This book aimed to help them to read through it and follow instructions to complete the sample propject by themslef. However, it is required by many other students who want to know about data analytics, machine learning and particularly practical issues, to gain experience and confidence of doing data analysis. So it is aimed for beginners and have no much knowledge of data Science. the format for this book is bookdown::gitbook." />
+  <meta name="github-repo" content="GangminLi/Do-Data-Science-with-R" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5.2 Dealt with Miss Values | Do A Data Science Project in 10 Days" />
+  
+  <meta name="twitter:description" content="This is a data science project practice book. It was initially written for my Big Data course to help students to run a quick data analytical project and to understand 1. the data analytical process, the typical tasks and the methods, techniques and the algorithms need to accomplish these tasks. During convid19, the unicersity has adopted on-line teaching. So the students can not access to the university labs and HPC facilities. Gaining an experience of doing a data science project becomes individual students self-learning in isolation. This book aimed to help them to read through it and follow instructions to complete the sample propject by themslef. However, it is required by many other students who want to know about data analytics, machine learning and particularly practical issues, to gain experience and confidence of doing data analysis. So it is aimed for beginners and have no much knowledge of data Science. the format for this book is bookdown::gitbook." />
+  <meta name="twitter:image" content="https://bookdown.org/Do-Data-Science-in-10days/images/cover.png" />
+
+<meta name="author" content="Gangmin Li" />
+
+
+<meta name="date" content="2021-03-07" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="general-data-prepartion-tasks.html"/>
+<link rel="next" href="attribute-re-engineering.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Do Data Science in 10 Days</a></li>
+
+<li class="divider"></li>
+<li><a href="index.html#section"></a><ul>
+<li class="chapter" data-level="" data-path="what-is-this-book.html"><a href="what-is-this-book.html"><i class="fa fa-check"></i>What is This Book?</a></li>
+<li class="chapter" data-level="" data-path="structure-of-the-book.html"><a href="structure-of-the-book.html"><i class="fa fa-check"></i>Structure of the Book</a></li>
+<li class="chapter" data-level="" data-path="what-can-this-book-offer-you.html"><a href="what-can-this-book-offer-you.html"><i class="fa fa-check"></i>What Can This Book Offer You?</a></li>
+<li class="chapter" data-level="" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i>Notes</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="what-is-data-science.html"><a href="what-is-data-science.html"><i class="fa fa-check"></i><b>1.1</b> What is Data Science?</a><ul>
+<li class="chapter" data-level="" data-path="what-is-data-science.html"><a href="what-is-data-science.html#data-science-as-discovery-of-data-insight"><i class="fa fa-check"></i>Data Science as Discovery of Data Insight</a></li>
+<li class="chapter" data-level="" data-path="what-is-data-science.html"><a href="what-is-data-science.html#data-science-as-development-of-data-product"><i class="fa fa-check"></i>Data Science as Development of Data Product</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="what-is-data-scientist.html"><a href="what-is-data-scientist.html"><i class="fa fa-check"></i><b>1.2</b> What is Data Scientist?</a><ul>
+<li class="chapter" data-level="" data-path="what-is-data-scientist.html"><a href="what-is-data-scientist.html#the-requisite-skill-set"><i class="fa fa-check"></i>The Requisite Skill Set</a></li>
+<li class="chapter" data-level="" data-path="what-is-data-scientist.html"><a href="what-is-data-scientist.html#how-to-become-a-data-scientist"><i class="fa fa-check"></i>How to Become a Data Scientist?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="process.html"><a href="process.html"><i class="fa fa-check"></i><b>1.3</b> Process of Doing Data Science</a><ul>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#step1"><i class="fa fa-check"></i>Step 1: Understand the Problem - Define Objectives</a></li>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#step2"><i class="fa fa-check"></i>Step 2: Understand Data - Knowing your Raw Materials</a></li>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#preprocess"><i class="fa fa-check"></i>Step 3: Data Preprocessing - Get your Data Ready</a></li>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#analyse"><i class="fa fa-check"></i>Step 4: Data Analyese - Building Models</a></li>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#step-5-results-interpretation-and-evaluation"><i class="fa fa-check"></i>Step 5: Results Interpretation and Evaluation</a></li>
+<li class="chapter" data-level="" data-path="process.html"><a href="process.html#step-6-data-report-and-communication"><i class="fa fa-check"></i>Step 6: Data Report and Communication</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html"><i class="fa fa-check"></i><b>1.4</b> Tools used in Doing a Data Science Project</a><ul>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#r"><i class="fa fa-check"></i>R</a></li>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#python"><i class="fa fa-check"></i>Python</a></li>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#sql"><i class="fa fa-check"></i>SQL</a></li>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#hadoop"><i class="fa fa-check"></i>Hadoop</a></li>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#tableau"><i class="fa fa-check"></i>Tableau</a></li>
+<li class="chapter" data-level="" data-path="tools-used-in-doing-a-data-science-project.html"><a href="tools-used-in-doing-a-data-science-project.html#weka"><i class="fa fa-check"></i>Weka</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html"><i class="fa fa-check"></i><b>1.5</b> Applications of Data Science</a><ul>
+<li class="chapter" data-level="" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html#data-science-in-healthcare"><i class="fa fa-check"></i>Data Science in Healthcare</a></li>
+<li class="chapter" data-level="" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html#data-science-in-e-commerce"><i class="fa fa-check"></i>Data Science in E-commerce</a></li>
+<li class="chapter" data-level="" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html#data-science-in-manufacturing"><i class="fa fa-check"></i>Data Science in Manufacturing</a></li>
+<li class="chapter" data-level="" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html#data-science-as-conversational-agents"><i class="fa fa-check"></i>Data Science as Conversational Agents</a></li>
+<li class="chapter" data-level="" data-path="applications-of-data-science.html"><a href="applications-of-data-science.html#data-science-in-transport"><i class="fa fa-check"></i>Data Science in Transport</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="data-science-related-terms.html"><a href="data-science-related-terms.html"><i class="fa fa-check"></i><b>1.6</b> Data Science Related Terms</a><ul>
+<li class="chapter" data-level="" data-path="data-science-related-terms.html"><a href="data-science-related-terms.html#dataanalyst-and-data-scientist"><i class="fa fa-check"></i>DataAnalyst and Data Scientist</a></li>
+<li class="chapter" data-level="" data-path="data-science-related-terms.html"><a href="data-science-related-terms.html#machine-learning-and-data-science"><i class="fa fa-check"></i>Machine Learning and Data Science</a></li>
+<li class="chapter" data-level="" data-path="data-science-related-terms.html"><a href="data-science-related-terms.html#data-mining-and-data-science"><i class="fa fa-check"></i>Data Mining and Data Science</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises.html"><a href="exercises.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="tools.html"><a href="tools.html"><i class="fa fa-check"></i><b>2</b> Get Your Tools Ready</a><ul>
+<li class="chapter" data-level="2.1" data-path="brief-introductiuon-about-r-and-rstudio.html"><a href="brief-introductiuon-about-r-and-rstudio.html"><i class="fa fa-check"></i><b>2.1</b> Brief introductiuon about R and RStudio</a><ul>
+<li class="chapter" data-level="" data-path="brief-introductiuon-about-r-and-rstudio.html"><a href="brief-introductiuon-about-r-and-rstudio.html#features-of-r-programming"><i class="fa fa-check"></i>Features of R Programming</a></li>
+<li class="chapter" data-level="" data-path="brief-introductiuon-about-r-and-rstudio.html"><a href="brief-introductiuon-about-r-and-rstudio.html#r-scripts"><i class="fa fa-check"></i>R Scripts</a></li>
+<li class="chapter" data-level="" data-path="brief-introductiuon-about-r-and-rstudio.html"><a href="brief-introductiuon-about-r-and-rstudio.html#r-graphical-user-interface-rgui"><i class="fa fa-check"></i>R Graphical User Interface (RGui)</a></li>
+<li class="chapter" data-level="" data-path="brief-introductiuon-about-r-and-rstudio.html"><a href="brief-introductiuon-about-r-and-rstudio.html#rstudio"><i class="fa fa-check"></i>RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="downlaod-and-install-r-and-rstudio.html"><a href="downlaod-and-install-r-and-rstudio.html"><i class="fa fa-check"></i><b>2.2</b> Downlaod and Install R and RStudio</a><ul>
+<li class="chapter" data-level="" data-path="downlaod-and-install-r-and-rstudio.html"><a href="downlaod-and-install-r-and-rstudio.html#r-download-and-installation"><i class="fa fa-check"></i>R Download and Installation</a></li>
+<li class="chapter" data-level="" data-path="downlaod-and-install-r-and-rstudio.html"><a href="downlaod-and-install-r-and-rstudio.html#rstudio-download-and-installation"><i class="fa fa-check"></i>RStudio Download and Installation</a></li>
+<li class="chapter" data-level="" data-path="downlaod-and-install-r-and-rstudio.html"><a href="downlaod-and-install-r-and-rstudio.html#familiar-with-rstudio-interface"><i class="fa fa-check"></i>Familiar with RStudio interface</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="bootsup-your-rstudio.html"><a href="bootsup-your-rstudio.html"><i class="fa fa-check"></i><b>2.3</b> Bootsup your RStudio</a></li>
+<li class="chapter" data-level="2.4" data-path="instructions.html"><a href="instructions.html"><i class="fa fa-check"></i><b>2.4</b> Instructions</a><ul>
+<li class="chapter" data-level="" data-path="instructions.html"><a href="instructions.html#code"><i class="fa fa-check"></i>Code</a></li>
+<li class="chapter" data-level="" data-path="instructions.html"><a href="instructions.html#tips"><i class="fa fa-check"></i>Tips</a></li>
+<li class="chapter" data-level="" data-path="instructions.html"><a href="instructions.html#actions"><i class="fa fa-check"></i>Actions</a></li>
+<li class="chapter" data-level="" data-path="instructions.html"><a href="instructions.html#exercise"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="exercises-1.html"><a href="exercises-1.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="prob.html"><a href="prob.html"><i class="fa fa-check"></i><b>3</b> Understand Problem</a><ul>
+<li class="chapter" data-level="3.1" data-path="Competion.html"><a href="Competion.html"><i class="fa fa-check"></i><b>3.1</b> Kaggle Competion</a></li>
+<li class="chapter" data-level="3.2" data-path="titianic-at-kaggel.html"><a href="titianic-at-kaggel.html"><i class="fa fa-check"></i><b>3.2</b> Titianic at Kaggel</a></li>
+<li class="chapter" data-level="3.3" data-path="the-titanic-problem.html"><a href="the-titanic-problem.html"><i class="fa fa-check"></i><b>3.3</b> The Titanic Problem</a><ul>
+<li class="chapter" data-level="" data-path="the-titanic-problem.html"><a href="the-titanic-problem.html#the-challenge"><i class="fa fa-check"></i>The Challenge</a></li>
+<li class="chapter" data-level="" data-path="the-titanic-problem.html"><a href="the-titanic-problem.html#the-data"><i class="fa fa-check"></i>The Data</a></li>
+<li class="chapter" data-level="" data-path="the-titanic-problem.html"><a href="the-titanic-problem.html#the-submission"><i class="fa fa-check"></i>The Submission</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="summary-1.html"><a href="summary-1.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-2.html"><a href="exercises-2.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="understand-data.html"><a href="understand-data.html"><i class="fa fa-check"></i><b>4</b> Understand Data</a><ul>
+<li class="chapter" data-level="4.1" data-path="load-data.html"><a href="load-data.html"><i class="fa fa-check"></i><b>4.1</b> Load Data</a></li>
+<li class="chapter" data-level="4.2" data-path="assess-data-quantity.html"><a href="assess-data-quantity.html"><i class="fa fa-check"></i><b>4.2</b> Assess Data Quantity</a></li>
+<li class="chapter" data-level="4.3" data-path="general-data-attributes-assessment.html"><a href="general-data-attributes-assessment.html"><i class="fa fa-check"></i><b>4.3</b> General Data Attributes Assessment</a></li>
+<li class="chapter" data-level="4.4" data-path="actual-attributes-types-examination.html"><a href="actual-attributes-types-examination.html"><i class="fa fa-check"></i><b>4.4</b> Actual Attributes Types Examination</a></li>
+<li class="chapter" data-level="4.5" data-path="attvalue.html"><a href="attvalue.html"><i class="fa fa-check"></i><b>4.5</b> Actual Data Attributes Value Examination</a><ul>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#passengerid"><i class="fa fa-check"></i>PassengerID</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#survive"><i class="fa fa-check"></i>Survived</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#pclass"><i class="fa fa-check"></i>Pclass</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#name"><i class="fa fa-check"></i>Name</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#sex"><i class="fa fa-check"></i>Sex</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#age"><i class="fa fa-check"></i>Age</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#sibsp"><i class="fa fa-check"></i>SibSp</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#parch"><i class="fa fa-check"></i>Parch</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#ticket"><i class="fa fa-check"></i>Ticket</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#fare"><i class="fa fa-check"></i>Fare</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#cabin"><i class="fa fa-check"></i>Cabin</a></li>
+<li class="chapter" data-level="" data-path="attvalue.html"><a href="attvalue.html#embarkded"><i class="fa fa-check"></i>Embarkded</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="data-recods-level-assessment.html"><a href="data-recods-level-assessment.html"><i class="fa fa-check"></i><b>4.6</b> Data Recods Level Assessment</a></li>
+<li class="chapter" data-level="" data-path="summary-2.html"><a href="summary-2.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-3.html"><a href="exercises-3.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="data-preparasion.html"><a href="data-preparasion.html"><i class="fa fa-check"></i><b>5</b> Data Preparasion</a><ul>
+<li class="chapter" data-level="5.1" data-path="general-data-prepartion-tasks.html"><a href="general-data-prepartion-tasks.html"><i class="fa fa-check"></i><b>5.1</b> General Data Prepartion Tasks</a></li>
+<li class="chapter" data-level="5.2" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html"><i class="fa fa-check"></i><b>5.2</b> Dealt with Miss Values</a><ul>
+<li class="chapter" data-level="" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html#cabin-attribute"><i class="fa fa-check"></i>Cabin Attribute</a></li>
+<li class="chapter" data-level="" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html#age-attribute"><i class="fa fa-check"></i>Age Attribute</a></li>
+<li class="chapter" data-level="" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html#fare-attribute"><i class="fa fa-check"></i>Fare Attribute</a></li>
+<li class="chapter" data-level="" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html#Embarked"><i class="fa fa-check"></i>Embarked Attribute</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html"><i class="fa fa-check"></i><b>5.3</b> Attribute Re-engineering</a><ul>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#title-from-name-attribute"><i class="fa fa-check"></i>Title from Name attribute</a></li>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#deck-from-cabin-attribute"><i class="fa fa-check"></i>Deck from Cabin attribute</a></li>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#extract-ticket-class-from-ticket-number"><i class="fa fa-check"></i>Extract ticket class from ticket number</a></li>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#travel-in-groups"><i class="fa fa-check"></i>Travel in Groups</a></li>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#age-in-groups"><i class="fa fa-check"></i>Age in Groups</a></li>
+<li class="chapter" data-level="" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#farepp"><i class="fa fa-check"></i>Fare per passenger</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="build-re-engineered-dataset.html"><a href="build-re-engineered-dataset.html"><i class="fa fa-check"></i><b>5.4</b> Build Re-engineered Dataset</a></li>
+<li class="chapter" data-level="" data-path="summary-3.html"><a href="summary-3.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-4.html"><a href="exercises-4.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>6</b> Data Analysis</a><ul>
+<li class="chapter" data-level="6.1" data-path="predictive-data-analysis-pda.html"><a href="predictive-data-analysis-pda.html"><i class="fa fa-check"></i><b>6.1</b> Predictive Data Analysis (PDA)</a></li>
+<li class="chapter" data-level="6.2" data-path="process-of-predcitive-data-analysis.html"><a href="process-of-predcitive-data-analysis.html"><i class="fa fa-check"></i><b>6.2</b> Process of Predcitive Data Analysis</a><ul>
+<li class="chapter" data-level="" data-path="process-of-predcitive-data-analysis.html"><a href="process-of-predcitive-data-analysis.html#predictor-selection"><i class="fa fa-check"></i>Predictor Selection</a></li>
+<li class="chapter" data-level="" data-path="process-of-predcitive-data-analysis.html"><a href="process-of-predcitive-data-analysis.html#model-construction"><i class="fa fa-check"></i>Model Construction</a></li>
+<li class="chapter" data-level="" data-path="process-of-predcitive-data-analysis.html"><a href="process-of-predcitive-data-analysis.html#model-validation"><i class="fa fa-check"></i>Model Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="classification-as-a-specific-prediction.html"><a href="classification-as-a-specific-prediction.html"><i class="fa fa-check"></i><b>6.3</b> Classification as A Specific Prediction</a></li>
+<li class="chapter" data-level="" data-path="summary-4.html"><a href="summary-4.html"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="predictor-selection-1.html"><a href="predictor-selection-1.html"><i class="fa fa-check"></i><b>7</b> Predictor Selection</a><ul>
+<li class="chapter" data-level="7.1" data-path="predictor-selection-pricinples.html"><a href="predictor-selection-pricinples.html"><i class="fa fa-check"></i><b>7.1</b> Predictor Selection Pricinples</a></li>
+<li class="chapter" data-level="7.2" data-path="attributes-analysis.html"><a href="attributes-analysis.html"><i class="fa fa-check"></i><b>7.2</b> Attributes Analysis</a></li>
+<li class="chapter" data-level="7.3" data-path="attributes-correlation-analysis.html"><a href="attributes-correlation-analysis.html"><i class="fa fa-check"></i><b>7.3</b> Attributes Correlation Analysis</a></li>
+<li class="chapter" data-level="7.4" data-path="pca-analysis.html"><a href="pca-analysis.html"><i class="fa fa-check"></i><b>7.4</b> PCA Analysis</a></li>
+<li class="chapter" data-level="" data-path="summary-5.html"><a href="summary-5.html"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="prediction-with-decision-trees.html"><a href="prediction-with-decision-trees.html"><i class="fa fa-check"></i><b>8</b> Prediction with Decision Trees</a><ul>
+<li class="chapter" data-level="8.1" data-path="decision-tree-in-hunts-algorithm.html"><a href="decision-tree-in-hunts-algorithm.html"><i class="fa fa-check"></i><b>8.1</b> Decision Tree in Hunt’s Algorithm</a><ul>
+<li class="chapter" data-level="" data-path="decision-tree-in-hunts-algorithm.html"><a href="decision-tree-in-hunts-algorithm.html#test_condition"><i class="fa fa-check"></i>How to Form a Test Condition?</a></li>
+<li class="chapter" data-level="" data-path="decision-tree-in-hunts-algorithm.html"><a href="decision-tree-in-hunts-algorithm.html#best_split"><i class="fa fa-check"></i>How to Determine the Best Split Condition?</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="the-simplest-decision-tree-for-titanic.html"><a href="the-simplest-decision-tree-for-titanic.html"><i class="fa fa-check"></i><b>8.2</b> The Simplest Decision Tree for Titanic</a></li>
+<li class="chapter" data-level="8.3" data-path="the-decision-tree-with-core-predictors.html"><a href="the-decision-tree-with-core-predictors.html"><i class="fa fa-check"></i><b>8.3</b> The Decision Tree with Core Predictors</a></li>
+<li class="chapter" data-level="8.4" data-path="the-decision-tree-with-more-predictors.html"><a href="the-decision-tree-with-more-predictors.html"><i class="fa fa-check"></i><b>8.4</b> The Decision Tree with More Predictors</a></li>
+<li class="chapter" data-level="8.5" data-path="the-decision-tree-with-full-predictors.html"><a href="the-decision-tree-with-full-predictors.html"><i class="fa fa-check"></i><b>8.5</b> The Decision Tree with Full Predictors</a></li>
+<li class="chapter" data-level="" data-path="summary-6.html"><a href="summary-6.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-5.html"><a href="exercises-5.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="titiannic-prediction-with-random-forest.html"><a href="titiannic-prediction-with-random-forest.html"><i class="fa fa-check"></i><b>9</b> Titiannic Prediction with Random Forest</a><ul>
+<li class="chapter" data-level="9.1" data-path="steps-to-build-a-random-forest.html"><a href="steps-to-build-a-random-forest.html"><i class="fa fa-check"></i><b>9.1</b> Steps to Build a Random Forest</a></li>
+<li class="chapter" data-level="9.2" data-path="random-forest-with-key-predictors.html"><a href="random-forest-with-key-predictors.html"><i class="fa fa-check"></i><b>9.2</b> Random Forest with Key Predictors</a></li>
+<li class="chapter" data-level="9.3" data-path="random-forest-with-more-variables.html"><a href="random-forest-with-more-variables.html"><i class="fa fa-check"></i><b>9.3</b> Random Forest with More Variables</a></li>
+<li class="chapter" data-level="9.4" data-path="random-forest-with-all-variables.html"><a href="random-forest-with-all-variables.html"><i class="fa fa-check"></i><b>9.4</b> Random Forest with All Variables</a></li>
+<li class="chapter" data-level="9.5" data-path="comparision-the-three-random-forest-models.html"><a href="comparision-the-three-random-forest-models.html"><i class="fa fa-check"></i><b>9.5</b> Comparision the Three Random Forest Models</a></li>
+<li class="chapter" data-level="" data-path="summary-7.html"><a href="summary-7.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-6.html"><a href="exercises-6.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="model-cross-validation.html"><a href="model-cross-validation.html"><i class="fa fa-check"></i><b>10</b> Model Cross Validation</a><ul>
+<li class="chapter" data-level="10.1" data-path="models-underfitting-and-overfitting.html"><a href="models-underfitting-and-overfitting.html"><i class="fa fa-check"></i><b>10.1</b> Model’s Underfitting and Overfitting</a></li>
+<li class="chapter" data-level="10.2" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html"><i class="fa fa-check"></i><b>10.2</b> General Cross Validation Methods</a><ul>
+<li class="chapter" data-level="" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html#single-model-cross-validation"><i class="fa fa-check"></i>Single Model Cross Validation</a></li>
+<li class="chapter" data-level="" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html#general-procedure-of-cv"><i class="fa fa-check"></i>General Procedure of CV</a></li>
+<li class="chapter" data-level="" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html#cross-validation-on-decision-tree-models"><i class="fa fa-check"></i>Cross Validation on Decision Tree Models</a></li>
+<li class="chapter" data-level="" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html#cross-validation-on-random-forest-models"><i class="fa fa-check"></i>Cross Validation on Random Forest Models</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html"><i class="fa fa-check"></i><b>10.3</b> Multiple Models Comparison</a><ul>
+<li class="chapter" data-level="" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#regression-model-for-titanic"><i class="fa fa-check"></i>Regression Model for Titanic</a></li>
+<li class="chapter" data-level="" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#support-vector-machine-model-for-titanic"><i class="fa fa-check"></i>Support Vector Machine Model for Titanic</a></li>
+<li class="chapter" data-level="" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#neural-network-models"><i class="fa fa-check"></i>Neural Network Models</a></li>
+<li class="chapter" data-level="" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#comparision-among-different-models"><i class="fa fa-check"></i>Comparision among Different Models</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="summary-8.html"><a href="summary-8.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-7.html"><a href="exercises-7.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="fine-tune-models.html"><a href="fine-tune-models.html"><i class="fa fa-check"></i><b>11</b> Fine Tune Models</a><ul>
+<li class="chapter" data-level="11.1" data-path="tuning-a-models-predictor.html"><a href="tuning-a-models-predictor.html"><i class="fa fa-check"></i><b>11.1</b> Tuning a model’s Predictor</a></li>
+<li class="chapter" data-level="11.2" data-path="tuning-training-data-samples.html"><a href="tuning-training-data-samples.html"><i class="fa fa-check"></i><b>11.2</b> Tuning Training Data Samples</a><ul>
+<li class="chapter" data-level="" data-path="tuning-training-data-samples.html"><a href="tuning-training-data-samples.html#set-prediction-accuracy-benchmark"><i class="fa fa-check"></i>Set Prediction Accuracy Benchmark</a></li>
+<li class="chapter" data-level="" data-path="tuning-training-data-samples.html"><a href="tuning-training-data-samples.html#folds-cv-repeat-10-times"><i class="fa fa-check"></i>10 Folds CV Repeat 10 Times</a></li>
+<li class="chapter" data-level="" data-path="tuning-training-data-samples.html"><a href="tuning-training-data-samples.html#folds-cv-repeat-10-times-1"><i class="fa fa-check"></i>5 Folds CV Repeat 10 Times</a></li>
+<li class="chapter" data-level="" data-path="tuning-training-data-samples.html"><a href="tuning-training-data-samples.html#folds-cv-repeat-10-times-2"><i class="fa fa-check"></i>3 Folds CV Repeat 10 Times</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="tuning-models-parameters.html"><a href="tuning-models-parameters.html"><i class="fa fa-check"></i><b>11.3</b> Tuning Model’s Parameters</a><ul>
+<li class="chapter" data-level="" data-path="tuning-models-parameters.html"><a href="tuning-models-parameters.html#random-search"><i class="fa fa-check"></i>Random Search</a></li>
+<li class="chapter" data-level="" data-path="tuning-models-parameters.html"><a href="tuning-models-parameters.html#grid-search"><i class="fa fa-check"></i>Grid Search</a></li>
+<li class="chapter" data-level="" data-path="tuning-models-parameters.html"><a href="tuning-models-parameters.html#manual-search"><i class="fa fa-check"></i>Manual Search</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="summary-9.html"><a href="summary-9.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-8.html"><a href="exercises-8.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="report.html"><a href="report.html"><i class="fa fa-check"></i><b>12</b> Report</a><ul>
+<li class="chapter" data-level="12.1" data-path="content-of-report.html"><a href="content-of-report.html"><i class="fa fa-check"></i><b>12.1</b> Content of Report</a></li>
+<li class="chapter" data-level="12.2" data-path="result-explainition.html"><a href="result-explainition.html"><i class="fa fa-check"></i><b>12.2</b> Result Explainition</a></li>
+<li class="chapter" data-level="12.3" data-path="model-interpretation.html"><a href="model-interpretation.html"><i class="fa fa-check"></i><b>12.3</b> Model Interpretation</a><ul>
+<li class="chapter" data-level="" data-path="model-interpretation.html"><a href="model-interpretation.html#models-performance-measure"><i class="fa fa-check"></i>Model’s Performance Measure</a></li>
+<li class="chapter" data-level="" data-path="model-interpretation.html"><a href="model-interpretation.html#visualise-models-prediction"><i class="fa fa-check"></i>Visualise Model’s Prediction</a></li>
+<li class="chapter" data-level="" data-path="model-interpretation.html"><a href="model-interpretation.html#importance-of-the-models-predictors"><i class="fa fa-check"></i>Importance of the Model’s Predictors</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="further-analysis.html"><a href="further-analysis.html"><i class="fa fa-check"></i><b>12.4</b> Further Analysis</a></li>
+<li class="chapter" data-level="" data-path="summary-10.html"><a href="summary-10.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-9.html"><a href="exercises-9.html"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix-apendix-the-r-code-of-the-entire-project.html"><a href="appendix-apendix-the-r-code-of-the-entire-project.html"><i class="fa fa-check"></i>(APPENDIX) Apendix: The R code of the entire project</a><ul>
+<li class="chapter" data-level="" data-path="titanicdataanalysis1-understand-data-r.html"><a href="titanicdataanalysis1-understand-data-r.html"><i class="fa fa-check"></i>TitanicDataAnalysis1_Understand_Data.R</a></li>
+<li class="chapter" data-level="" data-path="titanicdataanalysis2-datapreprocess-r.html"><a href="titanicdataanalysis2-datapreprocess-r.html"><i class="fa fa-check"></i>TitanicDataAnalysis2_Data+Preprocess.R</a></li>
+<li class="chapter" data-level="" data-path="titanicdataanalysis3-model-construction-r.html"><a href="titanicdataanalysis3-model-construction-r.html"><i class="fa fa-check"></i>TitanicDataAnalysis3_Model_Construction.R</a></li>
+<li class="chapter" data-level="" data-path="titanicdataanalysis4-model-cross-validation-r.html"><a href="titanicdataanalysis4-model-cross-validation-r.html"><i class="fa fa-check"></i>TitanicDataAnalysis4_Model_Cross_Validation.R</a></li>
+<li class="chapter" data-level="" data-path="titanicdataanalysis5-model-fine-tune-r.html"><a href="titanicdataanalysis5-model-fine-tune-r.html"><i class="fa fa-check"></i>TitanicDataAnalysis5_Model_Fine_Tune.R</a></li>
+<li class="chapter" data-level="" data-path="titanicdataanalysis6-analyse-report-r.html"><a href="titanicdataanalysis6-analyse-report-r.html"><i class="fa fa-check"></i>TitanicDataAnalysis6_Analyse_Report.R</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Do A Data Science Project in 10 Days</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="dealt-with-miss-values" class="section level2">
+<h2><span class="header-section-number">5.2</span> Dealt with Miss Values</h2>
+<p>We had a pretty good understanding of the Titanic datasets. We knew that there are missing values and some errors. They need to be resolved first of all. The systematic way to find missing value is to write a function checking the missing values, like this one,</p>
+<p>Before that, let us quickly recap the datasets we have,</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="dealt-with-miss-values.html#cb2-1"></a><span class="co"># assume we had imported both train and test dataset and we have combined them into on data</span></span>
+<span id="cb2-2"><a href="dealt-with-miss-values.html#cb2-2"></a></span>
+<span id="cb2-3"><a href="dealt-with-miss-values.html#cb2-3"></a><span class="co"># If we save the file from the previous code we can load it directly</span></span>
+<span id="cb2-4"><a href="dealt-with-miss-values.html#cb2-4"></a>data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./data/data.csv&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb2-5"><a href="dealt-with-miss-values.html#cb2-5"></a></span>
+<span id="cb2-6"><a href="dealt-with-miss-values.html#cb2-6"></a><span class="co"># Check our combined dataset details</span></span>
+<span id="cb2-7"><a href="dealt-with-miss-values.html#cb2-7"></a><span class="kw">glimpse</span>(data) <span class="co"># compare with str(data)</span></span></code></pre></div>
+<pre><code>## Rows: 1,309
+## Columns: 12
+## $ PassengerId &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, ...
+## $ Survived    &lt;int&gt; 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0...
+## $ Pclass      &lt;int&gt; 3, 1, 3, 1, 3, 3, 1, 3, 3, 2, 3, 1, 3, 3, 3, 2, 3, 2, 3...
+## $ Name        &lt;fct&gt; &quot;Braund, Mr. Owen Harris&quot;, &quot;Cumings, Mrs. John Bradley ...
+## $ Sex         &lt;fct&gt; male, female, female, female, male, male, male, male, f...
+## $ Age         &lt;dbl&gt; 22, 38, 26, 35, 35, NA, 54, 2, 27, 14, 4, 58, 20, 39, 1...
+## $ SibSp       &lt;int&gt; 1, 1, 0, 1, 0, 0, 0, 3, 0, 1, 1, 0, 0, 1, 0, 0, 4, 0, 1...
+## $ Parch       &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 5, 0, 0, 1, 0, 0...
+## $ Ticket      &lt;fct&gt; A/5 21171, PC 17599, STON/O2. 3101282, 113803, 373450, ...
+## $ Fare        &lt;dbl&gt; 7.2500, 71.2833, 7.9250, 53.1000, 8.0500, 8.4583, 51.86...
+## $ Cabin       &lt;fct&gt; , C85, , C123, , , E46, , , , G6, C103, , , , , , , , ,...
+## $ Embarked    &lt;fct&gt; S, C, S, S, S, Q, S, S, S, C, S, S, S, S, S, S, Q, S, S...</code></pre>
+<p>We can observe that there are 1309 data records with 12 attributes. We can also see the types and values of each attribute.
+We understood the goal of the Titanic problem is to predict given passengers’ survival. So, except for the attributes <em>PassengerID</em> and the targeted variable <em>Survived</em>, there are 10 attributes present in the combined data that are potentially useful. Among them, two variables <em>Name</em> and <em>Ticket</em> are less useful intuitively and also confirmed from the previous chapter.</p>
+<p>Let us focus on solving the data missing problem.</p>
+<p>We can define a function missing_vars, which can get a proportion of values that are missing in each attribute.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="dealt-with-miss-values.html#cb4-1"></a><span class="co"># Define a function to check missing values</span></span>
+<span id="cb4-2"><a href="dealt-with-miss-values.html#cb4-2"></a>missing_vars &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</span>
+<span id="cb4-3"><a href="dealt-with-miss-values.html#cb4-3"></a>  var &lt;-<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb4-4"><a href="dealt-with-miss-values.html#cb4-4"></a>  missing &lt;-<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb4-5"><a href="dealt-with-miss-values.html#cb4-5"></a>  missing_prop &lt;-<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb4-6"><a href="dealt-with-miss-values.html#cb4-6"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(<span class="kw">names</span>(x))) {</span>
+<span id="cb4-7"><a href="dealt-with-miss-values.html#cb4-7"></a>    var[i] &lt;-<span class="st"> </span><span class="kw">names</span>(x)[i]</span>
+<span id="cb4-8"><a href="dealt-with-miss-values.html#cb4-8"></a>    missing[i] &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">is.na</span>(x[, i])<span class="op">|</span>x[, i] <span class="op">==</span><span class="st">&quot;&quot;</span> )</span>
+<span id="cb4-9"><a href="dealt-with-miss-values.html#cb4-9"></a>    missing_prop[i] &lt;-<span class="st"> </span>missing[i] <span class="op">/</span><span class="st"> </span><span class="kw">nrow</span>(x)</span>
+<span id="cb4-10"><a href="dealt-with-miss-values.html#cb4-10"></a>  }</span>
+<span id="cb4-11"><a href="dealt-with-miss-values.html#cb4-11"></a><span class="co"># order   </span></span>
+<span id="cb4-12"><a href="dealt-with-miss-values.html#cb4-12"></a>missing_data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">var =</span> var, <span class="dt">missing =</span> missing, <span class="dt">missing_prop =</span> missing_prop) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb4-13"><a href="dealt-with-miss-values.html#cb4-13"></a><span class="kw">arrange</span>(<span class="kw">desc</span>(missing_prop))</span>
+<span id="cb4-14"><a href="dealt-with-miss-values.html#cb4-14"></a><span class="co"># print out</span></span>
+<span id="cb4-15"><a href="dealt-with-miss-values.html#cb4-15"></a>missing_data</span>
+<span id="cb4-16"><a href="dealt-with-miss-values.html#cb4-16"></a>}</span></code></pre></div>
+<p>Apply our function to the combined dataset <code>data</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="dealt-with-miss-values.html#cb5-1"></a><span class="kw">missing_vars</span>(data)</span></code></pre></div>
+<pre><code>##            var missing missing_prop
+## 1        Cabin    1014 0.7746371276
+## 2     Survived     418 0.3193277311
+## 3          Age     263 0.2009167303
+## 4     Embarked       2 0.0015278839
+## 5         Fare       1 0.0007639419
+## 6  PassengerId       0 0.0000000000
+## 7       Pclass       0 0.0000000000
+## 8         Name       0 0.0000000000
+## 9          Sex       0 0.0000000000
+## 10       SibSp       0 0.0000000000
+## 11       Parch       0 0.0000000000
+## 12      Ticket       0 0.0000000000</code></pre>
+<p><em>Survived</em> has 418 missing values that is the <code>test</code> dataset number. Our entire <code>test</code> dataset needs to be filled with that value. It is not an issue.</p>
+<p><em>Cabin</em> and <em>Age</em> have some significant proportion of missing values, whereas Embarked &amp; Fare only has 2 and 1 missing values.</p>
+<p>We will use Cabin and Age as examples to demonstrate the general methods used to deal with missing values.</p>
+<div id="cabin-attribute" class="section level3 unnumbered">
+<h3>Cabin Attribute</h3>
+<p><em>Cabin</em> has a large number of missing values. A total of 1014 missing values and 687 missing values in the <code>train</code> dataset counts as 71 percent of the total value. Its prediction power is in serious doubt since it only has a very small number for each cabin. Facing an attribute that has a large percentage of missing values, in most analyses, it will be simply dropped. However, if you think carefully, the missing value may have some reasons, and that reason could be a factor that affects passengers’ lives or perished. Therefore, the first thought, which is normally applied to a large number of missing values, is to replace the attribute with another attribute rather than to fill the missing value themselves. In this case, we can create a new attribute called “<em>HasCabinNum</em>” which only records if <em>Cabin</em> values are "" (empty or missing value). It has two values “<code>yes</code>” and “<code>no</code>”. This method is very general. It can be used in any attribute that has a large number of missing values.</p>
+<p>Ideally, we should replace the attribute <em>cabin</em> with the newly created attribute <em>HasCabinNum</em>. However, we find out that the data samples which have the cabin number, cabin number may have some useful information. So, we will keep it in the moment and for later use.</p>
+<p>As mentioned in section 4.5, cabin has rich useful information that can be abstracted and used for analysis (or prediction models).</p>
+
+<div class="rmdaction">
+Try your self:
+Find details of passenger who share cabins and figure out some deatures like social status or relations. Create new featurs linked them with survive values.
+</div>
+
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="dealt-with-miss-values.html#cb7-1"></a><span class="co">### Dealing with missing values in Cabin</span></span>
+<span id="cb7-2"><a href="dealt-with-miss-values.html#cb7-2"></a><span class="co"># add newly created attribute and assign it with new values</span></span>
+<span id="cb7-3"><a href="dealt-with-miss-values.html#cb7-3"></a>data<span class="op">$</span>HasCabinNum &lt;-<span class="st"> </span><span class="kw">ifelse</span>((data<span class="op">$</span>Cabin <span class="op">!=</span><span class="st"> &quot;&quot;</span>), <span class="st">&quot;Yes&quot;</span>, <span class="st">&quot;No&quot;</span>)</span></code></pre></div>
+<p>We can examine the relation between our newly created cabin replacement’s <em>HasCabinNum</em> with the attribute <em>Survival</em>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="dealt-with-miss-values.html#cb8-1"></a><span class="co"># Make sure survived is in factor type </span></span>
+<span id="cb8-2"><a href="dealt-with-miss-values.html#cb8-2"></a>p1 &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb8-3"><a href="dealt-with-miss-values.html#cb8-3"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(Survived)) <span class="op">%&gt;%</span></span>
+<span id="cb8-4"><a href="dealt-with-miss-values.html#cb8-4"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(HasCabinNum), <span class="dt">fill =</span> <span class="kw">factor</span>(Survived))) <span class="op">+</span></span>
+<span id="cb8-5"><a href="dealt-with-miss-values.html#cb8-5"></a><span class="st">   </span><span class="kw">geom_bar</span>(<span class="dt">width =</span> <span class="fl">0.5</span>) <span class="op">+</span></span>
+<span id="cb8-6"><a href="dealt-with-miss-values.html#cb8-6"></a><span class="st">   </span><span class="kw">xlab</span>(<span class="st">&quot;HasCabinNum&quot;</span>) <span class="op">+</span></span>
+<span id="cb8-7"><a href="dealt-with-miss-values.html#cb8-7"></a><span class="st">   </span><span class="kw">ylab</span>(<span class="st">&quot;Total Count&quot;</span>) <span class="op">+</span></span>
+<span id="cb8-8"><a href="dealt-with-miss-values.html#cb8-8"></a><span class="st">   </span><span class="kw">labs</span>(<span class="dt">fill =</span> <span class="st">&quot;Survived&quot;</span>)<span class="op">+</span></span>
+<span id="cb8-9"><a href="dealt-with-miss-values.html#cb8-9"></a><span class="st">   </span><span class="kw">ggtitle</span>(<span class="st">&quot;Newly created HasCabinNum attribute on Survived&quot;</span>)</span>
+<span id="cb8-10"><a href="dealt-with-miss-values.html#cb8-10"></a><span class="co"># show survive percentage on HasCabinNum </span></span>
+<span id="cb8-11"><a href="dealt-with-miss-values.html#cb8-11"></a>p2 &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb8-12"><a href="dealt-with-miss-values.html#cb8-12"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(Survived)) <span class="op">%&gt;%</span></span>
+<span id="cb8-13"><a href="dealt-with-miss-values.html#cb8-13"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(HasCabinNum), <span class="dt">fill =</span> <span class="kw">factor</span>(Survived))) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb8-14"><a href="dealt-with-miss-values.html#cb8-14"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>, <span class="dt">width =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb8-15"><a href="dealt-with-miss-values.html#cb8-15"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>percent, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.1</span>)) <span class="op">+</span></span>
+<span id="cb8-16"><a href="dealt-with-miss-values.html#cb8-16"></a><span class="st">  </span><span class="kw">scale_fill_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Survived&quot;</span>) <span class="op">+</span></span>
+<span id="cb8-17"><a href="dealt-with-miss-values.html#cb8-17"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;HasCabinNum&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Percentage of Survived&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb8-18"><a href="dealt-with-miss-values.html#cb8-18"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Newly created HasCabinNum attribute (Proportion Survived)&quot;</span>)</span>
+<span id="cb8-19"><a href="dealt-with-miss-values.html#cb8-19"></a></span>
+<span id="cb8-20"><a href="dealt-with-miss-values.html#cb8-20"></a><span class="kw">grid.arrange</span>(p1, p2, <span class="dt">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:cabinPro"></span>
+<img src="05-data-preprocess_files/figure-html/cabinPro-1.svg" alt="Distribution and survival percentage of the newly created HasCabinNum attribute" width="95%" />
+<p class="caption">
+Figure 5.1: Distribution and survival percentage of the newly created HasCabinNum attribute
+</p>
+</div>
+</div>
+<div id="age-attribute" class="section level3 unnumbered">
+<h3>Age Attribute</h3>
+<p>Now we can tackle the issue of missing values with the age attribute. <em>Age</em> is a typical numerical value. There several options for filling the missing values:</p>
+<ol style="list-style-type: decimal">
+<li>Take the mean value to replace the missing value</li>
+<li>Take a random list of ages that maintains the original statistical summary values.</li>
+<li>Use a model to predict values based on the existing values.</li>
+</ol>
+<p>Let us look into them one by one, be aware of this if you have multiple options to deal with one attribute, you cannot simply manipulate the original attribute. If you do, the value of the attribute will be altered, so the second option will be never executed since the missing value has been already eliminated.</p>
+<ol style="list-style-type: decimal">
+<li>Take the mean value to replace the missing value. It is the simplest way to impurate the missing value.</li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="dealt-with-miss-values.html#cb9-1"></a><span class="co"># replace missing value in Age with its average</span></span>
+<span id="cb9-2"><a href="dealt-with-miss-values.html#cb9-2"></a>ageEverage &lt;-<span class="st"> </span><span class="kw">summarise</span>(data, <span class="dt">Average =</span> <span class="kw">mean</span>(Age, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb9-3"><a href="dealt-with-miss-values.html#cb9-3"></a><span class="co"># create a new attribute Age_RE1 and assign it with new values</span></span>
+<span id="cb9-4"><a href="dealt-with-miss-values.html#cb9-4"></a>data<span class="op">$</span>Age_RE1 &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.na</span>(data<span class="op">$</span>Age), <span class="kw">as.numeric</span>(ageEverage), <span class="kw">as.numeric</span>(data<span class="op">$</span>Age))</span>
+<span id="cb9-5"><a href="dealt-with-miss-values.html#cb9-5"></a><span class="co"># plot newly altered age attribute </span></span>
+<span id="cb9-6"><a href="dealt-with-miss-values.html#cb9-6"></a><span class="co"># Make sure survived is in factor type </span></span>
+<span id="cb9-7"><a href="dealt-with-miss-values.html#cb9-7"></a>p1 &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb9-8"><a href="dealt-with-miss-values.html#cb9-8"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(Survived)) <span class="op">%&gt;%</span></span>
+<span id="cb9-9"><a href="dealt-with-miss-values.html#cb9-9"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(Age_RE1), <span class="dt">fill =</span> <span class="kw">factor</span>(Survived))) <span class="op">+</span></span>
+<span id="cb9-10"><a href="dealt-with-miss-values.html#cb9-10"></a><span class="st">   </span><span class="kw">geom_bar</span>(<span class="dt">width =</span> <span class="fl">0.5</span>) <span class="op">+</span></span>
+<span id="cb9-11"><a href="dealt-with-miss-values.html#cb9-11"></a><span class="st">   </span><span class="kw">xlab</span>(<span class="st">&quot;Age_RE1&quot;</span>) <span class="op">+</span></span>
+<span id="cb9-12"><a href="dealt-with-miss-values.html#cb9-12"></a><span class="st">   </span><span class="kw">ylab</span>(<span class="st">&quot;Total Count&quot;</span>) <span class="op">+</span></span>
+<span id="cb9-13"><a href="dealt-with-miss-values.html#cb9-13"></a><span class="st">   </span><span class="kw">labs</span>(<span class="dt">fill =</span> <span class="st">&quot;Survived&quot;</span>)<span class="op">+</span></span>
+<span id="cb9-14"><a href="dealt-with-miss-values.html#cb9-14"></a><span class="st">   </span><span class="kw">ggtitle</span>(<span class="st">&quot;Survived value on Age_RE1&quot;</span>)</span>
+<span id="cb9-15"><a href="dealt-with-miss-values.html#cb9-15"></a><span class="co"># show survive percentage on HasCabinNum </span></span>
+<span id="cb9-16"><a href="dealt-with-miss-values.html#cb9-16"></a>p2 &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb9-17"><a href="dealt-with-miss-values.html#cb9-17"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(Survived)) <span class="op">%&gt;%</span></span>
+<span id="cb9-18"><a href="dealt-with-miss-values.html#cb9-18"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(Age_RE1), <span class="dt">fill =</span> <span class="kw">factor</span>(Survived))) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb9-19"><a href="dealt-with-miss-values.html#cb9-19"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>, <span class="dt">width =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb9-20"><a href="dealt-with-miss-values.html#cb9-20"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>percent, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.1</span>)) <span class="op">+</span></span>
+<span id="cb9-21"><a href="dealt-with-miss-values.html#cb9-21"></a><span class="st">  </span><span class="kw">scale_fill_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Survived&quot;</span>) <span class="op">+</span></span>
+<span id="cb9-22"><a href="dealt-with-miss-values.html#cb9-22"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Age_RE1&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Percentage of Survived&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb9-23"><a href="dealt-with-miss-values.html#cb9-23"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Survived percentage on Age_RE1&quot;</span>)</span>
+<span id="cb9-24"><a href="dealt-with-miss-values.html#cb9-24"></a></span>
+<span id="cb9-25"><a href="dealt-with-miss-values.html#cb9-25"></a><span class="kw">grid.arrange</span>(p1, p2, <span class="dt">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:agepro"></span>
+<img src="05-data-preprocess_files/figure-html/agepro-1.svg" alt="Distribution and survival percentage on the Age with missing value filled" width="95%" />
+<p class="caption">
+Figure 5.2: Distribution and survival percentage on the Age with missing value filled
+</p>
+</div>
+<ol start="2" style="list-style-type: decimal">
+<li>Take a random number range between <code>min</code> and <code>max</code> age, and keep the mean and standard deviation unchanged.</li>
+</ol>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="dealt-with-miss-values.html#cb10-1"></a><span class="co"># calculate the non-NA mean and std</span></span>
+<span id="cb10-2"><a href="dealt-with-miss-values.html#cb10-2"></a>mean &lt;-<span class="st"> </span><span class="kw">mean</span>(data[[<span class="st">&quot;Age&quot;</span>]], <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="co"># take train mean</span></span>
+<span id="cb10-3"><a href="dealt-with-miss-values.html#cb10-3"></a>std &lt;-<span class="st"> </span><span class="kw">sd</span>(data[[<span class="st">&quot;Age&quot;</span>]], <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="co"># take test std</span></span>
+<span id="cb10-4"><a href="dealt-with-miss-values.html#cb10-4"></a><span class="co"># replace NA with a list that maintian the mean and std</span></span>
+<span id="cb10-5"><a href="dealt-with-miss-values.html#cb10-5"></a>temp_rnum &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">sum</span>(<span class="kw">is.na</span>(data<span class="op">$</span>Age)), <span class="dt">mean=</span>mean, <span class="dt">sd=</span>std)</span>
+<span id="cb10-6"><a href="dealt-with-miss-values.html#cb10-6"></a><span class="co"># add new attribute Age_RE2</span></span>
+<span id="cb10-7"><a href="dealt-with-miss-values.html#cb10-7"></a>data<span class="op">$</span>Age_RE2 &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.na</span>(data<span class="op">$</span>Age), <span class="kw">as.numeric</span>(temp_rnum), <span class="kw">as.numeric</span>(data<span class="op">$</span>Age))</span>
+<span id="cb10-8"><a href="dealt-with-miss-values.html#cb10-8"></a><span class="kw">summary</span>(data<span class="op">$</span>Age_RE2)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  -6.999  20.500  28.000  29.656  39.000  80.000</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="dealt-with-miss-values.html#cb12-1"></a><span class="co"># There are possible negative values too, replace them with positive values</span></span>
+<span id="cb12-2"><a href="dealt-with-miss-values.html#cb12-2"></a>data<span class="op">$</span>Age_RE2[(data<span class="op">$</span>Age_RE2)<span class="op">&lt;=</span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="kw">sample</span>(data<span class="op">$</span>Age[data<span class="op">$</span>Age<span class="op">&gt;</span><span class="dv">0</span>], <span class="kw">length</span>(data<span class="op">$</span>Age_RE2[(data<span class="op">$</span>Age_RE2)<span class="op">&lt;=</span><span class="dv">0</span>]), <span class="dt">replace=</span>F)</span>
+<span id="cb12-3"><a href="dealt-with-miss-values.html#cb12-3"></a><span class="co"># check</span></span>
+<span id="cb12-4"><a href="dealt-with-miss-values.html#cb12-4"></a><span class="kw">summary</span>(data<span class="op">$</span>Age_RE2)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##    0.17   21.00   28.00   29.83   39.00   80.00       2</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="dealt-with-miss-values.html#cb14-1"></a><span class="co"># plot newly altered age attribute </span></span>
+<span id="cb14-2"><a href="dealt-with-miss-values.html#cb14-2"></a><span class="co"># Make sure survived is in factor type </span></span>
+<span id="cb14-3"><a href="dealt-with-miss-values.html#cb14-3"></a>p1 &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb14-4"><a href="dealt-with-miss-values.html#cb14-4"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(Survived)) <span class="op">%&gt;%</span></span>
+<span id="cb14-5"><a href="dealt-with-miss-values.html#cb14-5"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(Age_RE2), <span class="dt">fill =</span> <span class="kw">factor</span>(Survived))) <span class="op">+</span></span>
+<span id="cb14-6"><a href="dealt-with-miss-values.html#cb14-6"></a><span class="st">   </span><span class="kw">geom_bar</span>(<span class="dt">width =</span> <span class="fl">0.5</span>) <span class="op">+</span></span>
+<span id="cb14-7"><a href="dealt-with-miss-values.html#cb14-7"></a><span class="st">   </span><span class="kw">xlab</span>(<span class="st">&quot;Age_RE2&quot;</span>) <span class="op">+</span></span>
+<span id="cb14-8"><a href="dealt-with-miss-values.html#cb14-8"></a><span class="st">   </span><span class="kw">ylab</span>(<span class="st">&quot;Total Count&quot;</span>) <span class="op">+</span></span>
+<span id="cb14-9"><a href="dealt-with-miss-values.html#cb14-9"></a><span class="st">   </span><span class="kw">labs</span>(<span class="dt">fill =</span> <span class="st">&quot;Survived&quot;</span>)<span class="op">+</span></span>
+<span id="cb14-10"><a href="dealt-with-miss-values.html#cb14-10"></a><span class="st">   </span><span class="kw">ggtitle</span>(<span class="st">&quot;Survived value on Age_RE2 attribute&quot;</span>)</span>
+<span id="cb14-11"><a href="dealt-with-miss-values.html#cb14-11"></a></span>
+<span id="cb14-12"><a href="dealt-with-miss-values.html#cb14-12"></a><span class="co"># show survive percentage on HasCabinNum </span></span>
+<span id="cb14-13"><a href="dealt-with-miss-values.html#cb14-13"></a>p2 &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb14-14"><a href="dealt-with-miss-values.html#cb14-14"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(Survived)) <span class="op">%&gt;%</span></span>
+<span id="cb14-15"><a href="dealt-with-miss-values.html#cb14-15"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(Age_RE2), <span class="dt">fill =</span> <span class="kw">factor</span>(Survived))) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb14-16"><a href="dealt-with-miss-values.html#cb14-16"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>, <span class="dt">width =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb14-17"><a href="dealt-with-miss-values.html#cb14-17"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>percent, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.1</span>)) <span class="op">+</span></span>
+<span id="cb14-18"><a href="dealt-with-miss-values.html#cb14-18"></a><span class="st">  </span><span class="kw">scale_fill_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Survived&quot;</span>) <span class="op">+</span></span>
+<span id="cb14-19"><a href="dealt-with-miss-values.html#cb14-19"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Age_RE2&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Percentage of Survived&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb14-20"><a href="dealt-with-miss-values.html#cb14-20"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Survived percentage on Age_RE2 attribute&quot;</span>)</span>
+<span id="cb14-21"><a href="dealt-with-miss-values.html#cb14-21"></a></span>
+<span id="cb14-22"><a href="dealt-with-miss-values.html#cb14-22"></a><span class="kw">grid.arrange</span>(p1, p2, <span class="dt">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:AgePro2"></span>
+<img src="05-data-preprocess_files/figure-html/AgePro2-1.svg" alt="Distribution and survival percentage on the Age with missing value filled with distribution shape maintained" width="95%" />
+<p class="caption">
+Figure 5.3: Distribution and survival percentage on the Age with missing value filled with distribution shape maintained
+</p>
+</div>
+<ol start="3" style="list-style-type: decimal">
+<li>Using machine generate model to produce new values based on other exiting values</li>
+</ol>
+<p>Among many prediction models (later chapters), the <em>decision tree</em> is the simplest. It can split data samples into subsets based on many test conditions (called branches) until there are not test conditions to test or there is no sample left untested<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.<br />
+To demonstrate we can use a prediction model to fill the missing values, here we will only use a simple decision tree without any further calibration. Since <em>Age</em> is a continuous variable we want to use the method=“anova”<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> for our decision tree. So let us build a decision tree on the subset of the data with the age values available, and then replace those that are missing,</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="dealt-with-miss-values.html#cb15-1"></a><span class="co"># confirm Age missing values</span></span>
+<span id="cb15-2"><a href="dealt-with-miss-values.html#cb15-2"></a>data<span class="op">$</span>Age_RE3 &lt;-<span class="st"> </span>data<span class="op">$</span>Age</span>
+<span id="cb15-3"><a href="dealt-with-miss-values.html#cb15-3"></a><span class="kw">summary</span>(data<span class="op">$</span>Age_RE3)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##    0.17   21.00   28.00   29.88   39.00   80.00     263</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="dealt-with-miss-values.html#cb17-1"></a><span class="co"># Construct a decision tree with selected attributes and ANOVA method</span></span>
+<span id="cb17-2"><a href="dealt-with-miss-values.html#cb17-2"></a>Agefit &lt;-<span class="st"> </span><span class="kw">rpart</span>(Age_RE3 <span class="op">~</span><span class="st"> </span>Survived <span class="op">+</span><span class="st"> </span>Pclass <span class="op">+</span><span class="st"> </span>Sex <span class="op">+</span><span class="st"> </span>SibSp <span class="op">+</span><span class="st"> </span>Parch <span class="op">+</span><span class="st"> </span>Fare <span class="op">+</span><span class="st"> </span>Embarked,</span>
+<span id="cb17-3"><a href="dealt-with-miss-values.html#cb17-3"></a>                  <span class="dt">data=</span>data[<span class="op">!</span><span class="kw">is.na</span>(data<span class="op">$</span>Age_RE3),], </span>
+<span id="cb17-4"><a href="dealt-with-miss-values.html#cb17-4"></a>                  <span class="dt">method=</span><span class="st">&quot;anova&quot;</span>)</span>
+<span id="cb17-5"><a href="dealt-with-miss-values.html#cb17-5"></a><span class="co">#Fill AGE missing values with prediction made by decision tree prediction</span></span>
+<span id="cb17-6"><a href="dealt-with-miss-values.html#cb17-6"></a>data<span class="op">$</span>Age_RE3[<span class="kw">is.na</span>(data<span class="op">$</span>Age_RE3)] &lt;-<span class="st"> </span><span class="kw">predict</span>(Agefit, data[<span class="kw">is.na</span>(data<span class="op">$</span>Age_RE3),])</span>
+<span id="cb17-7"><a href="dealt-with-miss-values.html#cb17-7"></a><span class="co">#confirm the missing values have been filled</span></span>
+<span id="cb17-8"><a href="dealt-with-miss-values.html#cb17-8"></a><span class="kw">summary</span>(data<span class="op">$</span>Age_RE3)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.17   22.00   27.43   29.63   37.00   80.00</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="dealt-with-miss-values.html#cb19-1"></a>p1 &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb19-2"><a href="dealt-with-miss-values.html#cb19-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(Survived)) <span class="op">%&gt;%</span></span>
+<span id="cb19-3"><a href="dealt-with-miss-values.html#cb19-3"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(Age_RE3), <span class="dt">fill =</span> <span class="kw">factor</span>(Survived))) <span class="op">+</span></span>
+<span id="cb19-4"><a href="dealt-with-miss-values.html#cb19-4"></a><span class="st">   </span><span class="kw">geom_bar</span>(<span class="dt">width =</span> <span class="fl">0.5</span>) <span class="op">+</span></span>
+<span id="cb19-5"><a href="dealt-with-miss-values.html#cb19-5"></a><span class="st">   </span><span class="kw">xlab</span>(<span class="st">&quot;Age_RE3&quot;</span>) <span class="op">+</span></span>
+<span id="cb19-6"><a href="dealt-with-miss-values.html#cb19-6"></a><span class="st">   </span><span class="kw">ylab</span>(<span class="st">&quot;Total Count&quot;</span>) <span class="op">+</span></span>
+<span id="cb19-7"><a href="dealt-with-miss-values.html#cb19-7"></a><span class="st">   </span><span class="kw">labs</span>(<span class="dt">fill =</span> <span class="st">&quot;Survived&quot;</span>)<span class="op">+</span></span>
+<span id="cb19-8"><a href="dealt-with-miss-values.html#cb19-8"></a><span class="st">   </span><span class="kw">ggtitle</span>(<span class="st">&quot;Survived value on Age_RE3 attribute&quot;</span>)</span>
+<span id="cb19-9"><a href="dealt-with-miss-values.html#cb19-9"></a></span>
+<span id="cb19-10"><a href="dealt-with-miss-values.html#cb19-10"></a><span class="co"># show survive percentage on HasCabinNum </span></span>
+<span id="cb19-11"><a href="dealt-with-miss-values.html#cb19-11"></a>p2 &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb19-12"><a href="dealt-with-miss-values.html#cb19-12"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(Survived)) <span class="op">%&gt;%</span></span>
+<span id="cb19-13"><a href="dealt-with-miss-values.html#cb19-13"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(Age_RE3), <span class="dt">fill =</span> <span class="kw">factor</span>(Survived))) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb19-14"><a href="dealt-with-miss-values.html#cb19-14"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>, <span class="dt">width =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb19-15"><a href="dealt-with-miss-values.html#cb19-15"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>percent, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.1</span>)) <span class="op">+</span></span>
+<span id="cb19-16"><a href="dealt-with-miss-values.html#cb19-16"></a><span class="st">  </span><span class="kw">scale_fill_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Survived&quot;</span>) <span class="op">+</span></span>
+<span id="cb19-17"><a href="dealt-with-miss-values.html#cb19-17"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Age_RE3&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Percentage of Survived&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb19-18"><a href="dealt-with-miss-values.html#cb19-18"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Survived percentage on Age_RE3 attribute&quot;</span>)</span>
+<span id="cb19-19"><a href="dealt-with-miss-values.html#cb19-19"></a></span>
+<span id="cb19-20"><a href="dealt-with-miss-values.html#cb19-20"></a><span class="kw">grid.arrange</span>(p1, p2, <span class="dt">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="05-data-preprocess_files/figure-html/unnamed-chunk-3-1.svg" width="672" />
+The above three methods can all fill the missing values. Each filled with different values. Depends on the applications you can choose to use any of them. For our prediction problem, I would use the machine predicted since we are doing predicting anyway. So I will tied data with replacing the original <em>Age</em> with <em>Age_RE3</em> and removal of the other two extra age attributes.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="dealt-with-miss-values.html#cb20-1"></a>data<span class="op">$</span>Age &lt;-<span class="st"> </span>data<span class="op">$</span>Age_RE3</span>
+<span id="cb20-2"><a href="dealt-with-miss-values.html#cb20-2"></a>data &lt;-<span class="st"> </span><span class="kw">subset</span>(data, <span class="dt">select =</span> <span class="op">-</span><span class="kw">c</span>(Age_RE1, Age_RE2, Age_RE3))</span></code></pre></div>
+</div>
+<div id="fare-attribute" class="section level3 unnumbered">
+<h3>Fare Attribute</h3>
+<p>Since there was one missing value in <em>Fare</em>, we can also see that this person travelled alone, so I can’t impurate it, The best solution is replacing it with the mean or median value, or even other values like median in the same class or median from the same embarked port, or age group, etc.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="dealt-with-miss-values.html#cb21-1"></a><span class="co"># Replacing na with the median value</span></span>
+<span id="cb21-2"><a href="dealt-with-miss-values.html#cb21-2"></a>data[<span class="kw">is.na</span>(data<span class="op">$</span>Fare), ]</span></code></pre></div>
+<pre><code>##      PassengerId Survived Pclass               Name  Sex  Age SibSp Parch
+## 1044        1044       NA      3 Storey, Mr. Thomas male 60.5     0     0
+##      Ticket Fare Cabin Embarked HasCabinNum
+## 1044   3701   NA              S          No</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="dealt-with-miss-values.html#cb23-1"></a>data<span class="op">$</span>Fare[<span class="kw">is.na</span>(data<span class="op">$</span>Fare)] &lt;-<span class="st"> </span><span class="kw">median</span>(data<span class="op">$</span>Fare, <span class="dt">na.rm =</span> T)</span></code></pre></div>
+</div>
+<div id="Embarked" class="section level3 unnumbered">
+<h3>Embarked Attribute</h3>
+<p><em>Embark</em> has two missing values. There are two methods to make up these two values: take the mode value, which is the most value at present; or the most likely value. The mode value is <code>S</code> (Southampton), the fact that 70% of passengers embarked from ‘S’.</p>
+<p>The most likelihood value needs some analysis. Generally, the embarked port reflects a passenger’s journey. It is associated with the fare of the ticket. So we could compare the fare of the ticket to see it most likely fit which part of the journey. However, we have noticed that the fare is the original data may provide faulty information since it can be a shared ticket. The fare is also shared with someone. If that is the case we should consider the partner’s Embarked port as its most appropriate value.</p>
+<p>So we take two steps:
+1. find out the passenger has a shared ticket or not. If the ticket is shared then find the travel companion’s embarked port and take that as the passenger’s embarked port;
+2. If the ticket is not shared or shared partner’s embarked port is also missing, find out the ticket price per person and compare with other ticket’s price per person to allocate the embarked port.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="dealt-with-miss-values.html#cb24-1"></a><span class="co"># list the missing records to figure out the fare and the ticket?</span></span>
+<span id="cb24-2"><a href="dealt-with-miss-values.html#cb24-2"></a>data[(data<span class="op">$</span>Embarked<span class="op">==</span><span class="st">&quot;&quot;</span>), <span class="kw">c</span>(<span class="st">&quot;Embarked&quot;</span>, <span class="st">&quot;PassengerId&quot;</span>,  <span class="st">&quot;Fare&quot;</span>, <span class="st">&quot;Ticket&quot;</span>)]</span></code></pre></div>
+<pre><code>##     Embarked PassengerId Fare Ticket
+## 62                    62   80 113572
+## 830                  830   80 113572</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="dealt-with-miss-values.html#cb26-1"></a><span class="co"># we want find out if the fare is a single ticket or a group ticket.</span></span></code></pre></div>
+<p>We can see the two miss records share the same ticket number and the fare. The situation because extremely simple. We don’t need to consider other possibilities. The two passengers must travel together. There is no possibility of any other reference can be used to figure out the missing port.</p>
+<p>For safety, let us check if there are other passengers share the same ticket number?</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="dealt-with-miss-values.html#cb27-1"></a><span class="co"># we need to find out is there other passenger share the ticket?</span></span>
+<span id="cb27-2"><a href="dealt-with-miss-values.html#cb27-2"></a>data[(data<span class="op">$</span>Ticket<span class="op">==</span><span class="st">&quot;113572&quot;</span>), <span class="kw">c</span>(<span class="st">&quot;Ticket&quot;</span>, <span class="st">&quot;PassengerId&quot;</span>, <span class="st">&quot;Embarked&quot;</span>, <span class="st">&quot;Fare&quot;</span>)]</span></code></pre></div>
+<pre><code>##     Ticket PassengerId Embarked Fare
+## 62  113572          62            80
+## 830 113572         830            80</code></pre>
+<p>The answer is “No”. It tells us only the two missing records share the ticket number. So we only need to find out the price (per person) to compare with other prices (per person) to allocate the missing embarked port. The logic is the same journey should bear the same ticket price. To calculate the ticket price (per person), we create an attribute <em>Fare_pp</em>. It is the ticket price divided by the number of the passenger who shares the same ticket. That is the concept of the group ticket. It can also be useful to single out the “group travel” vs “travel alone”.</p>
+<p>As matter of fact, the raw data sample already has this concept such as <em>Sibsp</em> and <em>Parch</em>. We don’t know if the <em>Sibsp</em> and <em>Parch</em> are sharing the same ticket number since the attributes are only numbers. We can imagine the people who travel in the group may not be relatives and they could be simple friends or colleagues. Anyway, in the case of group travel, it is useful to know the group size. So we created another new attribute <em>Friend_size</em> to record the number of passengers who share the same ticket number ie. “travel in-group”.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="dealt-with-miss-values.html#cb29-1"></a><span class="co"># calculate fare_PP per person</span></span>
+<span id="cb29-2"><a href="dealt-with-miss-values.html#cb29-2"></a>fare_pp &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb29-3"><a href="dealt-with-miss-values.html#cb29-3"></a><span class="st">  </span><span class="kw">group_by</span>(Ticket, Fare) <span class="op">%&gt;%</span></span>
+<span id="cb29-4"><a href="dealt-with-miss-values.html#cb29-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarize</span>(<span class="dt">Friend_size =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></span>
+<span id="cb29-5"><a href="dealt-with-miss-values.html#cb29-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Fare_pp =</span> Fare <span class="op">/</span><span class="st"> </span>Friend_size)</span></code></pre></div>
+<pre><code>## `summarise()` regrouping output by &#39;Ticket&#39; (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="dealt-with-miss-values.html#cb31-1"></a>data &lt;-<span class="st"> </span><span class="kw">left_join</span>(data, fare_pp, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;Ticket&quot;</span>, <span class="st">&quot;Fare&quot;</span>))</span>
+<span id="cb31-2"><a href="dealt-with-miss-values.html#cb31-2"></a>data <span class="op">%&gt;%</span></span>
+<span id="cb31-3"><a href="dealt-with-miss-values.html#cb31-3"></a><span class="st">  </span><span class="kw">filter</span>((Embarked <span class="op">!=</span><span class="st"> &quot;&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb31-4"><a href="dealt-with-miss-values.html#cb31-4"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Embarked, <span class="dt">y =</span> Fare_pp)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb31-5"><a href="dealt-with-miss-values.html#cb31-5"></a><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb31-6"><a href="dealt-with-miss-values.html#cb31-6"></a><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">40</span>, <span class="dt">col =</span> <span class="st">&quot;deepskyblue4&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:embarkfarepp"></span>
+<img src="05-data-preprocess_files/figure-html/embarkfarepp-1.svg" alt="Possible embarked port by value of Fare per person" width="95%" />
+<p class="caption">
+Figure 5.4: Possible embarked port by value of Fare per person
+</p>
+</div>
+<p>From the above plot, we can see that price 40 (per person) is an outlier in embarked group <code>S</code> and <code>Q</code>. However, if they embarked from <code>C</code> the price only just falls into the upper quartile. So, we can reasonably the pare are embarked from <code>C</code>, so we want to assign <code>C</code> to the embarked missing value.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="dealt-with-miss-values.html#cb32-1"></a>data<span class="op">$</span>Embarked[(data<span class="op">$</span>Embarked)<span class="op">==</span><span class="st">&quot;&quot;</span>] &lt;-<span class="st"> &quot;C&quot;</span></span></code></pre></div>
+<p>Now we have dealt with all the missing values. We could simply run the same code again to confirm the missing values have been fulfilled.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="dealt-with-miss-values.html#cb33-1"></a><span class="kw">missing_vars</span>(data)</span></code></pre></div>
+<pre><code>##            var missing missing_prop
+## 1        Cabin    1014    0.7746371
+## 2     Survived     418    0.3193277
+## 3  PassengerId       0    0.0000000
+## 4       Pclass       0    0.0000000
+## 5         Name       0    0.0000000
+## 6          Sex       0    0.0000000
+## 7          Age       0    0.0000000
+## 8        SibSp       0    0.0000000
+## 9        Parch       0    0.0000000
+## 10      Ticket       0    0.0000000
+## 11        Fare       0    0.0000000
+## 12    Embarked       0    0.0000000
+## 13 HasCabinNum       0    0.0000000
+## 14 Friend_size       0    0.0000000
+## 15     Fare_pp       0    0.0000000</code></pre>
+<p>In summary, we have dealt with the 4 discovered missing values. Different approaches and methods are adopted. some of them are simple fulfillment like replacement with mean/median/mode values, others have more complicated processes involved deeper drill-down analysis or even predictions. Depends on the applications, appropriate methods may need multiple trials and exploration.</p>
+<p>However, we have discovered one interesting thing that the fare could be shared among multiple passengers (not only the same fare but also the same ticket numbers) see the previous section. It appeared to be the price of a group ticket. It creates confusing information on the fare. So it may be a good idea to re-engineer it into another more useful attribute like <em>fare_PP</em> (Fare per person), see next section.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>detailed decision tree and prediction model will be covered in the next chapter<a href="dealt-with-miss-values.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>ANOVA, stands for “Analysis of variance”, is a statistical model used to analyse the differences among group means in a sample. Decision trees can take many different ways to partition data samples such as <em>Entropy</em>, <em>Gini Index</em>, <em>Classification error</em>, and <em>ANOVA</em>. <a href="dealt-with-miss-values.html#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="general-data-prepartion-tasks.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="attribute-re-engineering.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": true,
+"twitter": true,
+"linkedin": true,
+"weibo": true,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+},
+"search": true,
+"info": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
